@@ -1,0 +1,2195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!--begin::Head-->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Admin</title>
+    <!--begin::Primary Meta Tags-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="title" content="AdminLTE 4 | Sidebar Mini" />
+    <meta name="author" content="ColorlibHQ" />
+    <meta
+      name="description"
+      content="AdminLTE is a Free Bootstrap 5 Admin Dashboard, 30 example pages using Vanilla JS."
+    />
+    <meta
+      name="keywords"
+      content="bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, colorlibhq, colorlibhq dashboard, colorlibhq admin dashboard"
+    />
+    <!-- CDN Full Callendar.-->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
+    <!-- Fin CDN Full Callendar.-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.15.10/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.2.0/css/dataTables.bootstrap5.css">
+    <!---->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.6/css/dataTables.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.1.2/css/buttons.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.6/css/dataTables.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/autofill/2.7.0/css/autoFill.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.1.2/css/buttons.bootstrap5.min.css">
+    <!--end::Primary Meta Tags-->
+    <!--begin::Fonts-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css"
+    />
+    <!--end::Fonts-->
+    <!--begin::Third Party Plugin(OverlayScrollbars)-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/styles/overlayscrollbars.min.css"
+    />
+    <!--end::Third Party Plugin(OverlayScrollbars)-->
+    <!--begin::Third Party Plugin(Bootstrap Icons)-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <!--end::Third Party Plugin(Bootstrap Icons)-->
+    <!--begin::Required Plugin(AdminLTE)-->
+    <link rel="stylesheet" href="../../lib/css/adminlte.min.css"/>
+    <!--end::Required Plugin(AdminLTE)-->
+    <link rel="stylesheet" href="../../CSS/panel_admin.css"/>
+  </head>
+  <!--end::Head-->
+  <!--begin::Body-->
+  <body class="layout-fixed sidebar-expand-lg sidebar-mini sidebar-collapse bg-body-tertiary">
+    <!--begin::App Wrapper-->
+    <div class="app-wrapper">
+      <!--begin::Header-->
+      <nav class="app-header navbar navbar-expand bg-body">
+        <!--begin::Container-->
+        <div class="container-fluid">
+          <!--begin::Start Navbar Links-->
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button">
+                <i class="bi bi-list"></i>
+              </a>
+            </li>
+            <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Home</a></li>
+            <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Contact</a></li>
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="#"
+                id="logout"
+                onclick="cerrar_session()"
+                >
+                <p class="text-center" style="color: red;">Logout</p>
+                <i class="fa-sharp fa-solid fa-right-from-bracket"></i>
+              </a>
+            </li>
+          </ul>
+          <!--end::Start Navbar Links-->
+          <!--begin::End Navbar Links-->
+          <ul class="navbar-nav ms-auto">
+            <!--end::Navbar Search-->
+            <!--begin::Messages Dropdown Menu-->
+            <li class="nav-item dropdown">
+              <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                <a href="#" class="dropdown-item">
+                  <!--begin::Message-->
+                  <div class="d-flex">
+                    <div class="flex-shrink-0">
+                      <img
+                        src="../../lib/assets/img/user1-128x128.jpg"
+                        alt="User Avatar"
+                        class="img-size-50 rounded-circle me-3"
+                      />
+                    </div>
+                    <div class="flex-grow-1">
+                      <h3 class="dropdown-item-title">
+                        Brad Diesel
+                        <span class="float-end fs-7 text-danger"
+                          ><i class="bi bi-star-fill"></i
+                        ></span>
+                      </h3>
+                      <p class="fs-7">Call me whenever you can...</p>
+                      <p class="fs-7 text-secondary">
+                        <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
+                      </p>
+                    </div>
+                  </div>
+                  <!--end::Message-->
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item">
+                  <!--begin::Message-->
+                  <div class="d-flex">
+                    <div class="flex-shrink-0">
+                      <img
+                        src="../../lib/assets/img/user8-128x128.jpg"
+                        alt="User Avatar"
+                        class="img-size-50 rounded-circle me-3"
+                      />
+                    </div>
+                    <div class="flex-grow-1">
+                      <h3 class="dropdown-item-title">
+                        John Pierce
+                        <span class="float-end fs-7 text-secondary">
+                          <i class="bi bi-star-fill"></i>
+                        </span>
+                      </h3>
+                      <p class="fs-7">I got your message bro</p>
+                      <p class="fs-7 text-secondary">
+                        <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
+                      </p>
+                    </div>
+                  </div>
+                  <!--end::Message-->
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item">
+                  <!--begin::Message-->
+                  <div class="d-flex">
+                    <div class="flex-shrink-0">
+                      <img
+                        src="../../lib/assets/img/user3-128x128.jpg"
+                        alt="User Avatar"
+                        class="img-size-50 rounded-circle me-3"
+                      />
+                    </div>
+                    <div class="flex-grow-1">
+                      <h3 class="dropdown-item-title">
+                        Nora Silvester
+                        <span class="float-end fs-7 text-warning">
+                          <i class="bi bi-star-fill"></i>
+                        </span>
+                      </h3>
+                      <p class="fs-7">The subject goes here</p>
+                      <p class="fs-7 text-secondary">
+                        <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
+                      </p>
+                    </div>
+                  </div>
+                  <!--end::Message-->
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+              </div>
+            </li>
+            <!--end::Messages Dropdown Menu-->
+            <!--begin::Notifications Dropdown Menu-->
+            <li class="nav-item dropdown">
+              <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                <span class="dropdown-item dropdown-header">15 Notifications</span>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item">
+                  <i class="bi bi-envelope me-2"></i> 4 new messages
+                  <span class="float-end text-secondary fs-7">3 mins</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item">
+                  <i class="bi bi-people-fill me-2"></i> 8 friend requests
+                  <span class="float-end text-secondary fs-7">12 hours</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item">
+                  <i class="bi bi-file-earmark-fill me-2"></i> 3 new reports
+                  <span class="float-end text-secondary fs-7">2 days</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item dropdown-footer"> See All Notifications </a>
+              </div>
+            </li>
+            <!--end::Notifications Dropdown Menu-->
+            <!--begin::Fullscreen Toggle-->
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-lte-toggle="fullscreen">
+                <i data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i>
+                <i data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none"></i>
+              </a>
+            </li>
+            <!--end::Fullscreen Toggle-->
+            <!--begin::User Menu Dropdown-->
+            <li class="nav-item dropdown user-menu">
+              <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                <img
+                  src="../../lib/assets/img/user2-160x160.jpg"
+                  class="user-image rounded-circle shadow"
+                  alt="User Image"
+                />
+                <span class="d-none d-md-inline"><!--aCÁ VA EL NOMBRE DEL aDMINISTRADOR.--></span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                <!--begin::User Image-->
+                <li class="user-header text-bg-primary">
+                  <img
+                    src="../../lib/assets/img/user2-160x160.jpg"
+                    class="rounded-circle shadow"
+                    alt="User Image"
+                  />
+                  <p>
+                    Alexander Pierce - Web Developer
+                    <small>Member since Nov. 2023</small>
+                  </p>
+                </li>
+                <!--end::User Image-->
+                <!--begin::Menu Body-->
+                <li class="user-body">
+                  <!--begin::Row-->
+                  <div class="row">
+                    <div class="col-4 text-center"><a href="#">Followers</a></div>
+                    <div class="col-4 text-center"><a href="#">Sales</a></div>
+                    <div class="col-4 text-center"><a href="#">Friends</a></div>
+                  </div>
+                  <!--end::Row-->
+                </li>
+                <!--end::Menu Body-->
+                <!--begin::Menu Footer-->
+                <li class="user-footer">
+                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="#" class="btn btn-default btn-flat float-end">Sign out</a>
+                </li>
+                <!--end::Menu Footer-->
+              </ul>
+            </li>
+            <!--end::User Menu Dropdown-->
+          </ul>
+          <!--end::End Navbar Links-->
+        </div>
+        <!--end::Container-->
+      </nav>
+      <!--end::Header-->
+      <!--begin::Sidebar-->
+      <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+        <!--begin::Sidebar Brand-->
+        <div class="sidebar-brand">
+          <!--begin::Brand Link-->
+          <a href="../index.html" class="brand-link">
+            <!--begin::Brand Image-->
+            <img
+              src="../../lib/assets/img/AdminLTELogo.png"
+              alt="AdminLTE Logo"
+              class="brand-image opacity-75 shadow"
+            />
+            <!--end::Brand Image-->
+            <!--begin::Brand Text-->
+            <span class="brand-text fw-light">AdminLTE 4</span>
+            <!--end::Brand Text-->
+          </a>
+          <!--end::Brand Link-->
+        </div>
+        <!--end::Sidebar Brand-->
+        <!--begin::Sidebar Wrapper-->
+        <div class="sidebar-wrapper">
+          <nav class="mt-2">
+            <!--begin::Sidebar Menu-->
+            <ul
+              class="nav sidebar-menu flex-column"
+              data-lte-toggle="treeview"
+              role="menu"
+              data-accordion="false"
+            >
+            <li class="nav-item">
+              <a href="#" class="nav-link" id="seccion_clinica"">
+                <i class="nav-icon bi bi-hospital"></i>
+                <p>Clínicas</p>
+              </a>
+            </li>
+              <li class="nav-item">
+                <a href="#" id="seleccion_panel_modulos_usuario" data-name="seleccion_panel_modulos_usuario" class="nav-link">
+                  <i class="nav-icon bi bi-speedometer"></i>
+                  <p>
+                    Panel Usuarios
+                    <i class="nav-arrow bi bi-chevron-right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="#" id="panel_doctor" data-name="container_doctor" class="nav-link panel_doctor">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Doctores</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../index2.html" id="panel_paciente" data-name="container_paciente" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Usuarios Pacientes Registrados</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../index2.html" id="panel_paciente_no_registrado" onclick="listar_pac_no_registrado()" data-name="container_paciente_no_register" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Pacientes No Registrados</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="../index3.html" id="panel_secretaria" data-name="container_secretaria" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Secretarias</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link" onclick="grupos()">
+                  <i class="nav-icon bi bi-palette"></i>
+                  <p>Grupos</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" id="seccion_esp" onclick="seccion_especialidad(this)" class="nav-link">
+                  <i class="nav-icon bi bi-download"></i>
+                  <p>Especialidad</p>
+                </a>
+              </li>
+              <!-- <li class="nav-item">
+                <a href="#" id="seleccion_panel_modulos_info_citas" data-name="seleccion_panel_modulos_info_citas" class="nav-link">
+                  <i class="nav-icon bi bi-speedometer"></i>
+                  <p>
+                    HISTORIAL CITAS PACIETES REGISTRADOS
+                  </p>
+                </a>
+              </li> -->
+              <li class="nav-item">
+                <a href="#" id="seleccion_panel_descuento" onclick="listar_descuento()" data-name="seleccion_panel_desc" class="nav-link">
+                  <i class="nav-icon bi bi-speedometer"></i>
+                  <p>
+                    Descuentos
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" id="consulta_paciente" onclick="listar_consulta_pac()" class="nav-link">
+                  <i class="nav-icon bi bi-speedometer"></i>
+                  <p>
+                    Consultas
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" id="consulta_paciente_cerrada" onclick="listar_consulta_pac_cerrada()" class="nav-link">
+                  <i class="nav-icon bi bi-speedometer"></i>
+                  <p>
+                    Consultas Cerradas
+                  </p>
+                </a>
+              </li>
+            </ul>
+            <!--end::Sidebar Menu-->
+          </nav>
+        </div>
+        <!--end::Sidebar Wrapper-->
+      </aside>
+      <!--end::Sidebar-->
+      <!--begin::App Main-->
+      <main class="app-main">
+        <!--begin::App Content Header-->
+        <div class="app-content-header">
+          <!--begin::Container-->
+          <div class="container-fluid">
+            <!--begin::Row-->
+            <div class="row">
+              <div class="col-sm-6"><h3 class="mb-0">Collapsed Sidebar</h3></div>
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-end">
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Collapsed Sidebar</li>
+                </ol>
+              </div>
+            </div>
+            <!--end::Row-->
+          </div>
+          <!--end::Container-->
+        </div>
+        <!--end::App Content Header-->
+        <!--begin::App Content-->
+        <div class="app-content">
+          <!--begin::Container-->
+          <div class="container-fluid">
+            <!--begin::Row-->
+            <div class="row">
+              <div class="col-12">
+                <!-- Default box -->
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">Panel Administrador</h3>
+                    <div class="card-tools">
+                      <button
+                        type="button"
+                        class="btn btn-tool"
+                        data-lte-toggle="card-collapse"
+                        title="Collapse"
+                      >
+                        <i data-lte-icon="expand" class="bi bi-plus-lg"></i>
+                        <i data-lte-icon="collapse" class="bi bi-dash-lg"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <!-- Container Sección Clínica-->
+                  <div class="container mb-3" id="container_clinica" style="display: none;">
+                    <h1 class="text-center">Clínicas Disponibles</h1>
+                    <div class="container">
+                      <div class="table-responsive">
+                        <table id="tabla_clinica" class="display nowrap" style="width:100%">
+                          <div class="col-md-12">
+                            <div class="d-grid gap-2">
+                              <button class="btn mb-2" onclick="abrir_modal_nueva_clinica(this)" style="background: rgb(129, 240, 129);" type="button">Agregar Clínica</button>
+                            </div>
+                          </div>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Fin Container Grupo-->
+                  <!-- Panel ADMIN; Doctor, Paciente y Secretaria. -->
+                  <div class="" id="opcion_secre_doc_pasc" style="display: none;">
+                    <!-- Todo el Container del Panel de ADMIN. -->
+                      <div class="container panel_doctor" id="container_doctor" style="display: none;">
+                        <h1 class="text-center">Panel Doctores</h1>
+                        <div class="container">
+                          <div class="table-responsive">
+                            <table id="listar_doctor" class="table table-striped table-bordered dt-responsive nowrap">
+                              <div class="d-grid gap-2">
+                                <button class="btn mb-2" id="agregar_doctor" onclick="insertar_doctor(this)" type="button" style="background: rgb(172, 250, 172);">Agregar Doctor</button>
+                              </div>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    <!-- Fin Container Panel ADMIN. -->
+                    <!--Panel Paciente. -->
+                    <div class="container container_paciente" id="container_paciente" style="display: none;">
+                      <h1 class="text-center">Panel Paciente</h1>
+                      <div class="container">
+                        <div class="table-responsive">
+                          <table id="tabla_pac" class="display nowrap" style="width:100%">
+                            <div class="col-md-12">
+                              <div class="d-grid gap-2">
+                                <button class="btn mb-2" id="nuevo_pac" onclick="abrir_modal_crear_paciente()" style="background: rgb(106, 162, 247);"" type="button">Agregar Paciente</button>
+                              </div>
+                            </div>
+                          </table>
+                        </div>
+                        <h3 class="text-center">Reserva de Hora</h3>
+                        <div class="container container-xl">
+                          <label for="fono" class="form-label">Paciente</label>
+                          <div class="d-flex mb-3">
+                            <div class="input-group me-2">
+                              <select class="form-select" id="paciente_registrado" onfocus="paciente_nombre_clinica_paciente_registrado()" name="select_index_doc" aria-label="Default select example" style="border-color: rgb(196, 69, 235)"">
+                                <option value="0" selected>Nombre Paciente</option>
+                              </select>
+                            </div>
+                          </div>
+                          <label for="fono" class="form-label">Ubicación Centro Clínico</label>
+                          <div class="d-flex mb-3">
+                            <div class="input-group me-2">
+                              <select class="form-select" id="select_adm_com_clin_pac_registrado" onfocus="comuna_clinica_paciente_registrado()" name="select_index_doc" aria-label="Default select example" style="border-color: rgb(196, 69, 235)"">
+                                <option value="0" selected>Comuna</option>
+                              </select>
+                            </div>
+                          </div>
+                          <label for="reserva_adm_pac_registrado_esp" class="form-label">Especialidad</label>
+                          <div class="d-flex mb-3">
+                            <div class="input-group me-2">
+                              <select class="form-select" id="reserva_adm_pac_registrado_esp" name="select_adm_pac_especialidad" onfocus="select_esp_adm_panel_pac_registrado()" aria-label="Default select example" style="border-color: rgb(196, 69, 235)"">
+                                <option value="0" selected>Seleccionar Especialidad</option>
+                              </select>
+                            </div>
+                          </div>
+                          <label for="select_adm_esp_pac_registrado" class="form-label">Seleccionar Doctor</label>
+                          <div class="d-flex mb-3">
+                            <div class="input-group me-2">
+                              <select class="form-select" id="select_adm_esp_pac_registrado" onfocus="valor_select_esp_adm_pac_registrado()" name="select_index_doc_regis" aria-label="Default select example" style="border-color: rgb(196, 69, 235)"">
+                                <option value="0" selected>Doctor</option>
+                              </select>
+                            </div>
+                          </div>
+                          <button class="btn btn-success" onclick="reserva_calendar_pac_registrado()" type="button">Mostrar Reservas</button>
+                        </div>
+                        <div id='calendar_pac_registrado'></div>
+                      </div>
+                      </div>
+                    </div>
+                    <!--Fin Panel Paciente ADMIN. -->
+                    <!--Panel Paciente No Registrado. -->
+                    <div class="container" id="pac_no_register_container" style="display: none;">
+                      <h1 class="text-center">Panel Paciente No Registrado</h1>
+                      <div class="container">
+                        <div class="table-responsive">
+                          <table id="tabla_pac_no_register" class="display nowrap" style="width:100%; background: rgb(231, 232, 200);"">
+                            
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Fin Panel Paciente No Registrado. -->
+                    <!--Panel Secretaria-->
+                    <div class="container container-xl" id="container_secretaria" style="display: none;">
+                      <h1 class="text-center">Panel Secretaria</h1>
+                      <div class="container">
+                        <div class="table-responsive">
+                          <table id="tabla_secretaria" class="display nowrap" style="width:100%">
+                            <div class="col-md-12">
+                              <div class="d-grid gap-2">
+                                <button class="btn mb-2" onclick="nuevo_secretaria(this)" style="background: rgb(238, 172, 255);" type="button">Agregar Secretaria</button>
+                              </div>
+                            </div>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Fin Panel Secretaria-->
+                  </div>
+                  <!-- Container Grupo-->
+                  <div class="container mb-3" id="container_grupo" style="display: none;">
+                    <h1 class="text-center">Grupo</h1>
+                    <div class="container">
+                      <div class="table-responsive">
+                        <table id="tabla_grupo" class="display nowrap" style="width:100%">
+                          <div class="col-md-12">
+                            <div class="d-grid gap-2">
+                              <button class="btn mb-2" onclick="nuevo_grupo(this)" style="background: rgb(129, 240, 129);" type="button">Agregar Grupo</button>
+                            </div>
+                          </div>
+                        </table>
+                      </div>
+                    </div>
+                    <!-- Fin Container Grupo-->
+                      <!-- <div class="col-md-12">
+                        <div class="d-grid gap-2">
+                          <button class="btn btn-warning" id="modal_grupo" type="button">Mostrar</button>
+                        </div>
+                      </div> -->
+                  </div>
+                  <!-- Fin Container Grupo-->
+                  <!-- Container Especialidad Doctores Panel ADMIN. -->
+                  <div class="container-xl container_esp" id="container_espe_doctor" style="display: none;">
+                    <h1 class="text-center">Panel Especialidad Doctores</h1>
+                    <div class="container">
+                      <div class="table-responsive">
+                        <table id="tabla_esp" class="display nowrap" style="width:100%">
+                          <div class="col-md-12">
+                            <div class="d-grid gap-2">
+                              <button class="btn mb-2" id="nueva_esp" onclick="abrir_modal_insertar_esp_doc(this)" style="background: greenyellow;"" type="button">Agregar Especialidad</button>
+                            </div>
+                          </div>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Fin Container Especialidad Doctor Panel ADMIN. -->
+                  <!-- <div class="container-xl container_citas_esp" id="container_cita_user_info" style="display: none;">
+                    <h1 class="text-center">Panel Info Citas Paciente Registrados</h1>
+                    <div class="container">
+                      <div class="table-responsive">
+                        <table id="tabla_info_historial_reserva" class="display nowrap" style="width:100%">
+                          <div class="col-md-12">
+                            <div class="d-grid gap-2">
+                            </div>
+                          </div>
+                        </table>
+                      </div>
+                    </div>
+                  </div> -->
+                  <!-- Panel Descuentos. -->
+                  <div class="container-xl" id="container_descuento_info" style="display: none;">
+                    <h1 class="text-center">Panel Descuento</h1>
+                    <!-- Container Cardiología. -->
+                    <div class="container">
+                      <div class="table-responsive">
+                        <button type="button" id="agregar_des" class="btn btn-success mb-3" onclick="nuevo_descuento()">Agregar Descuento</button>
+                        <table id="tabla_info_descuento" class="display nowrap" style="width:100%">
+                          <div class="col-md-12">
+                            <div class="d-grid gap-2">
+                            </div>
+                          </div>
+                        </table>
+                      </div>
+                    </div>
+                    <!-- Fin container Cargiología. -->
+                  </div>
+                  <!-- Panel Consultas Realizadas Abiertas. -->
+                  <div class="container-xl" id="container_info_consulta_abierta" style="display: none;">
+                    <h1 class="text-center">Consultas Abiertas</h1>
+                    <!-- Container Cardiología. -->
+                    <div class="container">
+                      <div class="table-responsive">
+                        <table id="tabla_info_consulta_abierta" class="display nowrap" style="width:100%">
+                          <div class="col-md-12">
+                            <div class="d-grid gap-2">
+                            </div>
+                          </div>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Fin Panel Consultas Realizadas Abiertas. -->
+                  <!-- Panel Consultas Realizadas Cerradas. -->
+                  <div class="container-xl" id="container_info_consulta_cerrada" style="display: none;">
+                    <h1 class="text-center">Consultas Cerradas</h1>
+                    <!-- Container Cardiología. -->
+                    <div class="container">
+                      <div class="table-responsive">
+                        <table id="tabla_info_consulta_cerrada" class="display nowrap" style="width:100%">
+                          <div class="col-md-12">
+                            <div class="d-grid gap-2">
+                            </div>
+                          </div>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Fin Panel Consultas Realizadas Cerradas. -->
+                  <!-- /.card-body -->
+                  <div class="card-footer">Importante</div>
+                  <!-- /.card-footer-->
+                </div>
+                <!-- /.card -->
+              </div>
+            </div>
+            <!--end::Row-->
+          </div>
+          <!--end::Container-->
+        </div>
+        <!--end::App Content-->
+      </main>
+      <!--end::App Main-->
+      <!--begin::Footer-->
+      <footer class="app-footer">
+        <!--begin::To the end-->
+        <div class="float-end d-none d-sm-inline">Anything you want</div>
+        <!--end::To the end-->
+        <!--begin::Copyright-->
+        <strong>
+          Copyright &copy; 2014-2024&nbsp;
+          <a href="https://adminlte.io" class="text-decoration-none">AdminLTE.io</a>.
+        </strong>
+        All rights reserved.
+        <!--end::Copyright-->
+      </footer>
+      <!--end::Footer-->
+    </div>
+    <!---->
+    <!-- Button trigger modal -->
+    <!-- Modal Agregar Clínica Panel ADMIN. -->
+    <div class="modal fade" id="modal_clinica" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Nueva Clínica</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="container mt-5 mt-5 d-flex justify-content-center" id=""  style="background: rgb(231, 230, 229);" style="border-color: rgb(196, 69, 235)">
+              <div class="col-md-8 mt-3">
+                  <div class="row mb-3">
+                      <div class="col-md-6 mb-3"">
+                        <label for="username" class="form-label">Nombre Clínica</label>
+                        <input type="text" class="form-control" id="crear_clinica_adm" placeholder="Nombre Clínica" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <div class="col-md-6 mb-3"">
+                        <label for="password" class="form-label">Comuna Clínica</label>
+                        <input type="text" class="form-control" id="comuna_clinica_adm_pass" placeholder="Comuna" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <div class="col-md-6 mb-3"">
+                        <label for="first_name" class="form-label">Dirección Clínica</label>
+                        <input type="text" class="form-control" id="direccion_clinica_adm_first_name" placeholder="Dirección" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                    <div class="d-grid gap-2 mb-2">
+                        <button class="btn" id="adm_regis_clinica" onclick="registrar_clinica(this)" type="button" style="background: rgb(231, 43, 248);">Registrar</button>
+                    </div>
+                </div>
+              </div>
+          </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin Modal Agregar Clínica Panel ADMIN. -->
+    <!-- Modal Editar Clinica adm. -->
+    <div class="modal fade" id="modal_editar_clinica_adm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar Clínica</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="container mt-5 mt-5 d-flex justify-content-center" id=""  style="background: rgb(231, 230, 229);" style="border-color: rgb(196, 69, 235)">
+              <div class="col-md-8 mt-3">
+                <div class="row mb-3">
+                    <div class="col-md-6 mb-3"">
+                      <input type="hidden" id="edit_id_clinica">
+                      <label for="edit_clinica_adm" class="form-label">Nombre Clínica</label>
+                      <input type="text" class="form-control" id="edit_clinica_adm" placeholder="Nombre Clínica" style="border-color: rgb(196, 69, 235)">
+                    </div>
+                    <div class="col-md-6 mb-3"">
+                      <label for="edit_comuna_clinica_adm" class="form-label">Comuna Clínica</label>
+                      <input type="text" class="form-control" id="edit_comuna_clinica_adm" placeholder="Comuna" style="border-color: rgb(196, 69, 235)">
+                    </div>
+                    <div class="col-md-6 mb-3"">
+                      <label for="edit_direccion_clinica_adm" class="form-label">Dirección Clínica</label>
+                      <input type="text" class="form-control" id="edit_direccion_clinica_adm" placeholder="Dirección" style="border-color: rgb(196, 69, 235)">
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" onclick="update_clinica_adm()" class="btn btn-primary">Editar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin Editar Clinica adm. --> 
+    <!-- Modal Mostrar Información Doctor. -->
+    <div class="modal fade" id="modal_info_doctor" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header" style="background: hsl(240, 80%, 77%);">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Info Doctor</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+              
+          </div>
+          <div class="modal-footer" style="background: hsl(240, 80%, 77%);">
+            <button type="button" id="cerrar_modal_listar_doctor" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <!--Fin Modal Mostrar Información Doctor.-->
+    <!-- Modal Editar Doctor. -->
+    <div class="modal fade" id="modal_Editar_info_doctor" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar Información Doctor</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="row g-3 align-items-center">
+                  <input type="hidden" id="id_doc_user_edit">
+                  <div class="col-auto">
+                    <label for="edit_doc_username" class="col-form-label">Username</label>
+                  </div>
+                  <div class="col">
+                    <input type="text" class="form-control" name="edit_doc_username" id="edit_doc_username" aria-describedby="passwordHelpInline">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row g-3 align-items-center">
+                  <div class="col-auto">
+                    <label for="edit_doc_email" class="col-form-label">email</label>
+                  </div>
+                  <div class="col">
+                    <input type="email" id="edit_doc_email" name="edit_doc_email" class="form-control" aria-describedby="passwordHelpInline">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row g-3 align-items-center">
+                  <div class="col-auto">
+                    <label for="edit_doc_primer_nombre" class="col-form-label">Primer Nombre</label>
+                  </div>
+                  <div class="col">
+                    <input type="text" id="edit_doc_primer_nombre" name="edit_doc_primer_nombre" class="form-control" aria-describedby="passwordHelpInline">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row g-3 align-items-center">
+                  <div class="col-auto">
+                    <label for="edit_doc_segundo_nombre" class="col-form-label">Segundo Nombre</label>
+                  </div>
+                  <div class="col">
+                    <input type="text" id="edit_doc_segundo_nombre" name="edit_doc_segundo_nombre" class="form-control" aria-describedby="passwordHelpInline">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row g-3 align-items-center">
+                  <div class="col-auto">
+                    <label for="edit_doc_last_name" class="col-form-label">Ap. Paterno</label>
+                  </div>
+                  <div class="col">
+                    <input type="text" id="edit_doc_ap_paterno" name="edit_doc_ap_paterno" class="form-control" aria-describedby="passwordHelpInline">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row g-3 align-items-center">
+                  <div class="col-auto">
+                    <label for="edit_doc_last_name" class="col-form-label">Ap. Materno</label>
+                  </div>
+                  <div class="col">
+                    <input type="text" id="edit_doc_ap_materno" name="edit_doc_ap_materno" class="form-control" aria-describedby="passwordHelpInline">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row g-3 align-items-center">
+                  <div class="col-auto">
+                    <label for="edit_doc_edad" class="col-form-label">Edad</label>
+                  </div>
+                  <div class="col">
+                    <input type="number" id="edit_doc_edad" name="edit_doc_edad" min="0" class="form-control" aria-describedby="passwordHelpInline">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row g-3 align-items-center">
+                  <div class="col-auto">
+                    <label for="edit_doc_rut" class="col-form-label">RUT</label>
+                  </div>
+                  <div class="col">
+                    <input type="text" id="edit_doc_rut" name="edit_doc_rut" class="form-control" aria-describedby="passwordHelpInline">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 mb-3"">
+                <label for="basic-url" class="form-label">Fono Contacto</label>
+                <div class="input-group">
+                  <span class="input-group-text" id="basic-addon3">+56</span>
+                  <input type="text" class="form-control" id="edit_doc_fono" aria-describedby="basic-addon3 basic-addon4">
+                </div>
+                <div class="form-text" id="basic-addon4"><span class="badge text-bg-secondary">Debe contener 9 dígitos.</span></div>
+              </div>
+              <div class="col-md-6">
+                <div class="row g-3 align-items-center">
+                  <div class="col-auto">
+                    <label for="doc_masculino_edit" class="col-form-label">Sexo</label>
+                  </div>
+                  <div class="col">
+                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                      <input type="radio" class="btn-check" name="edit_doc_genero" id="doc_masculino_edit" autocomplete="off" value="M">
+                      <label class="btn btn-outline-primary" for="doc_masculino_edit">Masculino</label>
+                      
+                      <input type="radio" class="btn-check" name="edit_doc_genero" id="doc_femenino_edit" autocomplete="off" value="F">
+                      <label class="btn btn-outline-primary" for="doc_femenino_edit">Femenino</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6" style="background: rgb(169, 250, 236);">
+                <div class="row g-3 align-items-center">
+                  <div class="col-auto">
+                    <label for="edit_doc_pass" class="col-form-label">Password</label>
+                  </div>
+                  <div class="col">
+                    <input type="password" id="edit_doc_pass" name="edit_doc_pass" class="form-control" aria-describedby="passwordHelpInline">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="btn_editar_doc_adm" onclick="enviar_datos_edit_doc_adm()">Editar Doctor</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin Modal Editar Doctor. -->
+    <!-- Modal listar todas las clinicas que pertenece un doctor. -->
+    <div class="modal fade" id="modal_clinica_doctor" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header" style="background: rgb(212, 145, 243);">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Clínicas</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+              <div class="table-responsive">
+                <table id="tabla_clinica_doct_admin" class="display nowrap" style="width:100%">
+                  <div class="col-md-12">
+                    <div class="d-grid gap-2">
+                      <div class="d-grid gap-2 mb-2">
+                        <button class="btn" id="btn_agregar_cl" type="button" onfocus="agregar_nueva_clinica_doctor()" style="background: rgb(138, 241, 207);">Agregar Clínica Doctor</button>
+                        <input type="hidden" id="iduser_doc">
+                      </div>
+                    </div>
+                  </div>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer" style="background: rgb(212, 145, 243);">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin Modal todas las clínicas que pertenece un doctor. -->
+    <!-- Agregar Clínica Doctor. -->
+    <div class="modal fade" id="modal_agregar_clinica_doctor_adm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Agregar Clínica</h1>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="id_doc">
+            <div class="row g-3 align-items-center">
+              <div class="col-auto">
+                <label for="inputPassword4" class="col-form-label">Seleccionar Clínica</label>
+              </div>
+              <div class="col">
+                <select class="form-select" id="nueva_clinica_doc">
+                  <option value="0" selected>Seleccionar</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="registrar_nueva_clinica_doctor()">Registrar Clínica</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin Agregar Clínica Doctor. -->
+    <!-- Modal Mostrar Grupos. -->
+    <div class="modal fade" id="listar_grupo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header" style="background: rgb(255, 252, 69);">
+            <h1 class="modal-title fs-5" id="">Grupos</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            
+          </div>
+          <div class="modal-footer" style="background: rgb(255, 252, 69);">
+            <button type="button" id="cerrar_modal_listar_grupo" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Fin Modal Listar Grupos. -->
+    <!-- Modal Crear Grupo. -->
+    <div class="modal fade" id="crear_grupo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header" style="background: rgb(167, 243, 171);">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Crear Grupo</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Nombre Grupo</label>
+                <input type="text" class="form-control" id="nombre_grupo" required aria-describedby="emailHelp">
+              </div>
+          </div>
+          <div class="modal-footer" style="background: rgb(167, 243, 171);">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" id="insertar_grupo" class="btn btn-primary" onclick="insert_grupo()">Crear</button>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+    <!--Fin Modal Crear Grupo. -->
+    <!-- Modal Editar Nombre Grupo. -->
+    <!-- <div class="modal fade" id="modal_editar_grupo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header" style="background: rgb(124, 162, 245);">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar Grupo</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <input type="hidden" id="id_grupo" value="">
+                <label for="exampleInputEmail1" class="form-label">Nombre Grupo</label>
+                <input type="text" class="form-control" id="edit_nombre_grupo" required aria-describedby="emailHelp">
+              </div>
+          </div>
+          <div class="modal-footer" style="background: rgb(124, 162, 245);">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" id="btn_editar_nombre_grupo" onclick="editar_nombre_grupo_panel_admin(this)" class="btn btn-primary">Editar</button>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div> -->
+    <!--Fin Modal Editar Nombre Grupo.-->
+    <!-- Formulario Crear Doctor. -->
+    <div class="modal fade" id="modal_form_doctor" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Crear Doctor</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form action="" id="form_doctor">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                      <label for="inputPassword1" class="col-form-label">Username</label>
+                    </div>
+                    <div class="col">
+                      <input type="text" class="form-control" style="border-color: rgb(196, 69, 235)" name="username" id="username" aria-describedby="passwordHelpInline">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                      <label for="inputPassword2" class="col-form-label">Password</label>
+                    </div>
+                    <div class="col">
+                      <input type="password" name="password" style="border-color: rgb(196, 69, 235)" id="password" class="form-control" aria-describedby="passwordHelpInline">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                      <label for="inputPassword3" class="col-form-label">Primer Nombre</label>
+                    </div>
+                    <div class="col">
+                      <input type="text" id="primer_nombre" style="border-color: rgb(196, 69, 235)" name="primer_nombre" class="form-control" aria-describedby="passwordHelpInline">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                      <label for="inputPassword4" class="col-form-label">Segundo Nombre</label>
+                    </div>
+                    <div class="col">
+                      <input type="text" style="border-color: rgb(196, 69, 235)" id="segundo_nombre" name="segundo_nombre" class="form-control" aria-describedby="passwordHelpInline">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                      <label for="ap_paterno" class="col-form-label">Ap. Paterno</label>
+                    </div>
+                    <div class="col">
+                      <input type="text" style="border-color: rgb(196, 69, 235)" id="ap_paterno" name="ap_paterno" class="form-control" aria-describedby="passwordHelpInline">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                      <label for="ap_materno" class="col-form-label">Ap. Materno</label>
+                    </div>
+                    <div class="col">
+                      <input type="text" style="border-color: rgb(196, 69, 235)" id="ap_materno" name="ap_materno" class="form-control" aria-describedby="passwordHelpInline">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                      <label for="inputPassword4" class="col-form-label">email</label>
+                    </div>
+                    <div class="col">
+                      <input type="email" style="border-color: rgb(196, 69, 235)" id="email" name="email" class="form-control" aria-describedby="passwordHelpInline">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                      <label for="inputPassword4" class="col-form-label">Edad</label>
+                    </div>
+                    <div class="col">
+                      <input type="number" style="border-color: rgb(196, 69, 235)" id="edad" name="edad" class="form-control" aria-describedby="passwordHelpInline">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                      <label for="inputPassword4" class="col-form-label">RUT</label>
+                    </div>
+                    <div class="col">
+                      <input type="text" id="rut" style="border-color: rgb(196, 69, 235)" name="rut" class="form-control" aria-describedby="passwordHelpInline">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3"">
+                  <label for="basic-url" class="form-label">Fono Contacto</label>
+                  <div class="input-group">
+                    <span class="input-group-text" id="basic-addon3">+56</span>
+                    <input type="text" style="border-color: rgb(196, 69, 235)" class="form-control" id="fono" name="fono" aria-describedby="basic-addon3 basic-addon4">
+                  </div>
+                  <div class="form-text" id="basic-addon4"><span class="badge text-bg-secondary">Debe contener 9 dígitos.</span></div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                      <label for="inputPassword4" class="col-form-label">Sexo</label>
+                    </div>
+                    <div class="col">
+                      <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                        <input type="radio" class="btn-check" style="border-color: rgb(196, 69, 235)" name="genero" id="doc_masculino" autocomplete="off" value="M">
+                        <label class="btn btn-outline-primary" for="doc_masculino">Masculino</label>
+                        
+                        <input type="radio" class="btn-check" style="border-color: rgb(196, 69, 235)" name="genero" id="doc_femenino" autocomplete="off" value="F">
+                        <label class="btn btn-outline-primary" for="doc_femenino">Femenino</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row g-3 align-items-center">
+                    <div class="col-auto">
+                      <label for="inputPassword4" class="col-form-label">Seleccionar Especialidad</label>
+                    </div>
+                    <div class="col">
+                      <select class="form-select" style="border-color: rgb(196, 69, 235)" id="select_especialidad" onfocus="option_especialidad(this)">
+                        <option value="0" selected>Seleccionar</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row g-3 align-items-center">
+                  <div class="col-auto">
+                    <label for="select_clinica" class="col-form-label">Seleccionar Clínica</label>
+                  </div>
+                  <div class="col">
+                    <select class="form-select" style="border-color: rgb(196, 69, 235)" id="select_clinica" onfocus="obtener_clinica()">
+                      <option value="0" selected>Seleccionar</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="cancelar_insertar_doctor" data-bs-dismiss="modal">Close</button>
+            <button type="button" id="insert_doctor" onclick="insertar_bd_doctor(this)" class="btn btn-primary">Crear Doctor</button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- Fin Formulario Crear Doctor. -->
+    <!-- Modal Crud Especialidades Panel ADMIN.-->
+    <div class="modal fade" id="modal_espe_doctor" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header" style="background: rgb(114, 252, 252);">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Especialidades</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+              
+            </div>
+          </div>
+          <div class="modal-footer" style="background: rgb(114, 252, 252);">
+            <button type="button" class="btn btn-secondary" id="cerrar_modal_principal_list_esp" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Understood</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin Modal Crud Especialidades Panel ADMIN.-->
+    <!-- Modal Insertar Especialidad Panel ADMIN. -->
+    <div class="modal fade" id="modal_insert_especialidad" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header" style="background: greenyellow;">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Insertar Especialidad</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="especialidad" class="form-label">Especialidad</label>
+              <input type="text" id="especialidad" class="form-control" aria-describedby="especialidadHelp">
+            </div>
+            <div class="mb-3">
+              <label for="valor_especialidad" class="form-label">Valor Especialidad</label>
+              <input type="number" id="valor_especialidad" min="0" class="form-control" aria-describedby="valorHelp">
+            </div>
+          </div>
+          <div class="modal-footer d-flex justify-content-end gap-2">
+            <button type="button" id="cancelar_insert_esp" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn" onclick="form_insert_Esp(this)" style="background: rgb(99, 247, 124);">Crear</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin Modal Insertar Especialidad Panel ADMIN. -->
+    <!-- Fin Modal Editar Esp Doctor Panel ADMIN. -->
+    <div class="modal fade" id="modal_editar_esp_doc_admin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header" style="background: rgb(122, 122, 245);">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Especialidad</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="edit_especialidad" class="form-label">Especialidad</label>
+              <input type="text" id="edit_especialidad" class="form-control" aria-describedby="especialidadHelp">
+              <input type="hidden" id="edit_id_esp_admin" name="edit_id_esp_admin">
+            </div>
+
+            <div class="mb-3">
+              <label for="edit_valor_especialidad" class="form-label">Valor Especialidad</label>
+              <input type="number" id="edit_valor_especialidad" min="0" class="form-control" aria-describedby="valorHelp">
+            </div>
+          </div>
+          <div class="modal-footer" style="background: rgb(122, 122, 245);">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="editar_esp_admin(this)">Editar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Editar Esp Doctor Panel ADMIN. -->
+    <!-- Modal Listar especialidades en el panel admin, seccion DOCTOR. -->
+    <!-- Modal -->
+    <div class="modal fade" id="todas_esp_doc" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header" style="background:rgb(18, 236, 135)">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Especialidades</h1>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+              <div class="table-responsive">
+                <table id="tabla_esp_doct_admin" class="display nowrap" style="width:100%">
+                  <div class="col-md-12">
+                    <div class="d-grid gap-2">
+                      <button class="btn mb-2" id="nueva_espdoc_admin" onclick="agregar_esp_doct_admin(this)" style="background: greenyellow;"" type="button">Agregar Especialidad Doctor</button>
+                    </div>
+                  </div>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer" style="background:rgb(18, 236, 135)">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin Modal Listar especialidades en el panel admin, seccion DOCTOR. -->
+    <!-- Modal insert una nueva especialidad a un doctor específico. -->
+    <div class="modal fade" id="modal_agregar_nueva_esp_doctor" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="col-md-12">
+              <div class="row g-3 align-items-center">
+                <input type="hidden" id="id_doc" value="">
+                <div class="col-auto">
+                  <label for="inputPassword4" class="col-form-label">Seleccionar Especialidad</label>
+                </div>
+                <div class="col">
+                  <select class="form-select" id="select_especialidad_option" onfocus="option_especialidad_nueva_doc(this)">
+                    <option value="0" selected>Seleccionar</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" onclick="insert_nueva_esp_doctor_Admin(this)" class="btn btn-primary">Agregar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin Modal insert una nueva especialidad a un doctor específico.-->
+    <!-- Modal para crear una nueva cita a un usuario registrado en el Panel ADM. -->
+    <!-- <div class="modal fade" id="modal_crear_cita_usuario_adm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl ">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="modal_crear_cita_usuario_adm">Nueva Cita</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+              <h3 class="text-center">Reserva de Hora</h3>
+              <div class="container">
+                <input type="hidden" id="id_user_paciente_registrado">
+                <label for="select_adm_com_clin_pac_registrado" class="form-label">Ubicación Centro Clínico</label>
+                <div class="d-flex mb-3">
+                  <div class="input-group me-2">
+                    <select class="form-select" id="select_adm_com_clin_pac_registrado" onfocus="comuna_clinica_paciente_registrado()" name="select_index_doc" aria-label="Default select example" style="border-color: rgb(196, 69, 235)"">
+                      <option value="0" selected>Comuna</option>
+                    </select>
+                  </div>
+                </div>
+                <label for="reserva_adm_pac_registrado_esp" class="form-label">Especialidad</label>
+                <div class="d-flex mb-3">
+                  <div class="input-group me-2">
+                    <select class="form-select" id="reserva_adm_pac_registrado_esp" name="select_adm_pac_especialidad" onfocus="select_esp_adm_panel_pac_registrado()" aria-label="Default select example" style="border-color: rgb(196, 69, 235)"">
+                      <option value="0" selected>Prueba Seleccionar Especialidad</option>
+                    </select>
+                  </div>
+                </div>
+                <label for="select_adm_esp_pac_registrado" class="form-label">Seleccionar Doctor</label>
+                <div class="d-flex mb-3">
+                  <div class="input-group me-2">
+                    <select class="form-select" id="select_adm_esp_pac_registrado" onfocus="valor_select_esp_adm_pac_registrado()" name="select_index_doc_regis" aria-label="Default select example" style="border-color: rgb(196, 69, 235)"">
+                      <option value="0" selected>Doctor</option>
+                    </select>
+                  </div>
+                </div>
+                <button class="btn btn-success" onclick="reserva_calendar_pac_registrado()" type="button">sasasasasaMostrar Reservas</button>
+              </div>
+              <div id='calendar_pac_registrado'></div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="abrir_modal_anterior()" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <!-- Fin Modal para crear una nueva cita a un usuario registrado en el Panel ADM. -->
+    <!-- Modal para mostrar la información de una cita en full calendar. -->
+    <div class="modal fade" id="modal_info_full_calendar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content" style="background: rgb(162, 214, 248);">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="modal_info_full_calendar">Info Cita</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+              <div class="row g-3">
+                <div class="col-12">
+                  <label for="info_nombre_paciente_registrado" class="col-form-label">Nombre Paciente</label>
+                </div>
+                <div class="col-12">
+                  <input type="text" id="info_nombre_paciente_registrado" class="form-control" aria-describedby="passwordHelpInline">
+                </div>
+                <div class="col-12">
+                  <label for="info_especialidad_paciente_Registrado" class="col-form-label">Especialidad</label>
+                </div>
+                <div class="col-12">
+                  <input type="text" id="info_especialidad_paciente_Registrado" class="form-control" aria-describedby="passwordHelpInline">
+                </div>
+                <div class="col-12">
+                  <label for="cod_reserva_paciente_registrado" class="col-form-label">Cod. Reserva</label>
+                </div>
+                <div class="col-12">
+                  <input type="text" id="cod_reserva_paciente_registrado" class="form-control" aria-describedby="passwordHelpInline">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin Modal para mostrar inforación de una cita en full calendar. -->
+    <!-- Modal para crear una cita a un paciente registrado. -->
+    <div class="modal fade" id="modal_crear_cita_pac_resgistrado_panel_adm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="modal_crear_cita_pac_resgistrado_panel_adm">Info Cita</h1>
+          </div>
+          <div class="modal-body" style="background: rgb(175, 174, 172);">
+            <div class="container" id="info_nueva_reserva_pac_reistrado">
+              
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" id="btn_crear_cita_pac_registrado_panel_adm" onclick="crearCita()" class="btn btn-primary">Crear Cita</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin Modal para crear una cita a un paciente registrado. -->
+    <!-- Modal Insertar Paciente Panel ADMIN.  -->
+    <div class="modal fade" id="nuevo_pac_admin_panel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Registrar Paciente</h1>
+          </div>
+          <div class="modal-body">
+            <!-- Contenido de la página, incluyendo las cards -->
+            <div class="container mt-5 mt-5 d-flex justify-content-center" id=""  style="background: rgb(231, 230, 229);" style="border-color: rgb(196, 69, 235)">
+              <div class="col-md-8 mt-3">
+                  <div class="row mb-3">
+                      <div class="col-md-6 mb-3"">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="adm_paciente_username" placeholder="Username" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <div class="col-md-6 mb-3"">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="paciente_password" placeholder="Password" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <div class="col-md-6 mb-3"">
+                        <label for="adm_paciente_primer_nombre" class="form-label">Primer Nombres</label>
+                        <input type="text" class="form-control" id="adm_paciente_primer_nombre" placeholder="Nombres" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <div class="col-md-6 mb-3"">
+                        <label for="adm_paciente_segundo_nombre" class="form-label">Segundo Nombres</label>
+                        <input type="text" class="form-control" id="adm_paciente_segundo_nombre" placeholder="Nombres" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <div class="col-md-6 mb-3"">
+                        <label for="adm_paciente_ap_paterno" class="form-label">Apellido Paterno</label>
+                        <input type="text" class="form-control" id="adm_paciente_ap_paterno" placeholder="Apellidos" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <div class="col-md-6 mb-3"">
+                        <label for="adm_paciente_ap_materno" class="form-label">Apellido Paterno</label>
+                        <input type="text" class="form-control" id="adm_paciente_ap_materno" placeholder="Apellidos" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <!---->
+                      <div class="col-md-6 mb-3"">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="adm_paciente_email" placeholder="name@example.com" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <div class="col-md-6 mb-3"">
+                        <label for="edad" class="form-label">Edad</label>
+                        <input type="number" class="form-control" id="adm_paciente_edad" placeholder="Edad" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                    <!---->
+                    <div class="col-md-6 mb-3">
+                      <label for="vivienda" class="form-label">Sexo</label>
+                      <div class="d-flex flex-column"> <!-- Cambiado a dirección vertical -->
+                          <div class="form-check mb-2"> <!-- Añadido margen inferior -->
+                              <input class="form-check-input" type="radio" name="adm_paciente_sexo" id="adm_masculino" value="M" style="border-color: rgb(196, 69, 235)">
+                              <label class="form-check-label" for="adm_masculino"> Masculino </label>
+                          </div>
+                          <div class="form-check mb-2"> <!-- Añadido margen inferior -->
+                              <input class="form-check-input" type="radio" name="adm_paciente_sexo" id="adm_Femenino" value="F" style="border-color: rgb(196, 69, 235)">
+                              <label class="form-check-label" for="adm_Femenino"> Femenino </label>
+                          </div>
+                      </div>
+                    </div>
+                      <div class="col-md-6 mb-3"">
+                        <label for="basic-url" class="form-label">Fono Contacto</label>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon3">+56</span>
+                          <input type="text" style="border-color: rgb(196, 69, 235)" class="form-control" id="adm_paciente_fono" aria-describedby="basic-addon3 basic-addon4">
+                        </div>
+                        <div class="form-text" id="basic-addon4">Debe contener 9 dígitos.</div>
+                      </div>
+                      <div class="col-md-6 mb-3"">
+                        <label for="fono" class="form-label">RUT</label>
+                        <input type="text" class="form-control" id="adm_paciente_rut" placeholder="RUT" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="vivienda" class="form-label">Tipo Vivienda</label>
+                        <div class="d-flex flex-column"> <!-- Cambiado a dirección vertical -->
+                            <div class="form-check mb-2"> <!-- Añadido margen inferior -->
+                                <input class="form-check-input" type="radio" name="adm_paciente_tipo_vivienda" id="adm_vivienda" value="Casa" style="border-color: rgb(196, 69, 235)">
+                                <label class="form-check-label" for="adm_vivienda"> Casa </label>
+                            </div>
+                            <div class="form-check mb-2"> <!-- Añadido margen inferior -->
+                                <input class="form-check-input" type="radio" name="adm_paciente_tipo_vivienda" id="adm_vivienda_2" value="Condominio" style="border-color: rgb(196, 69, 235)">
+                                <label class="form-check-label" for="adm_vivienda_2"> Condominio </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="adm_paciente_tipo_vivienda" id="adm_vivienda_3" value="Departamento" style="border-color: rgb(196, 69, 235)">
+                                <label class="form-check-label" for="adm_vivienda_3"> Departamento </label>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3"">
+                        <label for="num_vivienda" class="form-label">N° Vivienda</label>
+                        <input type="text" class="form-control" id="adm_paciente_num_vivienda" placeholder="Num Vivienda" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                    </div>
+                    <div class="d-flex flex-column mb-3">
+                      <div class="input-group me-2">
+                        <label class="input-group-text" for="select1">Región</label>
+                        <select class="form-select" id="region" onchange="buscar_ciudad()" style="border-color: rgb(196, 69, 235)">
+                          <option data-id="0" data-region = "null" value="0" selected="selected">Regiones</option>
+                          <option  id="region_15" data-region ="Arica y Parinacota" value="15">Arica y Parinacota</option>
+                          <option id="region_1" data-region ="Tarapacá" value="1">Tarapacá</option>
+                          <option id="region_2" data-region ="Antofagasta" value="2">Antofagasta</option>
+                          <option id="region_3" data-region ="Atacama" value="3">Atacama</option>
+                          <option id="region_4" data-region ="Coquimbo" value="4">Coquimbo</option>
+                          <option id="region_5" data-region ="Valparaiso" value="5">Valparaiso</option>
+                          <option id="region_13" data-region ="Metropolitana" value="13">Metropolitana</option>
+                          <option id="region_6" data-region ="O'Higgins" value="6">O'Higgins</option>
+                          <option id="region_7" data-region ="Maule" value="7">Maule</option>
+                          <option id="region_16" data-region ="Ñuble" value="16">Ñuble</option>
+                          <option id="region_8" data-region ="Bio - Bio" value="8">Bio - Bio</option>
+                          <option id="region_9" data-region ="Araucania" value="9">Araucania</option>
+                          <option id="region_14" data-region ="Los Rios" value="14">Los Rios</option>
+                          <option id="region_10" data-region ="Los Lagos" value="10">Los Lagos</option>
+                          <option id="region_11" data-region ="Aisen" value="11">Aisen</option>
+                          <option id="region_12" data-region ="Magallanes Y Antártica" value="12">Magallanes Y Antartica</option>
+                        </select>
+                      </div>
+                      <div class="input-group mt-2">
+                        <label class="input-group-text" for="select2">Comuna</label>
+                        <select class="form-control" style="border-color: rgb(196, 69, 235)" name="comuna" id="comuna">
+                          <option value="0">Comunas por Region</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="d-grid gap-2 mb-2">
+                        <button class="btn btn-success" id="adm_regis_pac" onclick="adm_registrar_paciente()" type="button">Registrarme</button>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="container">
+              <div class="d-grid gap-2">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin Modal Insertar Paciente Panel ADMIN.  -->
+    <!-- Modal Editar Paciente Panel ADMIN.  -->
+    <div class="modal fade" id="modal_edit_pac_admin_panel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar Paciente</h1>
+          </div>
+          <div class="modal-body">
+            <!-- Contenido de la página, incluyendo las cards -->
+            <div class="container mt-5 mt-5 d-flex justify-content-center" id=""  style="background: rgb(231, 230, 229);" style="border-color: rgb(196, 69, 235)">
+              <div class="col-md-8 mt-3">
+                  <div class="row mb-3">
+                      <div class="col-md-6 mb-3">
+                        <input type="hidden" id="id_usuario_pac">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="edit_adm_paciente_username" placeholder="Username" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="edit_adm_paciente_email" placeholder="name@example.com" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <div class="col-md-6 mb-3" style="background: rgb(158, 240, 240);">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="edit_adm_paciente_pass" placeholder="Password" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="edit_adm_paciente_primer_nombre" class="form-label">Primer Nombres</label>
+                        <input type="text" class="form-control" id="edit_adm_paciente_primer_nombre" placeholder="Nombres" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="edit_adm_paciente_segundo_nombre" class="form-label">Segundo Nombres</label>
+                        <input type="text" class="form-control" id="edit_adm_paciente_segundo_nombre" placeholder="Nombres" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="edit_adm_ap_paterno" class="form-label">Apellido Paterno</label>
+                        <input type="text" class="form-control" id="edit_adm_ap_paterno" placeholder="Apellidos" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="edit_adm_ap_materno" class="form-label">Apellido Materno</label>
+                        <input type="text" class="form-control" id="edit_adm_ap_materno" placeholder="Apellidos" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <!---->
+                      <div class="col-md-6 mb-3">
+                        <label for="edad" class="form-label">Edad</label>
+                        <input type="number" class="form-control" id="edit_adm_paciente_edad" placeholder="Edad" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                    <!---->
+                    <div class="col-md-6 mb-3">
+                      <label for="vivienda" class="form-label">Sexo</label>
+                      <div class="d-flex flex-column"> <!-- Cambiado a dirección vertical -->
+                          <div class="form-check mb-2"> <!-- Añadido margen inferior -->
+                              <input class="form-check-input" type="radio" name="edit_adm_paciente_sexo" id="edit_adm_masculino" value="M" style="border-color: rgb(196, 69, 235)">
+                              <label class="form-check-label" for="edit_adm_masculino"> Masculino </label>
+                          </div>
+                          <div class="form-check mb-2"> <!-- Añadido margen inferior -->
+                              <input class="form-check-input" type="radio" name="edit_adm_paciente_sexo" id="edit_adm_Femenino" value="F" style="border-color: rgb(196, 69, 235)">
+                              <label class="form-check-label" for="edit_adm_Femenino"> Femenino </label>
+                          </div>
+                      </div>
+                    </div>
+                      <div class="col-md-6 mb-3"">
+                        <label for="basic-url" class="form-label">Fono</label>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon3">+56</span>
+                          <input type="text" class="form-control" id="edit_adm_paciente_fono" aria-describedby="basic-addon3 basic-addon4">
+                        </div>
+                        <div class="form-text" id="basic-addon4"><span class="badge text-bg-secondary">Debe contener 9 dígitos.</span></div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="fono" class="form-label">RUT</label>
+                        <input type="text" class="form-control" id="edit_adm_paciente_rut" placeholder="RUT" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="vivienda" class="form-label">Tipo Vivienda</label>
+                        <div class="d-flex flex-column"> <!-- Cambiado a dirección vertical -->
+                            <div class="form-check mb-2"> <!-- Añadido margen inferior -->
+                                <input class="form-check-input" type="radio" name="edit_adm_paciente_tipo_vivienda" id="edit_adm_vivienda" value="Casa" style="border-color: rgb(196, 69, 235)">
+                                <label class="form-check-label" for="edit_adm_vivienda"> Casa </label>
+                            </div>
+                            <div class="form-check mb-2"> <!-- Añadido margen inferior -->
+                                <input class="form-check-input" type="radio" name="edit_adm_paciente_tipo_vivienda" id="edit_adm_vivienda_2" value="Condominio" style="border-color: rgb(196, 69, 235)">
+                                <label class="form-check-label" for="edit_adm_vivienda_2"> Condominio </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="edit_adm_paciente_tipo_vivienda" id="edit_adm_vivienda_3" value="Departamento" style="border-color: rgb(196, 69, 235)">
+                                <label class="form-check-label" for="edit_adm_vivienda_3"> Departamento </label>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="num_vivienda" class="form-label">N° Vivienda</label>
+                        <input type="text" class="form-control" id="edit_adm_paciente_num_vivienda" placeholder="Num Vivienda" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                    </div>
+                    <div class="d-flex flex-column mb-3">
+                      <div class="input-group me-2">
+                        <label class="input-group-text" for="select1">Región</label>
+                        <select class="form-select" id="edit_pac_region" onchange="buscar_ciudad_paciente(1)" style="border-color: rgb(196, 69, 235)">
+                          <option data-id="0" data-region = "null" value="0" selected="selected">Regiones</option>
+                          <option  id="region_15" data-region ="Arica y Parinacota" value="15">Arica y Parinacota</option>
+                          <option id="region_1" data-region ="Tarapacá" value="1">Tarapacá</option>
+                          <option id="region_2" data-region ="Antofagasta" value="2">Antofagasta</option>
+                          <option id="region_3" data-region ="Atacama" value="3">Atacama</option>
+                          <option id="region_4" data-region ="Coquimbo" value="4">Coquimbo</option>
+                          <option id="region_5" data-region ="Valparaiso" value="5">Valparaiso</option>
+                          <option id="region_13" data-region ="Metropolitana" value="13">Metropolitana</option>
+                          <option id="region_6" data-region ="O'Higgins" value="6">O'Higgins</option>
+                          <option id="region_7" data-region ="Maule" value="7">Maule</option>
+                          <option id="region_16" data-region ="Ñuble" value="16">Ñuble</option>
+                          <option id="region_8" data-region ="Bio - Bio" value="8">Bio - Bio</option>
+                          <option id="region_9" data-region ="Araucania" value="9">Araucania</option>
+                          <option id="region_14" data-region ="Los Rios" value="14">Los Rios</option>
+                          <option id="region_10" data-region ="Los Lagos" value="10">Los Lagos</option>
+                          <option id="region_11" data-region ="Aisen" value="11">Aisen</option>
+                          <option id="region_12" data-region ="Magallanes Y Antártica" value="12">Magallanes Y Antartica</option>
+                        </select>
+                      </div>
+                      <div class="input-group mt-2">
+                        <label class="input-group-text" for="select2">Comuna</label>
+                        <select class="form-control" style="border-color: rgb(196, 69, 235)" name="edit_pac_comuna" id="edit_pac_comuna">
+                          <option value="0">Comunas por Region</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="d-grid gap-2 mb-2">
+                        <button class="btn btn-success" id="edit_adm_regis_pac" onclick="edit_panel_adm_paciente(this)" type="button">Registrarme</button>
+                    </div>
+                </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <div class="container">
+              <div class="d-grid gap-2">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin Modal Editar Paciente Panel ADMIN.  -->
+    <!-- Modal Historial Citas Paciente ADM. -->
+    <div class="modal fade" id="modal_historial_citas" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header" style="background: rgb(188, 253, 188);">
+            <h1 class="modal-title fs-5" id="modal_historial_citas">Historial Reserva Citas</h1>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+              <div class="table-responsive">
+                <table id="tabla_reserva_paciente_panel_admin" class="display nowrap" style="width:100%">
+                  <div class="col-md-12">
+                    <div class="d-grid gap-2">
+                      <div class="d-grid gap-2 mb-2">
+                        <input type="hidden" id="id_user_pac_reserva">
+                      </div>
+                    </div>
+                  </div>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer" style="background: rgb(188, 253, 188);">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin Modal Historial Citas Paciente ADM. -->
+    <!-- Modal Listar Secretaria Panel Admin. -->
+    <div class="modal fade" id="modal_crear_secretaria" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Crear Secretaria</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Contenido de la página, incluyendo las cards -->
+            <div class="container mt-5 mt-5 d-flex justify-content-center" id=""  style="background: rgb(231, 230, 229);" style="border-color: rgb(196, 69, 235)">
+              <div class="col-md-8 mt-3">
+                  <div class="row mb-3">
+                      <div class="col-md-6 mb-3"">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="crear_secretaria_adm_username" placeholder="Username" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <div class="col-md-6 mb-3"">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="crear_secretaria_adm_pass" placeholder="Password" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <div class="col-md-6 mb-3"">
+                        <label for="crear_secretaria_adm_primer_nombre" class="form-label">Primer Nombre</label>
+                        <input type="text" class="form-control" id="crear_secretaria_adm_primer_nombre" placeholder="Nombres" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <div class="col-md-6 mb-3"">
+                        <label for="crear_secretaria_adm_segundo_nombre" class="form-label">Segundo Nombre</label>
+                        <input type="text" class="form-control" id="crear_secretaria_adm_segundo_nombre" placeholder="Nombres" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <div class="col-md-6 mb-3"">
+                        <label for="crear_secretaria_adm_ap_paterno" class="form-label">Apellido Paterno</label>
+                        <input type="text" class="form-control" id="crear_secretaria_adm_ap_paterno" placeholder="Apellido Paterno" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <div class="col-md-6 mb-3"">
+                        <label for="crear_secretaria_adm_ap_materno" class="form-label">Apellido Materno</label>
+                        <input type="text" class="form-control" id="crear_secretaria_adm_ap_materno" placeholder="Apellido Materno" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <!---->
+                      <div class="col-md-6 mb-3"">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="crear_secretaria_adm_email" placeholder="name@example.com" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <div class="col-md-6 mb-3"">
+                        <label for="edad" class="form-label">Edad</label>
+                        <input type="number" class="form-control" id="crear_secretaria_adm_edad" placeholder="Edad" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                    <!---->
+                    <div class="col-md-6 mb-3">
+                      <label for="vivienda" class="form-label">Sexo</label>
+                      <div class="d-flex flex-column"> <!-- Cambiado a dirección vertical -->
+                          <div class="form-check mb-2"> <!-- Añadido margen inferior -->
+                              <input class="form-check-input" type="radio" name="crear_secretaria_adm_sexo" id="crear_secretaria_adm_masculino" value="M" style="border-color: rgb(196, 69, 235)">
+                              <label class="form-check-label" for="edit_adm_masculino"> Masculino </label>
+                          </div>
+                          <div class="form-check mb-2"> <!-- Añadido margen inferior -->
+                              <input class="form-check-input" type="radio" name="crear_secretaria_adm_sexo" id="crear_secretaria_adm_Femenino" value="F" style="border-color: rgb(196, 69, 235)">
+                              <label class="form-check-label" for="edit_adm_Femenino"> Femenino </label>
+                          </div>
+                      </div>
+                    </div>
+                      <div class="col-md-6 mb-3"">
+                        <label for="basic-url" class="form-label">Fono</label>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon3">+56</span>
+                          <input type="text" class="form-control" id="crear_secretaria_fono" aria-describedby="basic-addon3 basic-addon4">
+                        </div>
+                        <div class="form-text" id="basic-addon4"><span class="badge text-bg-secondary">Debe contener 9 dígitos.</span></div>
+                      </div>
+                      <div class="col-md-6 mb-3"">
+                        <label for="fono" class="form-label">RUT</label>
+                        <input type="text" class="form-control" id="crear_secretaria_rut" placeholder="RUT" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                    </div>
+                    <div class="row g-3 align-items-center mb-2">
+                      <div class="col-auto">
+                        <label for="select_clinica" class="col-form-label">Seleccionar Clínica</label>
+                      </div>
+                      <div class="col">
+                        <select class="form-select" id="select_clinica_secretaria" onfocus="obtener_clinica_secretaria()">
+                          <option value="0" selected>Seleccionar</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="d-grid gap-2 mb-2">
+                        <button class="btn btn-success" id="adm_regis_sec" onclick="registrar_secretaria(this)" type="button">Registrarme</button>
+                    </div>
+                </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Obtener Todas Las Clínicas De La Secretaria Panel Admin. -->
+    <div class="modal fade" id="modal_todas_clin_secretaria_panel_admin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header" style="background: orange;">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Clínicas</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Contenido de la página, incluyendo las cards -->
+            <div class="container">
+              <button class="btn btn-success btn-xl" id="btn_insert_nueva_clin_secret_panel_adm" onclick="insert_nueva_clin_secret_panel_adm()">Agregar Clínica</button>
+              <div class="table-responsive">
+                <table id="tabla_clinica_secret_panel_admin" class="display nowrap" style="width:100%">
+                  <div class="col-md-12">
+                    <div class="d-grid gap-2">
+                      <div class="d-grid gap-2 mb-2">
+                        <input type="hidden" id="id_secret_clin">
+                      </div>
+                    </div>
+                  </div>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer" style="background: orange;">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin Modal Obtener Todas Las Clínicas De La Secretaria Panel Admin. -->
+
+    <!-- Modal Obtener Todas Las Clínicas De La Secretaria Panel Admin. -->
+    <div class="modal fade" id="modal_insert_clin_secretaria_panel_admin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header" style="background: orange;">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Clínicas</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Contenido de la página, incluyendo las cards -->
+            <div class="container">
+              <input type="hidden" id="id_user_secretaria" value="">
+              <div class="row g-3 align-items-center mb-2">
+                <div class="col-auto">
+                  <label for="insert_select_clinica_secretaria" class="col-form-label">Seleccionar Clínica</label>
+                </div>
+                <div class="col">
+                  <select class="form-select" id="insert_select_clinica_secretaria" onfocus="insert_nueva_clinica_secret_panel_adm()">
+                    <option value="0" selected>Seleccionar</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer" style="background: orange;">
+            <button type="button" class="btn btn-success" onclick="enviar_nueva_clinica_secretaria()">Agregar Clínica</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin Modal Obtener Todas Las Clínicas De La Secretaria Panel Admin. -->
+
+    <!-- Modal Insertar Nueva Clínica De a La Secretaria Panel Admin. -->
+    <div class="modal fade" id="modal_insert_clin_secretaria_panel_admin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Clínicas</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Contenido de la página, incluyendo las cards -->
+            <div class="container">
+              
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin Modal Insertar Nueva Clínica De a La Secretaria Panel Admin. -->
+    <!-- Modal Listar Secretaria Panel Admin. -->
+    <div class="modal fade" id="modal_editar_secretaria" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Editar Secretaria</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Contenido de la página, incluyendo las cards -->
+            <div class="container mt-5 mt-5 d-flex justify-content-center" id=""  style="background: rgb(231, 230, 229);" style="border-color: rgb(196, 69, 235)">
+              <div class="col-md-8 mt-3">
+                  <div class="row mb-3">
+                      <div class="col-md-6 mb-3"">
+                        <input type="hidden" id="id_usuario_secretaria">
+                        <label for="edit_adm_secretaria_username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="edit_adm_secretaria_username" placeholder="Username" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <div class="col-md-6 mb-3"">
+                        <label for="edit_adm_secretaria_pass" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="edit_adm_secretaria_pass" placeholder="Password" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <div class="col-md-6 mb-3"">
+                        <label for="edit_adm_secretaria_primer_nombre" class="form-label">Primer Nombre</label>
+                        <input type="text" class="form-control" id="edit_adm_secretaria_primer_nombre" placeholder="Nombres" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <div class="col-md-6 mb-3"">
+                        <label for="edit_adm_secretaria_segundo_nombre" class="form-label">Segundo Nombre</label>
+                        <input type="text" class="form-control" id="edit_adm_secretaria_segundo_nombre" placeholder="Nombres" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <div class="col-md-6 mb-3"">
+                        <label for="edit_adm_secretaria_ap_paterno" class="form-label">Apellido Paterno</label>
+                        <input type="text" class="form-control" id="edit_adm_secretaria_ap_paterno" placeholder="Apellidos" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <div class="col-md-6 mb-3"">
+                        <label for="edit_adm_secretaria_ap_materno" class="form-label">Apellido Materno</label>
+                        <input type="text" class="form-control" id="edit_adm_secretaria_ap_materno" placeholder="Apellidos" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <!---->
+                      <div class="col-md-6 mb-3"">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="edit_adm_secretaria_email" placeholder="name@example.com" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                      <div class="col-md-6 mb-3"">
+                        <label for="edad" class="form-label">Edad</label>
+                        <input type="number" class="form-control" id="edit_adm_secretaria_edad" placeholder="Edad" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                    <!---->
+                    <div class="col-md-6 mb-3">
+                      <label for="vivienda" class="form-label">Sexo</label>
+                      <div class="d-flex flex-column"> <!-- Cambiado a dirección vertical -->
+                          <div class="form-check mb-2"> <!-- Añadido margen inferior -->
+                              <input class="form-check-input" type="radio" name="edit_adm_secretaria_sexo" id="editar_secretaria_adm_masculino" value="M" style="border-color: rgb(196, 69, 235)">
+                              <label class="form-check-label" for="editar_secretaria_adm_masculino"> Masculino </label>
+                          </div>
+                          <div class="form-check mb-2"> <!-- Añadido margen inferior -->
+                              <input class="form-check-input" type="radio" name="edit_adm_secretaria_sexo" id="editar_secretaria_adm_Femenino" value="F" style="border-color: rgb(196, 69, 235)">
+                              <label class="form-check-label" for="editar_secretaria_adm_Femenino"> Femenino </label>
+                          </div>
+                      </div>
+                    </div>
+                      <div class="col-md-6 mb-3"">
+                        <label for="basic-url" class="form-label">Fono</label>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon3">+56</span>
+                          <input type="text" class="form-control" style="border-color: rgb(196, 69, 235)" id="edit_adm_secretaria_fono" aria-describedby="basic-addon3 basic-addon4">
+                        </div>
+                        <div class="form-text" id="basic-addon4"><span class="badge text-bg-secondary">Debe contener 9 dígitos.</span></div>
+                      </div>
+                      <div class="col-md-6 mb-3"">
+                        <label for="fono" class="form-label">RUT</label>
+                        <input type="text" class="form-control" id="edit_adm_secretaria_rut" placeholder="RUT" style="border-color: rgb(196, 69, 235)">
+                      </div>
+                    </div>
+                    <div class="d-grid gap-2 mb-2">
+                        <button class="btn btn-warning" id="adm_regis_sec" onclick="editando_secretaria(this)" type="button">Editar</button>
+                    </div>
+                </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin Modal Editar Secretaria Panel Admin. -->
+    <!-- Modal para insertar un nuevo Descuento -->
+    <div class="modal fade" id="modal_desc" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Crear Descuento</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="col-md-12 mt-3 text-center">
+              <div class="row mb-3">
+                <div class="col-md-6 mb-3"">
+                  <label for="nombre_desc" class="form-label">Nombre Descuento</label>
+                  <input type="text" class="form-control" id="nombre_desc" placeholder="Nombre Descuento" style="border-color: rgb(196, 69, 235)">
+                </div>
+                <div class="col-md-6 mb-3"">
+                  <label for="descripcion_desc" class="form-label">Descripción</label>
+                  <textarea class="form-control" placeholder="Leve Descripción" id="descripcion_desc" style="border-color: rgb(196, 69, 235)"></textarea>
+                </div>
+                <div class="col-md-6 mb-3"">
+                  <label for="cod_desc" class="form-label">Cod. Descuento</label>
+                  <input type="text" class="form-control" id="cod_desc" placeholder="Código" style="border-color: rgb(196, 69, 235)">
+                </div>
+                <div class="col-md-6 mb-3"">
+                  <label for="fecha_inicio" class="form-label">Fecha Inicio</label>
+                  <input type="date" class="form-control" id="fecha_inicio" placeholder="Nombres" style="border-color: rgb(196, 69, 235)">
+                </div>
+                <div class="col-md-6 mb-3"">
+                  <label for="fecha_termino" class="form-label">Fecha Término</label>
+                  <input type="date" class="form-control" id="fecha_termino" placeholder="Nombres" style="border-color: rgb(196, 69, 235)">
+                </div>
+                <div class="col-md-6 mb-3"">
+                  <label for="descuento" class="form-label">Descuento</label>
+                  <div class="alert alert-success" role="alert">
+                    Recordar que el campo es número pero se aplica como porcentaje
+                  </div>
+                  <input type="number" class="form-control" id="descuento" placeholder="Descuento" style="border-color: rgb(196, 69, 235)" min="0">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="enviar_descuento()">Crear</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin Modal para insertar un nuevo Descuento -->
+    <!--  -->
+    <div class="modal fade" id="modal_edit_desc" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal_edit_desc">Editar Descuento</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="col-md-12 mt-3 text-center">
+              <div class="row mb-3">
+                <div class="col-md-6 mb-3"">
+                  <input type="hidden" id="id_desc">
+                  <label for="edit_nombre_desc" class="form-label">Nombre Descuento</label>
+                  <input type="text" class="form-control" id="edit_nombre_desc" placeholder="Nombre Descuento" style="border-color: rgb(196, 69, 235)">
+                </div>
+                <div class="col-md-6 mb-3"">
+                  <label for="edit_descripcion_desc" class="form-label">Descripción</label>
+                  <textarea class="form-control" placeholder="Leve Descripción" id="edit_descripcion_desc" style="border-color: rgb(196, 69, 235)"></textarea>
+                </div>
+                <div class="col-md-6 mb-3"">
+                  <label for="edit_cod_desc" class="form-label">Cod. Descuento</label>
+                  <input type="text" class="form-control" id="edit_cod_desc" placeholder="Código" style="border-color: rgb(196, 69, 235)">
+                </div>
+                <div class="col-md-6 mb-3"">
+                  <label for="edit_fecha_inicio" class="form-label">Fecha Inicio</label>
+                  <input type="date" class="form-control" id="edit_fecha_inicio" placeholder="Nombres" style="border-color: rgb(196, 69, 235)">
+                </div>
+                <div class="col-md-6 mb-3"">
+                  <label for="edit_fecha_termino" class="form-label">Fecha Término</label>
+                  <input type="date" class="form-control" id="edit_fecha_termino" placeholder="Nombres" style="border-color: rgb(196, 69, 235)">
+                </div>
+                <div class="col-md-6 mb-3"">
+                  <label for="edit_descuento" class="form-label">Descuento</label>
+                  <div class="alert alert-success" role="alert">
+                    Recordar que el campo es número pero se aplica como porcentaje
+                  </div>
+                  <input type="number" class="form-control" id="edit_descuento" placeholder="Descuento" style="border-color: rgb(196, 69, 235)" min="0">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="editar_descuento()">Crear</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--  -->
+    <!-- Modal para responder las Consultas. -->
+    <div class="modal fade" id="modal_consulta_cerrada_pac_adm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header" style="background:rgb(18, 236, 135)">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Historial</h1>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+              <input type="hidden" id="id_consulta_cerrada_pac_adm">
+              <div class="form-floating">
+                <textarea class="form-control" style="height:300px; width:100%;" placeholder="Leave a comment here" id="respuesta_consulta_cerrada"></textarea>
+                <label for="respuesta_consulta_cerrada">Respuesta</label>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer" style="background:rgb(18, 236, 135)">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin Modal para responder las Consultas. -->
+    <!--end::App Wrapper-->
+    <!--begin::Script-->
+    <!--begin::Third Party Plugin(OverlayScrollbars)-->
+    <script
+      src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/browser/overlayscrollbars.browser.es6.min.js"
+    ></script>
+    <!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    ></script>
+    <!--end::Required Plugin(popperjs for Bootstrap 5)--><!--begin::Required Plugin(Bootstrap 5)-->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+    ></script>
+    <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
+    <script src="../../lib/js/adminlte.js"></script>
+    <!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
+    <script>
+      const SELECTOR_SIDEBAR_WRAPPER = '.sidebar-wrapper';
+      const Default = {
+        scrollbarTheme: 'os-theme-light',
+        scrollbarAutoHide: 'leave',
+        scrollbarClickScroll: true,
+      };
+      document.addEventListener('DOMContentLoaded', function () {
+        const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
+        if (sidebarWrapper && typeof OverlayScrollbarsGlobal?.OverlayScrollbars !== 'undefined') {
+          OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
+            scrollbars: {
+              theme: Default.scrollbarTheme,
+              autoHide: Default.scrollbarAutoHide,
+              clickScroll: Default.scrollbarClickScroll,
+            },
+          });
+        }
+      });
+    </script>
+    <!--end::OverlayScrollbars Configure-->
+    <!--end::Script-->
+    <!--CDN JQUERY.-->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <!--Agregamos los estilos de BOOTSTRAP 5.-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- aGREGAMOS LA LIBRERÍA DE AXIOS.JS-->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.datatables.net/2.1.6/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.1.2/js/dataTables.buttons.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.1.2/js/buttons.dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.1.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.1.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.min.js"></script>
+    <!-- Script Full Calendar. -->
+    <!--<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/main.global.min.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/locales/es.global.min.js"></script>
+    <!-- Fin Scripts Full Calendar. -->
+    <script src="../../JS/panel_admin/panel_admin.js"></script>
+    <script src="../../JS/panel_admin/regiones.js"></script>
+    <script src="../../JS/panel_admin/regiones_secretaria.js"></script>
+    <script src="../../JS/panel_admin/regiones_paciente.js"></script>
+    <script src="../../JS/panel_admin/fullcalendar_adm.js"></script>
+  </body>
+  <!--end::Body-->
+</html>
