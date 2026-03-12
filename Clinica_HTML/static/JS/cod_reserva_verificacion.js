@@ -1,13 +1,14 @@
+//
 function enviar_cod_verificacion(){
         //
     let cod_reserva = document.getElementById("cod_reserva").value
+    console.log(cod_reserva)
     //
     let datos = {
         'reserva_uuid': cod_reserva,
-
     }
     console.warn(datos)
-    axios.post('http://127.0.0.1:8000/reserva/cod_reserva_verificacion',datos)
+    axios.post('https://jacruces91.pythonanywhere.com/reserva/cod_reserva_verificacion',datos)
         .then(function (response) {
             console.log(response.data)
             let cod_ver = response.data.cod
@@ -28,21 +29,21 @@ function enviar_cod_verificacion(){
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
-                        text: "No existe el grupo!",
+                        text: "¡Ingrese el código correctamente!",
                     });
                 }
                 if (error.response.data == 2) {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
-                        text: "No existe el grupo!",
+                        text: "¡Ingrese el código correctamente!",
                     });
                 }
                 if (error.response.data == 3) {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
-                        text: "No existe el grupo!",
+                        text: "¡Ingrese el código correctamente!",
                     });
                 }
             }

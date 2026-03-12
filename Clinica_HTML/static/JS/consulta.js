@@ -23,7 +23,7 @@ function consulta(){
         'consulta':consulta,
     }
     // Realizamos el envío por AXIOS.
-    axios.post('http://127.0.0.1:8000/consulta/consulta_paciente',datos)
+    axios.post('https://jacruces91.pythonanywhere.com/consulta/consulta_paciente',datos)
         .then(function (response) {
             console.log(response.data)
             if (response.data.success == 1) {

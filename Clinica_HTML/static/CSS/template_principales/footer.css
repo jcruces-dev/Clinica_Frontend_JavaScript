@@ -1,0 +1,104 @@
+/* ========================================
+   ESTILOS PARA FOOTER
+   ======================================== */
+
+/* Footer mejorado */
+.footer {
+    background: linear-gradient(135deg, #1e3c72 0%, #0a1a2f 100%);
+    padding-top: 80px;
+    padding-bottom: 40px;
+    color: white;
+    position: relative;
+}
+
+.footer h4 {
+    color: #ffd700;
+    font-weight: 600;
+    margin-bottom: 25px;
+    font-size: 1.3rem;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.footer h4::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background: #ffd700;
+}
+
+.footer ul li a {
+    color: rgba(255,255,255,0.8);
+    transition: all 0.3s ease;
+    line-height: 36px;
+}
+
+.footer ul li a:hover {
+    color: #ffd700;
+    padding-left: 10px;
+}
+
+.social_profile ul {
+    display: flex;
+    gap: 10px;
+}
+
+.social_profile ul li a {
+    width: 40px;
+    height: 40px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.social_profile ul li a:hover {
+    background: #ffd700;
+    transform: translateY(-5px);
+}
+
+.social_profile ul li a img {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
+}
+
+.subscribe__input {
+    border: 2px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.subscribe__input::placeholder {
+    color: rgba(255,255,255,0.6);
+}
+
+.subscribe__btn {
+    background: #ffd700;
+    color: #1e3c72;
+    border-radius: 10px;
+    width: auto;
+    padding: 0 2rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.subscribe__btn:hover {
+    background: white;
+    color: #1e3c72;
+}
+
+.copyright {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin-top: 50px;
+    padding-top: 30px;
+    text-align: center;
+    color: rgba(255,255,255,0.8);
+}

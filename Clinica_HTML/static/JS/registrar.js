@@ -12,19 +12,53 @@ function formatearRUT(rut) {
 
     return cuerpo + '-' + dv;
 }
-document.addEventListener('DOMContentLoaded', function () {
-    //
-    const inputRut = document.getElementById('rut');
-    //
-    inputRut.addEventListener('input', function (e) {
-        let valor = e.target.value.replace(/\./g, '').replace(/-/g, '');
+// document.addEventListener('DOMContentLoaded', function () {
+//     //
+//     const inputRut = document.getElementById('rut');
+//     //
+//     inputRut.addEventListener('input', function (e) {
+//         let valor = e.target.value.replace(/\./g, '').replace(/-/g, '');
         
-        // Solo formatear si hay al menos 2 caracteres (cuerpo + dv)
-        if (valor.length >= 2) {
-            e.target.value = formatearRUT(valor);
+//         // Solo formatear si hay al menos 2 caracteres (cuerpo + dv)
+//         if (valor.length >= 2) {
+//             e.target.value = formatearRUT(valor);
+//         }
+//     });
+// });
+
+//
+document.addEventListener('DOMContentLoaded', function () {
+    const inputRut = document.getElementById('rut');
+
+    inputRut.addEventListener('input', function (e) {
+        // 1. Guardar la posición del cursor antes de formatear
+        let cursorPosition = e.target.selectionStart;
+        let valorOriginal = e.target.value;
+
+        // 2. Limpiar el valor: Solo dejar números y la letra K
+        let valor = valorOriginal.replace(/[^0-9kK]/g, '');
+        
+        if (valor.length > 0) {
+            // 3. Aplicar el formato (Puntos y Guion)
+            let cuerpo = valor.slice(0, -1);
+            let dv = valor.slice(-1).toUpperCase();
+            
+            // Formatear cuerpo con puntos
+            let cuerpoFormateado = cuerpo.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            
+            // Unir todo
+            let resultado = cuerpo.length > 0 ? `${cuerpoFormateado}-${dv}` : dv;
+            
+            e.target.value = resultado;
+
+            // 4. Reposicionar el cursor para que no salte al final
+            // Ajustamos la posición si se añadieron puntos o guiones
+            let diff = e.target.value.length - valorOriginal.length;
+            e.target.setSelectionRange(cursorPosition + diff, cursorPosition + diff);
         }
     });
 });
+
 //
 function registrar_paciente_index(e){
     let username = document.getElementById("username").value
@@ -63,9 +97,16 @@ function registrar_paciente_index(e){
     console.log(valor_vivienda)
     //------- Fin Valor Radio Button Vivienda ---------
     //-------------------- Select dinámico, esta es la manera de recorrer el select y obtener el valorInput Región.
-    let id_region = document.getElementById("region").value
-    let region = document.getElementById("region_" + id_region).getAttribute("data-region")
-    console.log(region)
+    // let id_region = document.getElementById("region").value
+    // console.warn(id_region)
+    // // 
+    // let region = document.getElementById("region_" + id_region).getAttribute("data-region")
+    // console.log(region)
+    let selectRegion = document.getElementById("region");
+    // Obtiene el texto de la opción seleccionada (ej: "Metropolitana")
+    let region = selectRegion.options[selectRegion.selectedIndex].text;
+    console.log("Región seleccionada:", region);
+
     //------ Fin Select dinámico, esta es la manera de recorrer el select y obtener el valorInput Comuna.
     let comuna = document.getElementById("comuna").value
     console.log(comuna)
@@ -89,7 +130,9 @@ function registrar_paciente_index(e){
         'comuna': comuna,
     }
     console.log(datos)
-    axios.post(`http://127.0.0.1:8000/usuario/crear_paciente_index_registrar`,datos, {
+    // axios.post(`http://127.0.0.1:8000/paciente/crear_paciente_index_registrar`,datos, {
+    axios.post(`https://jacruces91.pythonanywhere.com/paciente/crear_paciente_index_registrar`,datos, {
+    
         headers: {
             //'Authorization': `Token ${token}`,
             'Content-Type': 'application/json',
@@ -117,6 +160,21 @@ function registrar_paciente_index(e){
                     icon: "error",
                     title: "El usuario ya existe",
                     text: "El usuario fue creado anteriormente!",
+                });
+            }
+            if (error.response.data.error == 4) {
+                Swal.fire({
+                    icon: "error",
+                    title: "El RUT es inválido",
+                    text: "El RUT ingresado ya se encuentra registrado!",
+                });
+            }
+            //
+            if (error.response.data.error == 5) {
+                Swal.fire({
+                    icon: "error",
+                    title: "OOoops...",
+                    text: "El usuario ya existe",
                 });
             }
             //
@@ -210,7 +268,7 @@ function registrar_paciente(e){
         'comuna': comuna,
     }
     console.log(datos)
-    axios.post(`http://127.0.0.1:8000/usuario/registrar_usuario`,datos, {
+    axios.post(`https://jacruces91.pythonanywhere.com/usuario/registrar_usuario`,datos, {
         headers: {
             'Authorization': `Token ${token}`,
             'Content-Type': 'application/json',

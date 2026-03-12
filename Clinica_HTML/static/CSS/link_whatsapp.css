@@ -1,0 +1,56 @@
+/* Contenedor principal del botón */
+.whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #25d366;
+    color: white;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    text-decoration: none;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    z-index: 1000;
+    transition: transform 0.3s ease;
+}
+
+/* El texto al lado del logo */
+.whatsapp-text {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    margin-right: 10px;
+    font-weight: 500;
+}
+
+/* El icono circular */
+.whatsapp-icon {
+    width: 30px;
+    height: 30px;
+}
+
+/* Efecto al pasar el mouse */
+.whatsapp-float:hover {
+    background-color: #128c7e;
+    transform: scale(1.05);
+}
+
+/* --- RESPONSIVE --- */
+
+/* Para celulares muy pequeños */
+@media (max-width: 480px) {
+    .whatsapp-text {
+        display: none; /* Ocultamos el texto en pantallas muy chicas para que no estorbe */
+    }
+    .whatsapp-float {
+        padding: 12px;
+        border-radius: 50%; /* Se vuelve un botón circular solo con el logo */
+        bottom: 15px;
+        right: 15px;
+    }
+    .whatsapp-icon {
+        width: 35px;
+        height: 35px;
+        margin-right: 0;
+    }
+}

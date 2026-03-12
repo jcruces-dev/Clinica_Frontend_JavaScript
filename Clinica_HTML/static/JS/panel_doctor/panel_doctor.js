@@ -155,7 +155,7 @@ function obtener_datos_doctor(){
     const token = sessionStorage.getItem('token');
     //
     let arr = []
-    axios.get(`http://127.0.0.1:8000/doctor/listar_datos_doctor/${username}`, {
+    axios.get(`https://jacruces91.pythonanywhere.com/doctor/listar_datos_doctor/${username}`, {
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -357,7 +357,7 @@ function enviar_datos_doc(){
     }
     console.log(datos)
     let arr = []
-    axios.put(`http://127.0.0.1:8000/doctor/update_panel_doctor/${id}/`,datos, {
+    axios.put(`https://jacruces91.pythonanywhere.com/doctor/update_panel_doctor/${id}/`,datos, {
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -376,7 +376,7 @@ function enviar_datos_doc(){
                 // Eliminamos el token.
                 sessionStorage.removeItem('token');
                 // Redireccionamos al Login.
-                window.location.href = 'http://127.0.0.1:5500/login.html'
+                window.location.href = 'http://127.0.0.1:5500/Clinica_HTML/login.html'
             } 
             //
             let doctor = response.data.dato_doctor
@@ -499,7 +499,7 @@ function clinica_doc_panel_doc(id){
     //
    const token = sessionStorage.getItem('token');
    let arr =[]
-   axios.get(`http://127.0.0.1:8000/doctor/listar_clinica_panel_doc/${id}`,{
+   axios.get(`https://jacruces91.pythonanywhere.com/doctor/listar_clinica_panel_doc/${id}`,{
        headers: {
            'Authorization': `Token ${token}`
        }
@@ -586,7 +586,7 @@ function obtener_doctores(){
     //
     let arr = []
     //
-    axios.get(`http://127.0.0.1:8000/doctor/listar_doctor`,{
+    axios.get(`https://jacruces91.pythonanywhere.com/doctor/listar_doctor`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -695,7 +695,7 @@ function clinica_disp(){
     //
     let arr = []
     //
-    axios.get(`http://127.0.0.1:8000/reserva/listar_clinica_paciente_doctor`,{
+    axios.get(`https://jacruces91.pythonanywhere.com/reserva/listar_clinica_paciente_doctor`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -753,7 +753,7 @@ function seleccionar_cli_reservas(){
         calendar.destroy();
     }
     // Full Callendar.
-    let request_calendar = `http://127.0.0.1:8000/reserva/listar_paciente_doctor`
+    let request_calendar = `https://jacruces91.pythonanywhere.com/reserva/listar_paciente_doctor`
     //let request_calendar = '../../JS/events.json'
     var calendarEl = document.getElementById('calendar_res_pac_registrado');
     // Si ya existe un calendario, destrúyelo antes de crear uno nuevo
@@ -956,7 +956,7 @@ function historial_pac_panel_doc(id, usuario, nombres, apellidos, email, edad, s
     //
     let arr = []
     //
-    axios.get(`http://127.0.0.1:8000/reserva/listar_paciente_historial_doctor/${id}`,{
+    axios.get(`https://jacruces91.pythonanywhere.com/reserva/listar_paciente_historial_doctor/${id}`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -1097,7 +1097,7 @@ function obtener_pac_todo(){
     //
     let arr = []
     //
-    axios.get(`http://127.0.0.1:8000/reserva/listar_paciente_doctor_cita`,{
+    axios.get(`https://jacruces91.pythonanywhere.com/reserva/listar_paciente_doctor_cita`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -1217,7 +1217,7 @@ function info_pac_doctor_panel_doc(id, cod_reserva){
     modalInstance.show();
     //
     let arr = []
-    axios.post(`http://127.0.0.1:8000/historial_clinico/listar_historial_clinico_pacien_panel_doctor`,datos,{
+    axios.post(`https://jacruces91.pythonanywhere.com/historial_clinico/listar_historial_clinico_pacien_panel_doctor`,datos,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -1355,7 +1355,7 @@ function cerrar_cita(){
                 calendar.destroy();
             }   
             // Full Callendar.
-            let request_calendar = `http://127.0.0.1:8000/paciente/historial_clinico`
+            let request_calendar = `https://jacruces91.pythonanywhere.com/paciente/historial_clinico`
             //let request_calendar = '../../JS/events.json'
             var calendarEl = document.getElementById('calendar_res_pac_registrado');
             // Si ya existe un calendario, destrúyelo antes de crear uno nuevo
@@ -1546,7 +1546,7 @@ function historial_detalle_medico_pac_panel_doc(id_reserva){
 
     let arr = []
     //
-    axios.get(`http://127.0.0.1:8000/reserva/listar_paciente_historial_doctor/${id}`,{
+    axios.get(`https://jacruces91.pythonanywhere.com/reserva/listar_paciente_historial_doctor/${id}`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -1653,7 +1653,7 @@ function cerrar_session(){
         'token': token
     }
     //
-    axios.post(`http://127.0.0.1:8000/usuario/cerrar_sesion`,datos, {
+    axios.post(`https://jacruces91.pythonanywhere.com/usuario/cerrar_sesion`,datos, {
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -1664,7 +1664,7 @@ function cerrar_session(){
         // Eliminar el token del almacenamiento local
         if (response.status == 200) {
             sessionStorage.removeItem('token');
-            window.location.href = 'http://127.0.0.1:5500/index.html'
+            window.location.href = 'http://127.0.0.1:5500/Clinica_HTML/index.html'
         }
     }).catch(error => {
         if (error.response) {
@@ -1682,7 +1682,7 @@ function listar_secretarias(){
     const token = sessionStorage.getItem('token');
     //
     let arr = []
-    axios.get(`http://127.0.0.1:8000/secretaria/listar_secretaria`, {
+    axios.get(`https://jacruces91.pythonanywhere.com/secretaria/listar_secretaria`, {
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -1776,7 +1776,7 @@ function obtener_pac_no_registrado(){
     const token = sessionStorage.getItem('token');
     //
     let arr = []
-    axios.get(`http://127.0.0.1:8000/paciente_no_registrado/listar_pac_no_registrado`, {
+    axios.get(`https://jacruces91.pythonanywhere.com/paciente_no_registrado/listar_pac_no_registrado`, {
         headers: {
             'Authorization': `Token ${token}`,
             'Content-Type': 'application/json'
@@ -1938,7 +1938,7 @@ function info_pac_no_register_panel_doc(reserva_uuid){
     // Abre el modal
     modalInstance.show();
     //
-    axios.get(`http://127.0.0.1:8000/historial_pac_no_registrado/historial_paciente_no_registrado/${reserva_uuid}`,{
+    axios.get(`https://jacruces91.pythonanywhere.com/historial_pac_no_registrado/historial_paciente_no_registrado/${reserva_uuid}`,{
         headers: {
             'Authorization': `Token ${token}`,
             'Content-Type': 'application/json'

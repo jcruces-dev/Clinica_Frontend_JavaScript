@@ -1,168 +1,362 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Clínica BuenPaciente - Accede a tu portal de paciente">
+    
+    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    
+    <!-- SweetAlert2 -->
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.15.10/dist/sweetalert2.min.css" rel="stylesheet">
+    
+    <!-- DataTables -->
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.0/css/dataTables.bootstrap5.css">
-    <!---->
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.6/css/dataTables.dataTables.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.1.2/css/buttons.dataTables.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.6/css/dataTables.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/autofill/2.7.0/css/autoFill.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.1.2/css/buttons.bootstrap5.min.css">
-    <link rel="stylesheet" href="./static/CSS/chat_bot.css">
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- **************************************************************************************************************** -->
+    <!-- Estilos de todos los templates principales. -->
+    <link rel="stylesheet" href="./static/CSS/template_principales/whatsapp.css">
+    <link rel="stylesheet" href="./static/CSS/template_principales/chat_both.css">
     <link rel="stylesheet" href="./static/CSS/login.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="./static/CSS/template_principales/footer.css">
+    <!-- Fin Estilos de todos los templates principales. -->
+    <!-- **************************************************************************************************************** -->
+    
+    <title>Clínica BuenPaciente - Iniciar Sesión</title>
 </head>
-<body class="body_login">
-    <nav class="navbar bg-primary navbar-expand-lg">
-        <div class="container-fluid">
-          <a class="navbar-brand text-center text-white" href="./index.html">Clínica BuenPaciente</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarScroll">
-            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="./index.html">Home</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Mi Portal
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="./registrar_paciente.html">Registrate</a></li>
-                  <li><a class="dropdown-item" href="./login.html">Login</a></li>
-                  <!--<li><a class="dropdown-item" href="#">Another action</a></li>-->
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="./index.html">
+                <i class="fas fa-clinic-medical me-2"></i>
+                Clínica BuenPaciente
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="./index.html">
+                            <i class="fas fa-home me-1"></i>Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./index.html#quienes_somos">
+                            <i class="fas fa-users me-1"></i>¿Quiénes Somos?
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./index.html#reserva_hora">
+                            <i class="fas fa-calendar-check me-1"></i>Reserva de Hora
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./index.html#destacados">
+                            <i class="fas fa-star me-1"></i>Destacados
+                        </a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="./static/Templates/Admin/template_admin.html">
+                            <i class="fas fa-user-tie me-1"></i>Admin
+                        </a>
+                    </li> -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user me-1"></i>Mi Portal
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item active" href="./registrar_paciente.html">
+                                    <i class="fas fa-user-plus me-2"></i>Regístrate
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="./login.html">
+                                    <i class="fas fa-sign-in-alt me-2"></i>Login
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./escribenos.html">
+                            <span class="badge bg-warning text-dark">
+                                <i class="fas fa-envelope me-1"></i>Escríbenos
+                            </span>
+                        </a>
+                    </li>
+                    <!--  -->
+                    <li class="nav-item">
+                        <a class="nav-link active" href="./pagar_reserva.html">
+                            <span class="badge bg-info text-dark">
+                                <i class="fas fa-credit-card me-1"></i>Paga tu Reserva
+                            </span>
+                        </a>
+                    </li>
+                    <!--  -->
                 </ul>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-warning" href="./escribenos.html"><span class="badge text-bg-secondary">Escribenos</span></a>
-              </li>
-            </ul>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-success" type="submit">Search</button>
-            </form>
-          </div>
+            </div>
         </div>
     </nav>
-    <main class="flex-grow-1 mb-5">
-      <!-- Contenido de la página, incluyendo las cards -->
-      <div id="" class="container_login mt-5 " style="background: rgb(172, 169, 169);">
-        <form class="p-2 pt-4">
-            <div class="mb-3">
-              <label for="username" class="form-label">Username</label>
-              <input type="text" class="form-control" id="username" aria-describedby="emailHelp">
+
+    <!-- Login Section -->
+    <div class="login-wrapper">
+        <div class="login-container">
+            <div class="login-header">
+                <i class="fas fa-user-circle"></i>
+                <h2>Bienvenido</h2>
+                <p>Ingresa a tu portal</p>
             </div>
-            <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" id="password">
+            
+            <form>
+                <div class="mb-3">
+                    <label for="username" class="form-label">
+                        <i class="fas fa-user me-2"></i>Usuario
+                    </label>
+                    <div class="input-group-custom">
+                        <i class="fas fa-user"></i>
+                        <input type="text" class="form-control" id="username" 
+                               placeholder="Ingresa tu usuario" autocomplete="off">
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="password" class="form-label">
+                        <i class="fas fa-lock me-2"></i>Contraseña
+                    </label>
+                    <div class="input-group-custom">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" class="form-control" id="password" 
+                               placeholder="Ingresa tu contraseña">
+                    </div>
+                </div>
+                
+                <button type="button" onclick="login()" class="btn-login">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Iniciar Sesión
+                </button>
+            </form>
+            
+            <div class="login-footer">
+                <p>¿No tienes una cuenta?</p>
+                <a href="./registrar_paciente.html" class="register-link">
+                    <i class="fas fa-user-plus me-2"></i>
+                    Regístrate aquí
+                </a>
             </div>
-            <button type="button" onclick="login()" class="btn btn-success">Ingresar</button>
-          </form>
-      </div>
-      <!-- Ejemplo chatBot 2 -->
-        <div class="chat-container">
-          <div class="chat-header" onclick="cerrar_chat()">Asistente Virtual</div>
-          
-          <div class="chat-messages">
-            <div class="message bot-message">
-              ¡Hola! ¿Que necesitas?, selecciona una opción, si no encuentras lo que buscas,por favor escribenos para ayudarte... 😊
-            </div>
-            <!-- Mensaje del Usuario -->
-            <div class="message user-message">
-              <span class="badge text-bg-primary"><a class="text-center text-white" href="./registrar_paciente.html">Registrarme</a></span>
-              <span class="badge text-bg-success"><a class="text-center text-white" href="./index.html#reserva_hora">Reservar Hora</a></span>
-              <span class="badge text-bg-secondary"><a class="text-center text-white" href="./login.html">Login</a></span>
-            </div>
-            <div class="message bot-message typing-indicator">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-          </div>
-          
-          <div class="chat-input">
-            <input type="text" id="pregunta_usuario" placeholder="Escribe tu mensaje...">
-            <button id="mensaje_usuario" class="btn" onclick="respuesta_cahtBot()">➤</button>
-          </div>
         </div>
-        <!-- Fin ejemplo chatbot 2 -->
-        <div class="chat-header-abrir" onclick="abrirChat()" style="display:none;">💬</div>
-    </main>
-    <!--FOOTER-->
-    <footer class="index_footer mt-5">
-      <div class="footer">
-        <div class="container">     
-            <div class="row">                       
-                <div class="col-lg-4 col-sm-4 col-xs-12">
+    </div>
+
+    <!-- Chat Bot (manteniendo tu estructura) -->
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header" onclick="cerrar_chat()">
+            Asistente Virtual
+            <i class="fas fa-times"></i>
+        </div>
+        
+        <!-- ChatBot Inicio -->
+        <div class="chat-messages">
+            <!-- Mensaje Inicial del ChatBot. -->
+            <div style="display: none;" id="chat_inicial">
+                <div class="message bot-message">
+                    <i class="fas fa-robot me-2"></i>
+                    ¡Hola! ¿Qué necesitas? Selecciona una opción para ayudarte... 😊
+                </div>
+                <!-- Creamos un Input para la opción de solo escribir en el ChatBot. -->
+                 <input type="hidden" id ="input_opcion_inicial_chatbot" value="0" name="">
+                <!-- Creamos un Input para la opción de solo escribir en el ChatBot. -->
+                <div class="message user-message">
+                    <span class="badge text-bg-primary">
+                        <a class="text-white text-decoration-none" href="./registrar_paciente.html">
+                            <i class="fas fa-user-plus me-1"></i>Registrarme
+                        </a>
+                    </span>
+                    <span class="badge text-bg-success">
+                        <a class="text-white text-decoration-none" href="./index.html#reserva_hora">
+                            <i class="fas fa-calendar-check me-1"></i>Reservar Hora
+                        </a>
+                    </span>
+                    <span class="badge text-bg-secondary">
+                        <a class="text-white text-decoration-none" href="./login.html">
+                            <i class="fas fa-sign-in-alt me-1"></i>Login
+                        </a>
+                    </span>
+                    <!-- Agregar más contenido al ChatBot. -->
+                    <span class="badge text-bg-warning">
+                        <a class="text-black text-decoration-none" href="#" onclick="opcionInformacionReserva()">
+                            <i class="fa-solid fa-circle-info me-1"></i>Info Reserva
+                        </a>
+                    </span>
+                    <!-- Fin Agregar más contenido al ChatBot. -->
+                    <!-- Agregar más contenido al ChatBot. -->
+                    <span class="badge text-bg-danger">
+                        <a class="text-white text-decoration-none" href="#" onclick="opcionCancelarReserva()">
+                            <i class="fa-regular fa-calendar-xmark me-1"></i>Cancelar Reserva
+                        </a>
+                    </span>
+                    <!-- Fin Agregar más contenido al ChatBot. -->
+                </div>
+            </div>
+            <!-- Fin Mensaje Inicial del ChatBot. -->
+
+            <!-- Inicio mensaje INFORMACIÓN RESERVA. -->
+            <div style="display: none;" id="chat_informacion_reserva">
+                <div class="message bot-message">
+                    <i class="fas fa-robot me-2"></i>
+                    Ingrese el Código de la Reserva o Cita en el Chat para obtener la información... 😊
+                </div>
+                <!-- Este div es para crear un elemento input hidden. -->
+                <div style="display: none;" id="div_hidden_reserva">
+
+                </div>
+                <button type="button" id="boton_cancelar_info_reserva_chatbot" onclick="boton_cancelar_info_reserva_chatbot()" class="btn btn-outline-danger mb-2"><i class="fa-solid fa-delete-left"></i> Cancelar Operación</button>
+                <!-- Fin div input hidden información reserva. -->
+            </div>
+            <!-- FIN mensaje INFORMACIÓN RESERVA. -->
+            <!-- Inicio mensaje CANCELAR RESERVA. -->
+            <div style="display: none;" id="chat_cancelar_reserva">
+                <div class="message bot-message">
+                    <i class="fas fa-robot me-2"></i>
+                    ingrese el Código de la Reserva o Cita en el Chat para realizar la anulación... 😊
+                </div>
+                <div style="display: none;" id="div_hidden_cancelar_reserva">
+
+                </div>
+                <button type="button" id="boton_cancelar_reserva_chatbot" onclick="cancelar_reserva_chatbot()" class="btn btn-outline-danger mb-2"><i class="fa-solid fa-delete-left"></i> Cancelar Operación</button>
+            </div>
+            <!-- FIN mensaje INFORMACIÓN RESERVA. -->
+            <div class="message bot-message typing-indicator" id="typingIndicator">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <!-- Fin al ChatBot de Inicio. -->
+        
+        <div class="chat-input">
+            <input type="text" id="pregunta_usuario" placeholder="Escribe tu mensaje...">
+            <button id="mensaje_usuario" class="btn" onclick="respuesta_cahtBot()">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Burbuja para abrir el chat -->
+    <div class="chat-header-abrir" id="chatBubble" onclick="abrirChat()">
+        <i class="fas fa-comment"></i>
+    </div>
+
+    <!-- WhatsApp Button - IGUAL AL INDEX -->
+    <a href="https://wa.me/569XXXXXXXX?text=Hola!%20Vengo%20de%20la%20web%20y%20tengo%20una%20consulta" 
+       class="whatsapp-float" 
+       target="_blank" 
+       rel="noopener noreferrer">
+        <span class="whatsapp-text">¿Tienes dudas? Escríbenos</span>
+        <i class="fab fa-whatsapp whatsapp-icon"></i>
+    </a>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
                     <div class="single_footer">
-                        <h4>Services</h4>
-                        <ul>
-                            <li><a href="#">Lorem Ipsum</a></li>
-                            <li><a href="#">Simply dummy text</a></li>
-                            <li><a href="#">The printing and typesetting </a></li>
-                            <li><a href="#">Standard dummy text</a></li>
-                            <li><a href="#">Type specimen book</a></li>
-                        </ul>
-                    </div>
-                </div><!--- END COL --> 
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                    <div class="single_footer single_footer_address">
-                        <h4>Page Link</h4>
-                        <ul>
-                            <li><a href="#">Lorem Ipsum</a></li>
-                            <li><a href="#">Simply dummy text</a></li>
-                            <li><a href="#">The printing and typesetting </a></li>
-                            <li><a href="#">Standard dummy text</a></li>
-                            <li><a href="#">Type specimen book</a></li>
-                        </ul>
-                    </div>
-                </div><!--- END COL -->
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                    <div class="single_footer single_footer_address">
-                        <h4>Suscríbete Hoy</h4>
-                        <div class="signup_form">                           
-                            <form action="#" class="subscribe">
-                                <input type="text" class="subscribe__input" placeholder="Enter Email Address">
-                                <button type="button" class="subscribe__btn"><i class="fas fa-paper-plane"></i></button>
-                            </form>
+                        <h4><i class="fas fa-clinic-medical me-2"></i>Clínica BuenPaciente</h4>
+                        <p class="text-white-50">Brindando atención médica de excelencia desde 1995. Comprometidos con tu salud y bienestar.</p>
+                        <div class="mt-4">
+                            <p class="text-white-50">
+                                <i class="fas fa-map-marker-alt me-2"></i>Av. Principal 123, Santiago
+                            </p>
+                            <p class="text-white-50">
+                                <i class="fas fa-phone me-2"></i>+56 2 2345 6789
+                            </p>
+                            <p class="text-white-50">
+                                <i class="fas fa-envelope me-2"></i>contacto@clinicabuenpaciente.cl
+                            </p>
                         </div>
                     </div>
-                    <div class="social_profile">
+                </div>
+                
+                <div class="col-lg-2 col-md-6">
+                    <div class="single_footer">
+                        <h4>Servicios</h4>
                         <ul>
-                            <li><a href="#" class=""><img class="pb-1" src="./static/IMG/facebook_5968764.png" alt=""></a></li>
-                            <li><a href="#"><img class="pb-1" src="./static/IMG/social_15707749.png" alt=""></a></li>
-                            <li><a href="#"><img class="pb-1" src="./static/IMG/twitter_3670151.png" alt=""></a></li>
-                            <!--Agregar el icon de youtube.-->
-                            <!--<li><a href="#"><i class="fa-brands fa-youtube"></i></a></li>-->
+                            <li><a href="#"><i class="fas fa-chevron-right me-2"></i>Consultas Médicas</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right me-2"></i>Especialidades</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right me-2"></i>Exámenes</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right me-2"></i>Urgencias 24/7</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right me-2"></i>Telemedicina</a></li>
                         </ul>
-                    </div>                          
-                </div><!--- END COL -->         
-            </div><!--- END ROW --> 
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6">
+                    <div class="single_footer">
+                        <h4>Enlaces Rápidos</h4>
+                        <ul>
+                            <li><a href="#"><i class="fas fa-chevron-right me-2"></i>Sobre Nosotros</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right me-2"></i>Equipo Médico</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right me-2"></i>Convenios</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right me-2"></i>Preguntas Frecuentes</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right me-2"></i>Contacto</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="single_footer">
+                        <h4>Suscríbete</h4>
+                        <p class="text-white-50">Recibe noticias y promociones exclusivas</p>
+                        <div class="signup_form">
+                            <form action="#" class="subscribe">
+                                <input type="email" class="subscribe__input" placeholder="Tu correo electrónico">
+                                <button type="button" class="subscribe__btn">
+                                    <i class="fas fa-paper-plane me-2"></i>Suscribirme
+                                </button>
+                            </form>
+                        </div>
+                        <div class="social_profile">
+                            <ul>
+                                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                                <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                                <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <div class="row">
-                <div class="col-lg-12 col-sm-12 col-xs-12">
-                    <p class="copyright">Copyright © 2019 <a href="#">Akdesign</a>.</p>
-                </div><!--- END COL -->                 
-            </div><!--- END ROW -->                 
-        </div><!--- END CONTAINER -->
-    </div>
+                <div class="col-12">
+                    <div class="copyright">
+                        <p class="mb-0">
+                            © 2024 Clínica BuenPaciente. Todos los derechos reservados. 
+                            | Diseñado con <i class="fas fa-heart text-danger"></i> para nuestros pacientes
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </footer>
-    <!--CDN JQUERY.-->
+
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-    <!--Agregamos los estilos de BOOTSTRAP 5.-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- aGREGAMOS LA LIBRERÍA DE AXIOS.JS-->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.datatables.net/2.1.6/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.1.2/js/dataTables.buttons.js"></script>
-    <script src="https://cdn.datatables.net/buttons/3.1.2/js/buttons.dataTables.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
@@ -171,5 +365,40 @@
     <script src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.min.js"></script>
     <script src="./static/JS/chatBot/chat_bot.js"></script>
     <script src="./static/JS/login.js"></script>
+    
+    <script>
+        function togglePassword() {
+            const password = document.getElementById('password');
+            const icon = document.querySelector('.password-toggle');
+            
+            if (password.type === 'password') {
+                password.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                password.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Funciones para el chat (deben coincidir con tu chat_bot.js)
+        function abrirChat() {
+            document.getElementById('chatContainer').style.display = 'block';
+            document.getElementById('chatBubble').style.display = 'none';
+        }
+
+        function cerrar_chat() {
+            document.getElementById('chatContainer').style.display = 'none';
+            document.getElementById('chatBubble').style.display = 'flex';
+        }
+
+        // Inicializar el estado del chat
+        document.addEventListener('DOMContentLoaded', function() {
+            // Por defecto, mostrar el chat y ocultar la burbuja
+            document.getElementById('chatContainer').style.display = 'block';
+            document.getElementById('chatBubble').style.display = 'none';
+        });
+    </script>
 </body>
 </html>

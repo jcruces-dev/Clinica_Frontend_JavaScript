@@ -12,6 +12,7 @@ function formatearRUT(rut) {
 
     return cuerpo + '-' + dv;
 }
+
 // Creamos un evento de escucha para el rut del paciente que se va a ingresar consus . y -.
 document.addEventListener('DOMContentLoaded', function () {
     //
@@ -26,40 +27,61 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
-//
-function clinica_disp(){
-    let select_especialidad = document.getElementById("index_doctor_clinica")
-    let index_doctor = document.getElementById("index_doctor_clinica");
-    // Reiniciar el select de "Doctor" a su estado por defecto
-    index_doctor.innerHTML = '<option selected>Seleccionar Clínica</option>';
-    // Evitar múltiples peticiones si ya hay datos
-    if (select_especialidad.options.length > 1) return;
-    //
-    let arr =[]
-    //
-    axios.get('http://127.0.0.1:8000/reserva/listar_clinica_index',{
-    })
+
+// Envío de datos del formulario para reserva de hora desde el archivo Index. 
+function clinica_disp() {
+    const selectClinica = document.getElementById("index_doctor_clinica");
+    
+    // Guardar la opción por defecto
+    const defaultOption = '<option value="" selected>Seleccionar Clínica</option>';
+    
+    // Verificar si ya hay datos cargados (evita múltiples peticiones)
+    if (selectClinica.dataset.cargado === "true") {
+        console.log("Clínicas ya cargadas previamente");
+        return;
+    }
+    
+    // Mostrar indicador de carga (opcional)
+    selectClinica.innerHTML = defaultOption + '<option disabled>Cargando clínicas...</option>';
+    
+    axios.get('https://jacruces91.pythonanywhere.com/reserva/listar_clinica_index')
     .then(function (response) {
-        // 
-        const esp = response.data.list_clinica;
-        //
-        esp.forEach(element => {
-            // Crear un NUEVO elemento option en cada iteración
-            const elegir_especialidad = document.createElement("option");
-            elegir_especialidad.value = element.id;
-            elegir_especialidad.setAttribute("data-nombre_clinica", element.nombre_clinica)
-            elegir_especialidad.setAttribute("data-id_clinica", element.id)
-            elegir_especialidad.setAttribute("data-comuna_clinica", element.comuna_clinica)
-            elegir_especialidad.setAttribute("data-direccion_clinica", element.direccion_clinica)
-            elegir_especialidad.textContent = element.nombre_clinica;
-            select_especialidad.appendChild(elegir_especialidad);
+        // Verificar que la respuesta sea válida
+        if (!response.data || !response.data.list_clinica || !Array.isArray(response.data.list_clinica)) {
+            console.error("Respuesta inválida:", response.data);
+            selectClinica.innerHTML = defaultOption + '<option disabled>Error al cargar</option>';
+            return;
+        }
+        
+        const clinicas = response.data.list_clinica;
+        
+        // Limpiar el select y agregar opción por defecto
+        selectClinica.innerHTML = defaultOption;
+        
+        // Agregar las clínicas
+        clinicas.forEach(element => {
+            const option = document.createElement("option");
+            option.value = element.id;
+            option.setAttribute("data-nombre_clinica", element.nombre_clinica);
+            option.setAttribute("data-id_clinica", element.id);
+            option.setAttribute("data-comuna_clinica", element.comuna_clinica);
+            option.setAttribute("data-direccion_clinica", element.direccion_clinica);
+            option.textContent = element.nombre_clinica;
+            selectClinica.appendChild(option);
         });
+        
+        // Marcar como cargado para evitar futuras peticiones
+        selectClinica.dataset.cargado = "true";
+        
+        console.log(`✅ ${clinicas.length} clínicas cargadas correctamente`);
     })
     .catch(error => {
+        console.error('Error al cargar clínicas:', error);
+        selectClinica.innerHTML = defaultOption + '<option disabled>Error al cargar clínicas</option>';
+        
         if (error.response) {
             console.log('Error Response:', error.response.data);
             console.log('Error Status:', error.response.status);
-            console.log('Error Headers:', error.response.headers);
         }
     });
 }
@@ -78,7 +100,7 @@ function select_esp_index(e){
     //
     let arr =[]
     //
-    axios.get(`http://127.0.0.1:8000/reserva/listar_esp_index/${id}/`,{
+    axios.get(`https://jacruces91.pythonanywhere.com/reserva/listar_esp_index/${id}/`,{
     })
     .then(function (response) {
         // 
@@ -119,7 +141,7 @@ function valor_select_esp_index(){
     //
     let arr =[]
     //
-    axios.get(`http://127.0.0.1:8000/reserva/listar_doc_index/${id_clinica}/${id_especialidad}/`,{
+    axios.get(`https://jacruces91.pythonanywhere.com/reserva/listar_doc_index/${id_clinica}/${id_especialidad}/`,{
     })
     .then(function (response) {
         // 
@@ -184,7 +206,7 @@ function calendario_reserva_index(){
     console.warn(datos)
     // INICIALIZACIÓN ÚNICA DEL CALENDARIO.
     var calendarEl = document.getElementById('calendar_index');
-    let request_calendar = `http://127.0.0.1:8000/reserva/reserva_paciente_index`
+    let request_calendar = `https://jacruces91.pythonanywhere.com/reserva/reserva_paciente_index`
     if (calendar) {
          // Destruye la instancia actual
         calendar.destroy();
@@ -336,8 +358,6 @@ function calendario_reserva_index(){
             },
             // Método para ocultar la info una vez pasado el mouse.
             eventMouseLeave: function(mouseLeaveInfo){
-                // Nos muestra las clases que tenemos.
-                console.warn(mouseLeaveInfo)
                 // Obtenemos la clase del elementos que creamos arriba.
                 let el = document.querySelector(".fc-hoverable-event").remove()
             },
@@ -356,7 +376,9 @@ function calendario_reserva_index(){
                 }
             },
         });
+        // Cargamos el calendario con los eventos.
         calendar.render();
+        // Esperamos 2 segundos y recargamos la página.
     } else {
         // Si el calendario ya existe, actualiza sus eventos
         calendar.refetchEvents();
@@ -520,7 +542,7 @@ function metodo_pago_debito(){
                 'ap_paterno': ap_paterno,
                 'ap_materno': ap_materno,
             }
-            axios.post(`http://127.0.0.1:8000/reserva/pago_debito_reserva_index`, datos,{
+            axios.post(`https://jacruces91.pythonanywhere.com/reserva/pago_debito_reserva_index`, datos,{
                 headers: {
                     //'Authorization': `Token ${token}`,
                     'Content-Type': 'application/json',
@@ -540,6 +562,10 @@ function metodo_pago_debito(){
                     if (calendar) {
                         calendar.refetchEvents();
                     }
+                    // Volvemos a recargar el sitio web.
+                    setTimeout(function() {
+                        location.reload();
+                    }, 2000);
                 }
             })
             .catch(error => {
@@ -634,7 +660,7 @@ function pagar_index_reserva_credito(){
                 'ap_materno': ap_materno,
             }
             console.log(datos)
-            axios.post(`http://127.0.0.1:8000/reserva/pago_credito_reserva_index`, datos,{
+            axios.post(`https://jacruces91.pythonanywhere.com/reserva/pago_credito_reserva_index`, datos,{
                 headers: {
                     //'Authorization': `Token ${token}`,
                     'Content-Type': 'application/json',
@@ -654,6 +680,10 @@ function pagar_index_reserva_credito(){
                     if (calendar) {
                         calendar.refetchEvents();
                     }
+                    // Volvemos a recargar el sitio web.
+                    setTimeout(function() {
+                        location.reload();
+                    }, 2000);
                 }
             })
             .catch(error => {

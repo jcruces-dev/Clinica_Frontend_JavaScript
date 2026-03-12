@@ -9,7 +9,7 @@ function login(){
 
     }
     console.warn(datos)
-    axios.post('http://127.0.0.1:8000/login',datos)
+    axios.post('https://jacruces91.pythonanywhere.com/login',datos)
         .then(function (response) {
             console.log(response.data)
             // Capturamos el token que generamos en el back-end.
@@ -22,28 +22,28 @@ function login(){
                 sessionStorage.setItem('token', token);
                 sessionStorage.setItem('username', username)
                 //localStorage.setItem('usuarios', response.data.list_users)
-                window.location.href = 'http://127.0.0.1:5500/static/Templates/Admin/template_admin.html'; // URL para administradores
+                window.location.href = 'http://127.0.0.1:5500/Clinica_HTML/static/Templates/Admin/template_admin.html'; // URL para administradores
             }
             //
             if (response.data.grupo == 'Doctor'){
                 //console.log( response.data.username)
                 sessionStorage.setItem('token', response.data.token);
                 sessionStorage.setItem('username',username)
-                window.location.href = 'http://127.0.0.1:5500/static/Templates/Doctor/template_doctor.html';
+                window.location.href = 'http://127.0.0.1:5500/Clinica_HTML/static/Templates/Doctor/template_doctor.html';
             }
             //
             if (response.data.grupo == 'Secretaria'){
                 //console.log( response.data.username)
                 sessionStorage.setItem('token', response.data.token);
                 sessionStorage.setItem('username',username)
-                window.location.href = 'http://127.0.0.1:5500/static/Templates/Secretaria/template_secretaria.html';
+                window.location.href = 'http://127.0.0.1:5500/Clinica_HTML/static/Templates/Secretaria/template_secretaria.html';
             }
             //
             if (response.data.grupo == 'Paciente'){
                 //console.log( response.data.username)
                 sessionStorage.setItem('token', response.data.token);
                 sessionStorage.setItem('username',username)
-                window.location.href = 'http://127.0.0.1:5500/static/Templates/Paciente/template_paciente.html';
+                window.location.href = 'http://127.0.0.1:5500/Clinica_HTML/static/Templates/Paciente/template_paciente.html';
             }
         })
         .catch(error => {
