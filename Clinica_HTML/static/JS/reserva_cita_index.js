@@ -206,7 +206,8 @@ function calendario_reserva_index(){
     console.warn(datos)
     // INICIALIZACIÓN ÚNICA DEL CALENDARIO.
     var calendarEl = document.getElementById('calendar_index');
-    let request_calendar = `https://jacruces91.pythonanywhere.com/reserva/reserva_paciente_index`
+    // https://jacruces91.pythonanywhere.com/reserva/reserva_paciente_index
+    let request_calendar = `http://127.0.0.1:8000/reserva/reserva_paciente_index`
     if (calendar) {
          // Destruye la instancia actual
         calendar.destroy();
@@ -484,7 +485,7 @@ function ocultar_cuotas_disponibles(){
 function boton_pago_credito(){
     mostrar_cuotas_disponibles()
 }
-//
+// INDEX crear la reserva y pagar con débito al mismo tiempo.
 function metodo_pago_debito(){
     // Llamamos la función creada anteriormente.
     ocultar_cuotas_disponibles()
@@ -660,6 +661,7 @@ function pagar_index_reserva_credito(){
                 'ap_materno': ap_materno,
             }
             console.log(datos)
+            // https://jacruces91.pythonanywhere.com/reserva/pago_credito_reserva_index
             axios.post(`https://jacruces91.pythonanywhere.com/reserva/pago_credito_reserva_index`, datos,{
                 headers: {
                     //'Authorization': `Token ${token}`,

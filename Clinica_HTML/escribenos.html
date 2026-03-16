@@ -21,6 +21,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Tu CSS personalizado -->
+     <!-- **************************************************************************************************************** -->
+    <!-- Estilos de todos los templates principales. -->
+    <link rel="stylesheet" href="./static/CSS/template_principales/whatsapp.css">
+    <link rel="stylesheet" href="./static/CSS/template_principales/chat_both.css">
     <link rel="stylesheet" href="./static/CSS/escribenos.css">
     <title>Clínica BuenPaciente - Contáctanos</title>
 </head>
@@ -202,44 +206,91 @@
         </div>
     </section>
 
-    <!-- Chat Bot -->
+    <!-- Chat Bot. -->
     <div class="chat-container" id="chatContainer">
         <div class="chat-header" onclick="cerrar_chat()">
             Asistente Virtual
             <i class="fas fa-times"></i>
         </div>
-        
+        <!-- ChatBot Inicio -->
         <div class="chat-messages">
-            <div class="message bot-message">
-                <i class="fas fa-robot me-2"></i>
-                ¡Hola! ¿Qué necesitas? Selecciona una opción, si no encuentras lo que buscas, escríbenos para ayudarte... 😊
+            <!-- Mensaje Inicial del ChatBot. -->
+            <div style="display: none;" id="chat_inicial">
+                <div class="message bot-message">
+                    <i class="fas fa-robot me-2"></i>
+                    ¡Hola! ¿Qué necesitas? Selecciona una opción para ayudarte... 😊
+                </div>
+                <!-- Creamos un Input para la opción de solo escribir en el ChatBot. -->
+                 <input type="hidden" id ="input_opcion_inicial_chatbot" value="0" name="">
+                <!-- Creamos un Input para la opción de solo escribir en el ChatBot. -->
+                <div class="message user-message">
+                    <span class="badge text-bg-primary">
+                        <a class="text-white text-decoration-none" href="./registrar_paciente.html">
+                            <i class="fas fa-user-plus me-1"></i>Registrarme
+                        </a>
+                    </span>
+                    <span class="badge text-bg-success">
+                        <a class="text-white text-decoration-none" href="./index.html#reserva_hora">
+                            <i class="fas fa-calendar-check me-1"></i>Reservar Hora
+                        </a>
+                    </span>
+                    <span class="badge text-bg-secondary">
+                        <a class="text-white text-decoration-none" href="./login.html">
+                            <i class="fas fa-sign-in-alt me-1"></i>Login
+                        </a>
+                    </span>
+                    <!-- Agregar más contenido al ChatBot. -->
+                    <span class="badge text-bg-warning">
+                        <a class="text-black text-decoration-none" href="#" onclick="opcionInformacionReserva()">
+                            <i class="fa-solid fa-circle-info me-1"></i>Info Reserva
+                        </a>
+                    </span>
+                    <!-- Fin Agregar más contenido al ChatBot. -->
+                    <!-- Agregar más contenido al ChatBot. -->
+                    <span class="badge text-bg-danger">
+                        <a class="text-white text-decoration-none" href="#" onclick="opcionCancelarReserva()">
+                            <i class="fa-regular fa-calendar-xmark me-1"></i>Cancelar Reserva
+                        </a>
+                    </span>
+                    <!-- Fin Agregar más contenido al ChatBot. -->
+                </div>
             </div>
-            
-            <div class="message user-message">
-                <span class="badge text-bg-primary">
-                    <a class="text-white text-decoration-none" href="./registrar_paciente.html">
-                        <i class="fas fa-user-plus me-1"></i>Registrarme
-                    </a>
-                </span>
-                <span class="badge text-bg-success">
-                    <a class="text-white text-decoration-none" href="./index.html#reserva_hora">
-                        <i class="fas fa-calendar-check me-1"></i>Reservar Hora
-                    </a>
-                </span>
-                <span class="badge text-bg-secondary">
-                    <a class="text-white text-decoration-none" href="./login.html">
-                        <i class="fas fa-sign-in-alt me-1"></i>Login
-                    </a>
-                </span>
+            <!-- Fin Mensaje Inicial del ChatBot. -->
+
+            <!-- Inicio mensaje INFORMACIÓN RESERVA. -->
+            <div style="display: none;" id="chat_informacion_reserva">
+                <div class="message bot-message">
+                    <i class="fas fa-robot me-2"></i>
+                    Ingrese el Código de la Reserva o Cita en el Chat para obtener la información... 😊
+                </div>
+                <!-- Este div es para crear un elemento input hidden. -->
+                <div style="display: none;" id="div_hidden_reserva">
+
+                </div>
+                <button type="button" id="boton_cancelar_info_reserva_chatbot" onclick="boton_cancelar_info_reserva_chatbot()" class="btn btn-outline-danger mb-2"><i class="fa-solid fa-delete-left"></i> Cancelar Operación</button>
+                <!-- Fin div input hidden información reserva. -->
             </div>
-            
-            <div class="message bot-message typing-indicator" id="typingIndicator" style="display: none;">
+            <!-- FIN mensaje INFORMACIÓN RESERVA. -->
+            <!-- Inicio mensaje CANCELAR RESERVA. -->
+            <div style="display: none;" id="chat_cancelar_reserva">
+                <div class="message bot-message">
+                    <i class="fas fa-robot me-2"></i>
+                    ingrese el Código de la Reserva o Cita en el Chat para realizar la anulación... 😊
+                </div>
+                <div style="display: none;" id="div_hidden_cancelar_reserva">
+
+                </div>
+                <button type="button" id="boton_cancelar_reserva_chatbot" onclick="cancelar_reserva_chatbot()" class="btn btn-outline-danger mb-2"><i class="fa-solid fa-delete-left"></i> Cancelar Operación</button>
+            </div>
+            <!-- FIN mensaje INFORMACIÓN RESERVA. -->
+            <div class="message bot-message typing-indicator" id="typingIndicator">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
         </div>
-        
+        <!-- Fin al ChatBot de Inicio. -->
+
         <div class="chat-input">
             <input type="text" id="pregunta_usuario" placeholder="Escribe tu mensaje...">
             <button id="mensaje_usuario" class="btn" onclick="respuesta_chatBot()">

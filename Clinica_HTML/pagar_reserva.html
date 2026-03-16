@@ -168,7 +168,7 @@
                                     <span class="input-group-text bg-white border-2">
                                         <i class="fas fa-hashtag text-primary"></i>
                                     </span>
-                                    <input type="text" id="cod_reserva" class="form-control" 
+                                    <input type="text" id="cod_reserva_index" class="form-control" 
                                            placeholder="Ej: RES-2024-001" 
                                            aria-describedby="codigoHelp" required>
                                 </div>
@@ -177,7 +177,7 @@
                                 </div>
                             </div>
                             <div class="col-12 mt-4 text-center">
-                                <button class="btn-verify btn-lg" onclick="enviar_cod_verificacion()">
+                                <button class="btn-verify btn-lg" onclick="enviar_cod_verificacion_index()">
                                     <i class="fas fa-search me-2"></i>Verificar Código
                                 </button>
                             </div>
@@ -202,47 +202,95 @@
         </div>
     </section>
 
-    <!-- Chat Bot -->
+    <!-- Chat Bot (manteniendo tu estructura) -->
     <div class="chat-container" id="chatContainer">
         <div class="chat-header" onclick="cerrar_chat()">
             Asistente Virtual
             <i class="fas fa-times"></i>
         </div>
         
+        <!-- ChatBot Inicio -->
         <div class="chat-messages">
-            <div class="message bot-message">
-                <i class="fas fa-robot me-2"></i>
-                ¡Hola! ¿Qué necesitas? Selecciona una opción, si no encuentras lo que buscas, escríbenos para ayudarte... 😊
+            <!-- Mensaje Inicial del ChatBot. -->
+            <div style="display: none;" id="chat_inicial">
+                <div class="message bot-message">
+                    <i class="fas fa-robot me-2"></i>
+                    ¡Hola! ¿Qué necesitas? Selecciona una opción para ayudarte... 😊
+                </div>
+                <!-- Creamos un Input para la opción de solo escribir en el ChatBot. -->
+                 <input type="hidden" id ="input_opcion_inicial_chatbot" value="0" name="">
+                <!-- Creamos un Input para la opción de solo escribir en el ChatBot. -->
+                <div class="message user-message">
+                    <span class="badge text-bg-primary">
+                        <a class="text-white text-decoration-none" href="./registrar_paciente.html">
+                            <i class="fas fa-user-plus me-1"></i>Registrarme
+                        </a>
+                    </span>
+                    <span class="badge text-bg-success">
+                        <a class="text-white text-decoration-none" href="./index.html#reserva_hora">
+                            <i class="fas fa-calendar-check me-1"></i>Reservar Hora
+                        </a>
+                    </span>
+                    <span class="badge text-bg-secondary">
+                        <a class="text-white text-decoration-none" href="./login.html">
+                            <i class="fas fa-sign-in-alt me-1"></i>Login
+                        </a>
+                    </span>
+                    <!-- Agregar más contenido al ChatBot. -->
+                    <span class="badge text-bg-warning">
+                        <a class="text-black text-decoration-none" href="#" onclick="opcionInformacionReserva()">
+                            <i class="fa-solid fa-circle-info me-1"></i>Info Reserva
+                        </a>
+                    </span>
+                    <!-- Fin Agregar más contenido al ChatBot. -->
+                    <!-- Agregar más contenido al ChatBot. -->
+                    <span class="badge text-bg-danger">
+                        <a class="text-white text-decoration-none" href="#" onclick="opcionCancelarReserva()">
+                            <i class="fa-regular fa-calendar-xmark me-1"></i>Cancelar Reserva
+                        </a>
+                    </span>
+                    <!-- Fin Agregar más contenido al ChatBot. -->
+                </div>
             </div>
-            
-            <div class="message user-message">
-                <span class="badge text-bg-primary">
-                    <a class="text-white text-decoration-none" href="./registrar_paciente.html">
-                        <i class="fas fa-user-plus me-1"></i>Registrarme
-                    </a>
-                </span>
-                <span class="badge text-bg-success">
-                    <a class="text-white text-decoration-none" href="./index.html#reserva_hora">
-                        <i class="fas fa-calendar-check me-1"></i>Reservar Hora
-                    </a>
-                </span>
-                <span class="badge text-bg-secondary">
-                    <a class="text-white text-decoration-none" href="./login.html">
-                        <i class="fas fa-sign-in-alt me-1"></i>Login
-                    </a>
-                </span>
+            <!-- Fin Mensaje Inicial del ChatBot. -->
+
+            <!-- Inicio mensaje INFORMACIÓN RESERVA. -->
+            <div style="display: none;" id="chat_informacion_reserva">
+                <div class="message bot-message">
+                    <i class="fas fa-robot me-2"></i>
+                    Ingrese el Código de la Reserva o Cita en el Chat para obtener la información... 😊
+                </div>
+                <!-- Este div es para crear un elemento input hidden. -->
+                <div style="display: none;" id="div_hidden_reserva">
+
+                </div>
+                <button type="button" id="boton_cancelar_info_reserva_chatbot" onclick="boton_cancelar_info_reserva_chatbot()" class="btn btn-outline-danger mb-2"><i class="fa-solid fa-delete-left"></i> Cancelar Operación</button>
+                <!-- Fin div input hidden información reserva. -->
             </div>
-            
-            <div class="message bot-message typing-indicator" id="typingIndicator" style="display: none;">
+            <!-- FIN mensaje INFORMACIÓN RESERVA. -->
+            <!-- Inicio mensaje CANCELAR RESERVA. -->
+            <div style="display: none;" id="chat_cancelar_reserva">
+                <div class="message bot-message">
+                    <i class="fas fa-robot me-2"></i>
+                    ingrese el Código de la Reserva o Cita en el Chat para realizar la anulación... 😊
+                </div>
+                <div style="display: none;" id="div_hidden_cancelar_reserva">
+
+                </div>
+                <button type="button" id="boton_cancelar_reserva_chatbot" onclick="cancelar_reserva_chatbot()" class="btn btn-outline-danger mb-2"><i class="fa-solid fa-delete-left"></i> Cancelar Operación</button>
+            </div>
+            <!-- FIN mensaje INFORMACIÓN RESERVA. -->
+            <div class="message bot-message typing-indicator" id="typingIndicator">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
         </div>
+        <!-- Fin al ChatBot de Inicio. -->
         
         <div class="chat-input">
             <input type="text" id="pregunta_usuario" placeholder="Escribe tu mensaje...">
-            <button id="mensaje_usuario" class="btn" onclick="respuesta_chatBot()">
+            <button id="mensaje_usuario" class="btn" onclick="respuesta_cahtBot()">
                 <i class="fas fa-paper-plane"></i>
             </button>
         </div>
@@ -261,6 +309,110 @@
         <span class="whatsapp-text">¿Tienes dudas? Escríbenos</span>
         <i class="fab fa-whatsapp whatsapp-icon"></i>
     </a>
+
+    <!-- Modal para mostrar la info de la reserva a pagar en el INDEX. -->
+    <div class="modal fade" id="modal_pagar_reserva_index" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                    <div class="modal-header" style="background: #1e3c72; color: white;">
+                        <h5 class="modal-title"><i class="fas fa-file-invoice me-2"></i>Resumen de tu Reserva</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body" style="background: #f8f9fa;">
+                        <div class="row">
+                            <!-- Input hidden con el cod de la reserva. -->
+                            <input type="hidden" id="cod_reserva_pagar">
+                            <!--  -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Nombre Completo</label>
+                                <input type="text" class="form-control" id="pagar_index_cita_reserva_nombre" readonly>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Email</label>
+                                <input type="email" class="form-control" id="pagar_index_cita_reserva_email" readonly>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">RUT</label>
+                                <input type="text" class="form-control" id="pagar_index_cita_reserva_rut" readonly>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Especialidad</label>
+                                <input type="text" class="form-control" id="pagar_index_cita_reserva_esp" readonly>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Valor</label>
+                                <input type="text" class="form-control" id="pagar_index_cita_reserva_valor_esp" readonly>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Clínica</label>
+                                <input type="text" class="form-control" id="pagar_index_cita_reserva_nombre_clinica" readonly>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Dirección</label>
+                                <input type="text" class="form-control" id="pagar_index_cita_reserva_direccion_clinica" readonly>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Comuna</label>
+                                <input type="text" class="form-control" id="pagar_index_cita_reserva_comuna_clinica" readonly>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Médico</label>
+                                <input type="text" class="form-control" id="pagar_index_cita_reserva_nombre_doctor" readonly>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label fw-bold">Fecha</label>
+                                <input type="text" class="form-control" id="pagar_index_cita_reserva_fecha" readonly>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label fw-bold">Hora Inicio</label>
+                                <input type="text" class="form-control" id="pagar_index_cita_reserva_hora_inicio" readonly>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label fw-bold">Hora Término</label>
+                                <input type="text" class="form-control" id="pagar_index_cita_reserva_hora_termino" readonly>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Reserva Pagada</label>
+                                <input type="text" class="form-control" id="pagar_index_cita_reserva_pagada" readonly>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Estado Reserva</label>
+                                <input type="text" class="form-control" id="pagar_index_cita_reserva_estado" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="background: #1e3c72;">
+                        <button type="button" class="btn btn-light"  data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn" style="background: #ffd700; color: #1e3c72; font-weight: 600;" onclick="pagarDebitoReserva()">
+                            <i class="fas fa-credit-card me-2"></i>Débito
+                        </button>
+                        <button type="button" class="btn" style="background: #ffd700; color: #1e3c72; font-weight: 600;" onclick="pagarCreditoReserva()">
+                            <i class="fas fa-credit-card me-2"></i>Crédito
+                        </button>
+                    </div>
+                    <div class="modal-footer" id="lista_cuota" style="background: #1e3c72; display: none; justify-content: center;">
+                        <div class="d-flex gap-3 align-items-center">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="cuota_index" id="cuota_index_1" value="3">
+                                <label class="form-check-label text-white" for="cuota_index_1">3 Cuotas</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="cuota_index" id="cuota_index_2" value="6">
+                                <label class="form-check-label text-white" for="cuota_index_2">6 Cuotas</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="cuota_index" id="cuota_index_3" value="9">
+                                <label class="form-check-label text-white" for="cuota_index_3">9 Cuotas</label>
+                            </div>
+                            <button type="button" class="btn btn-success" id="pagar_index" onclick="pagar_index_reserva_credito()">
+                                Pagar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <!-- Fin Modal para mostrar la info de la reserva a pagar en el INDEX. -->
 
     <!-- Footer mejorado -->
     <footer class="footer">
