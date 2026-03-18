@@ -207,7 +207,7 @@ function calendario_reserva_index(){
     // INICIALIZACIÓN ÚNICA DEL CALENDARIO.
     var calendarEl = document.getElementById('calendar_index');
     // https://jacruces91.pythonanywhere.com/reserva/reserva_paciente_index
-    let request_calendar = `http://127.0.0.1:8000/reserva/reserva_paciente_index`
+    let request_calendar = `https://jacruces91.pythonanywhere.com/reserva/reserva_paciente_index`
     if (calendar) {
          // Destruye la instancia actual
         calendar.destroy();

@@ -62,7 +62,7 @@ function enviar_cod_verificacion_index(){
     }
     console.warn(datos)
     // axios.post('https://jacruces91.pythonanywhere.com/reserva/cod_reserva_verificacion',datos)
-    axios.post('http://127.0.0.1:8000/reserva/cod_reserva_verificacion_index/',datos)
+    axios.post('https://jacruces91.pythonanywhere.com/reserva/cod_reserva_verificacion_index/',datos)
         .then(function (response) {
             console.log(response.data.datos)
             let reserva_cerrada;
@@ -156,6 +156,7 @@ function enviar_cod_verificacion_index(){
 //  Pagar Crédito desde el HTML pagar_reserva.html, con confundir con el pago y la reserva del INDEX.
 // Este es solamente el pago.
 function pagarDebitoReserva(){
+    cancelar_pago()
     // Llamamos la función creada anteriormente.
     // ocultar_cuotas_disponibles()
     let pagar_index_cita_reserva_nombre = document.getElementById("pagar_index_cita_reserva_nombre").value
@@ -189,7 +190,7 @@ function pagarDebitoReserva(){
             }
             //
             // axios.post(`https://jacruces91.pythonanywhere.com/reserva/pago_debito_reserva_index`, datos,{
-            axios.post(`http://127.0.0.1:8000/reserva/pago_debito_solo_reserva`, datos,{
+            axios.post(`https://jacruces91.pythonanywhere.com/reserva/pago_debito_solo_reserva`, datos,{
                 headers: {
                     //'Authorization': `Token ${token}`,
                     'Content-Type': 'application/json',
@@ -198,21 +199,18 @@ function pagarDebitoReserva(){
             .then(function (response) {
                 console.warn(response.data);
                 console.warn(response.status)
-                let doc = response.data.list_doctor;
                 if (response.status == 200) {
                     Swal.fire({
                         icon: "success",
                         title: "Pago Realizado",
-                        text: "El pago de la reserva se ha efectuado correctamente!",
-                    });
-                    // 
-                    if (calendar) {
-                        calendar.refetchEvents();
-                    }
-                    // Volvemos a recargar el sitio web.
-                    setTimeout(function() {
+                        text: "Redirigiendo...",
+                        timer: 2000, // La alerta se cierra sola en 2 segundos
+                        timerProgressBar: true,
+                        showConfirmButton: false
+                    }).then(() => {
+                        // Se ejecuta cuando el timer termina
                         location.reload();
-                    }, 2000);
+                    });
                 }
             })
             .catch(error => {
@@ -220,11 +218,11 @@ function pagarDebitoReserva(){
                     console.log('Error Response:', error.response.data);
                     console.log('Error Status:', error.response.status);
                     console.log('Error Headers:', error.response.headers);
-                    if (error.response.data.error == 3) {
+                    if (error.response.data.error == 0) {
                         Swal.fire({
                             icon: "error",
-                            title: "El grupo ya existe",
-                            text: "El grupo fue creado anteriormente!",
+                            title: "Ooops..",
+                            text: "Ha ocurrido un error al intentar pagar la reserva.",
                         });
                     }
                     if (error.response.data.error == 3) {
@@ -241,3 +239,119 @@ function pagarDebitoReserva(){
 }
 
 //
+function creditoReservaCuota(){
+    let lista_cuota = document.getElementById("lista_cuota")
+    lista_cuota.style.display = "block"
+}
+
+//
+function pagar_solo_reserva_credito(){
+    // Aquí se obtiene el valor seleccionado del radio button.
+    let cuotas_disponibles = document.getElementsByName("cuota_solo_pago");
+    let cuota_seleccionada;
+    for (let i = 0; i < cuotas_disponibles.length; i++) {
+        if (cuotas_disponibles[i].checked) {
+            cuota_seleccionada = cuotas_disponibles[i].value;
+            break;
+        }
+    }
+    console.log("Cuota seleccionada:", cuota_seleccionada);
+    if (!cuota_seleccionada) {
+        Swal.fire({
+            icon: "warning",
+            title: "No se ha seleccionado una cuota",
+            text: "Por favor, seleccione una opción de cuota para continuar con el pago.",
+        });
+        // Detenemos la función si no se ha seleccionado una cuota.
+        return; 
+    }
+    let cod_reserva_pagar = document.getElementById("cod_reserva_pagar").value
+    //
+    Swal.fire({
+        title: "¿Está seguro de pagar la cita?",
+        text: "Una vez aceptado el pago, no puede ser cancelado.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "¡Si, Pagar!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+            let datos = {
+                'cod_reserva_pagar': cod_reserva_pagar,
+                'cuota': cuota_seleccionada,
+            }
+            //
+            // axios.post(`http://127.0.0.1:8000/reserva/pago_credito_solo_reserva`, datos,{
+            axios.post(`https://jacruces91.pythonanywhere.com/reserva/pago_credito_solo_reserva`, datos,{
+                headers: {
+                    //'Authorization': `Token ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(function (response) {
+                console.warn(response.data);
+                console.warn(response.status)
+                if (response.status == 200) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Pago Realizado",
+                        text: "Redirigiendo...",
+                        timer: 2000, // La alerta se cierra sola en 2 segundos
+                        timerProgressBar: true,
+                        showConfirmButton: false
+                    }).then(() => {
+                        // Se ejecuta cuando el timer termina
+                        location.reload();
+                    });
+                }
+            })
+            .catch(error => {
+                if (error.response) {
+                    console.log('Error Response:', error.response.data);
+                    console.log('Error Status:', error.response.status);
+                    console.log('Error Headers:', error.response.headers);
+                    if (error.response.data.error == 0) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Ooops..",
+                            text: "Ha ocurrido un error al intentar pagar la reserva.",
+                        });
+                    }
+                    console.log('Error Response:', error.response.data);
+                    console.log('Error Status:', error.response.status);
+                    console.log('Error Headers:', error.response.headers);
+                    if (error.response.data.error == 1) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Ooops..",
+                            text: "No se pudo realizar el pago de la reserva.",
+                        });
+                    }
+                    if (error.response.data.error == 3) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Reserva No Disponible",
+                            text: "Debe solicitar otra hora disponible!",
+                        });
+                    }
+                }
+            });
+        }
+    });
+}
+
+//
+function cancelar_pago(){
+    let lista_cuota = document.getElementById("lista_cuota")
+    lista_cuota.style.display = "none"
+    // Dejamos los radio button en false cuando aprieten el boton calcenlar.
+    // Se desmarcará todas las casillas de radio button con el nombre "cuotas_disponibles".
+    // Buscamos todos los radio buttons con el nombre 'cuota_solo_pago'
+    let radios = document.getElementsByName("cuota_solo_pago");
+
+    // Los recorremos y les quitamos la marca (check)
+    radios.forEach(radio => {
+        radio.checked = false;
+    });
+}
