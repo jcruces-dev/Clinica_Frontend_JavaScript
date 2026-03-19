@@ -96,43 +96,63 @@ function respuesta_chatBot() {
         return;
     }
 
-    // 1. Mostrar indicador de escritura y moverlo al final del scroll
+    // 1. Mostrar indicador de escritura
     if (typing) {
         typing.style.display = 'flex';
         chatMessages.appendChild(typing); 
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
-    // 2. Determinar la opción de envío dinámicamente
+    // 2. Determinar la opción de envío
     let opcion_envio = 0;
     if (document.getElementById('info_reserva_input')) opcion_envio = 2;
     else if (document.getElementById('cancel_reserva_input')) opcion_envio = 3;
-    else if (document.getElementById('input_opcion_inicial_chatbot')?.value === '0') opcion_envio = 0;
 
     const datos = { pregunta: pregunta, opcion: opcion_envio };
     
     // Limpiar input inmediatamente
     preguntaInput.value = '';
 
-    // 3. Petición Axios al Backend
-    // axios.post('http://127.0.0.1:8000/chatbot/obtener_respuesta', datos)
+    // 3. Petición Axios
     axios.post('https://jacruces91.pythonanywhere.com/chatbot/obtener_respuesta', datos)
+    //axios.post('http://127.0.0.1:8000/chatbot/obtener_respuesta', datos)
     .then(function (response) {
-        // Pausa artificial para naturalidad (800ms)
         setTimeout(() => {
             if (typing) typing.style.display = 'none';
             
             if (response.status === 200 && response.data.respuesta) {
                 escribirRespuestaConAnimacion(response.data.respuesta);
             } else {
-                mostrarMensajeError("Respuesta inesperada del servidor");
+                // Error genérico del servidor
+                escribirRespuestaConAnimacion("❌ Hubo un error inesperado. Inténtalo de nuevo.");
             }
         }, 800);
     })
     .catch(function (error) {
-        if (typing) typing.style.display = 'none';
-        console.error('Error:', error);
-        mostrarMensajeError("No pude conectar con el asistente.");
+        // --- AQUÍ ESTÁ EL CAMBIO PRINCIPAL ---
+        setTimeout(() => {
+            if (typing) typing.style.display = 'none';
+            console.error('Error:', error);
+            
+            // Creamos un objeto de error que imita la estructura del Modo Demo
+            // para que 'escribirRespuestaConAnimacion' lo maneje correctamente (Caso 1).
+            const respuestaErrorConBoton = {
+                tipo: 'animar', // Usamos 'animar' para que se escriba letra por letra
+                texto: "❌ El código ingresado no es válido o no existe en nuestros registros.",
+                // Este HTML debe usar las clases CSS existentes para el botón amarillo
+                html_boton: `
+                    <div style="text-align: center; margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 15px;">
+                        <button type="button" onclick="boton_volver_chatbot()" class="btn-volver-inicio">
+                            <i class="fas fa-arrow-left me-2"></i>Volver al Inicio
+                        </button>
+                    </div>
+                `
+            };
+
+            // Enviamos el objeto para que se anime y muestre el botón
+            escribirRespuestaConAnimacion(respuestaErrorConBoton);
+
+        }, 800);
     });
 }
 
@@ -194,7 +214,7 @@ function escribirRespuestaConAnimacion(respuesta) {
         }
         escribirTextoPlano();
     }
-} // <--- AQUÍ FALTABA ESTA LLAVE PARA CERRAR LA FUNCIÓN PRINCIPAL
+}
 
 /* ========================================
    5. AUXILIARES Y BOTONES "VOLVER"

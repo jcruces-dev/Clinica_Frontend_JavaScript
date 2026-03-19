@@ -266,6 +266,11 @@
     color: white;
 }
 
+/* Mensaje de error personalizado dentro del bot */
+.bot-message-error {
+    background: linear-gradient(135deg, #cb2d3e 0%, #ef473a 100%) !important;
+    border-left: 4px solid #721c24;
+}
 
 @keyframes typing {
     0%, 100% { transform: translateY(0); }
