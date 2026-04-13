@@ -358,6 +358,8 @@ function click_seccion(){
 }
 click_seccion()
 //----------------------------------- Inicio Módulo Clínica -----------------------------------------------
+// Declaramos la variable global para eldatats tabla solo de clinicas, CRUD.
+var tabla_clinica = null;
 function seccion_clinica(){
     //
     const token = sessionStorage.getItem('token');
@@ -371,8 +373,10 @@ function seccion_clinica(){
         //console.warn(response.data.grupos[0])
         let list_clinica = response.data.list_clinica
         //
-        var table = $('#tabla_clinica').DataTable({
+        tabla_clinica = $('#tabla_clinica').DataTable({
             data: list_clinica,
+            autoWidth: false, // <-- ESTO EVITA EL ESPACIO FANTASMA
+            destroy: true,
             columns: [
                 { title: 'ID', data: "id", defaultContent: '' },
                 { title: 'Nombre Clínica', data: "nombre_clinica", defaultContent: '' },
@@ -390,7 +394,6 @@ function seccion_clinica(){
                     }
                 }
             ],
-            destroy: true,
             "dom": 'Bfrtip',
             buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
             "lengthMenu": [
@@ -473,66 +476,28 @@ function registrar_clinica(){
         console.warn(response.status)
         let list_clinica = response.data.list_clinica
         console.warn(list_clinica)
-        arr.push(list_clinica)
-        console.warn(arr)
         if (response.status == 200) {
             Swal.fire({
                 icon: "success",
                 title: "Clínica Creada Correctamente",
                 text: "La clínica fue creada correctamente!",
             });
-            var table = $('#tabla_clinica').DataTable({
-                data: list_clinica,
-                columns: [
-                    { title: 'ID', data: "id", defaultContent: '' },
-                    { title: 'Nombre Clínica', data: "nombre_clinica", defaultContent: '' },
-                    { title: 'Comuna Clínica', data: "comuna_clinica", defaultContent: '' },
-                    { title: 'Dirección Clínica', data: "direccion_clinica", defaultContent: '' },
-                    { 
-                        title: 'Acciones', 
-                        data: null,
-                        responsivePriority: 1, // Prioridad máxima (no se oculta)
-                        className: 'no-wrap', // Clase para evitar saltos de línea
-                        orderable: false,
-                        render: function(data, type, row) {
-                            return '<button type="button" id="btn_editar_clinica" onclick="modal_editar_clinica('+row.id+', \''+row.nombre_clinica+'\', \''+row.comuna_clinica+'\', \''+row.direccion_clinica+'\')" class="btn btn-primary btn-sm editar-btn">Editar</button> ' +
-                                    '<button type="button" id="btn_borrar_clinica" onclick="borrar_clinica_admin('+row.id+', \''+row.nombre_clinica+'\', \''+row.last_name+'\')" class="btn btn-danger btn-sm borrar-btn">Borrar</button> ';
-                        }
-                    }
-                ],
-                destroy: true,
-                "dom": 'Bfrtip',
-                buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-                "lengthMenu": [
-                    [5,10, 25, 50, -1],
-                    ['5 Resultados', '10 Resultados', '50 Resultados', 'Mostrar Todos']
-                ],
-                "buttons": {
-                    "pageLength": {
-                        _: "Mostrar %d Registros"
-                    }
-                },
-                "language": {
-                    "decimal": "",
-                    "emptyTable": "No hay información",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Datos",
-                    "infoEmpty": "Mostrando 0 to 0 of 0 Documentos",
-                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "lengthMenu": "Mostrar _MENU_ Documentos",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscar:",
-                    "zeroRecords": "Sin resultados encontrados",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Ultimo",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
-                }
-            });
+            // 
+            if ($.fn.DataTable.isDataTable('#tabla_clinica')) {
+                let table = $('#tabla_clinica').DataTable();
+                
+                // Limpiamos y cargamos la lista completa que ya te devolvió el servidor
+                table.clear().rows.add(response.data.list_clinica).draw();
+                
+                // 2. IMPORTANTE: Forzar el ajuste de columnas para eliminar el scroll fantasma
+                setTimeout(() => {
+                    table.columns.adjust().responsive.recalc();
+                }, 150);
+
+            } else {
+                // Si por alguna razón no estaba inicializada, la cargamos de cero
+                seccion_clinica();
+            }
             // Realizamos el click automático.
             // elemento.click();
             // cerrar_modal_listar_doctor.click();
@@ -605,60 +570,22 @@ function update_clinica_adm(){
                 title: "Actualizado Correctamente",
                 text: "La clínica fue actualizada correctamente!",
             });
-            let list_clinica = response.data.list_clinica
-            //
-            var table = $('#tabla_clinica').DataTable({
-                data: list_clinica,
-                columns: [
-                    { title: 'ID', data: "id", defaultContent: '' },
-                    { title: 'Nombre Clínica', data: "nombre_clinica", defaultContent: '' },
-                    { title: 'Comuna Clínica', data: "comuna_clinica", defaultContent: '' },
-                    { title: 'Dirección Clínica', data: "direccion_clinica", defaultContent: '' },
-                    { 
-                        title: 'Acciones', 
-                        data: null,
-                        responsivePriority: 1, // Prioridad máxima (no se oculta)
-                        className: 'no-wrap', // Clase para evitar saltos de línea
-                        orderable: false,
-                        render: function(data, type, row) {
-                            return '<button type="button" id="btn_editar_clinica" onclick="modal_editar_clinica('+row.id+', \''+row.nombre_clinica+'\', \''+row.comuna_clinica+'\', \''+row.direccion_clinica+'\')" class="btn btn-primary btn-sm editar-btn">Editar</button> ' +
-                                    '<button type="button" id="btn_borrar_clinica" onclick="borrar_clinica_admin('+row.id+', \''+row.nombre_clinica+'\', \''+row.last_name+'\')" class="btn btn-danger btn-sm borrar-btn">Borrar</button> ';
-                        }
-                    }
-                ],
-                destroy: true,
-                "dom": 'Bfrtip',
-                buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-                "lengthMenu": [
-                    [5,10, 25, 50, -1],
-                    ['5 Resultados', '10 Resultados', '50 Resultados', 'Mostrar Todos']
-                ],
-                "buttons": {
-                    "pageLength": {
-                        _: "Mostrar %d Registros"
-                    }
-                },
-                "language": {
-                    "decimal": "",
-                    "emptyTable": "No hay información",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Datos",
-                    "infoEmpty": "Mostrando 0 to 0 of 0 Documentos",
-                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "lengthMenu": "Mostrar _MENU_ Documentos",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscar:",
-                    "zeroRecords": "Sin resultados encontrados",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Ultimo",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
-                }
-            });
+            // let list_clinica = response.data.list_clinica
+            if ($.fn.DataTable.isDataTable('#tabla_clinica')) {
+                let table = $('#tabla_clinica').DataTable();
+                
+                // Limpiamos y cargamos la lista completa que ya te devolvió el servidor
+                table.clear().rows.add(response.data.list_clinica).draw();
+                
+                // 2. IMPORTANTE: Forzar el ajuste de columnas para eliminar el scroll fantasma
+                setTimeout(() => {
+                    table.columns.adjust().responsive.recalc();
+                }, 150);
+
+            } else {
+                // Si por alguna razón no estaba inicializada, la cargamos de cero
+                seccion_clinica();
+            }
         }
     })
     .catch(error => {
@@ -675,6 +602,11 @@ function update_clinica_adm(){
             }
         }
     });
+    // FUNCIÓN AUXILIAR PARA ESCAPAR CARACTERES ESPECIALES (evita errores con comillas)
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/['"]/g, '\\$&');
+    }
 }
 //
 function borrar_clinica_admin(id, nombreClinica){
@@ -706,60 +638,8 @@ function borrar_clinica_admin(id, nombreClinica){
                     });
                     //console.warn(response.data.grupos[0])
                     let list_clinica = response.data.list_clinica
-                    //
-                    var table = $('#tabla_clinica').DataTable({
-                        data: list_clinica,
-                        responsive: true,
-                        columns: [
-                            { title: 'ID', data: "id", defaultContent: '' },
-                            { title: 'Nombre Clínica', data: "nombre_clinica", defaultContent: '' },
-                            { title: 'Comuna Clínica', data: "comuna_clinica", defaultContent: '' },
-                            { title: 'Dirección Clínica', data: "direccion_clinica", defaultContent: '' },
-                            { 
-                                title: 'Acciones', 
-                                data: null,
-                                responsivePriority: 1, // Prioridad máxima (no se oculta)
-                                className: 'no-wrap', // Clase para evitar saltos de línea
-                                orderable: false,
-                                render: function(data, type, row) {
-                                    return '<button type="button" id="btn_editar_clinica" onclick="modal_editar_clinica('+row.id+', \''+row.nombre_clinica+'\', \''+row.comuna_clinica+'\', \''+row.direccion_clinica+'\')" class="btn btn-primary btn-sm editar-btn">Editar</button> ' +
-                                            '<button type="button" id="btn_borrar_clinica" onclick="borrar_clinica_admin('+row.id+', \''+row.nombre_clinica+'\', \''+row.last_name+'\')" class="btn btn-danger btn-sm borrar-btn">Borrar</button> ';
-                                }
-                            }
-                        ],
-                        destroy: true,
-                        "dom": 'Bfrtip',
-                        buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-                        "lengthMenu": [
-                            [5,10, 25, 50, -1],
-                            ['5 Resultados', '10 Resultados', '50 Resultados', 'Mostrar Todos']
-                        ],
-                        "buttons": {
-                            "pageLength": {
-                                _: "Mostrar %d Registros"
-                            }
-                        },
-                        "language": {
-                            "decimal": "",
-                            "emptyTable": "No hay información",
-                            "info": "Mostrando _START_ a _END_ de _TOTAL_ Datos",
-                            "infoEmpty": "Mostrando 0 to 0 of 0 Documentos",
-                            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                            "infoPostFix": "",
-                            "thousands": ",",
-                            "lengthMenu": "Mostrar _MENU_ Documentos",
-                            "loadingRecords": "Cargando...",
-                            "processing": "Procesando...",
-                            "search": "Buscar:",
-                            "zeroRecords": "Sin resultados encontrados",
-                            "paginate": {
-                                "first": "Primero",
-                                "last": "Ultimo",
-                                "next": "Siguiente",
-                                "previous": "Anterior"
-                            }
-                        }
-                    });
+                    // Actualizar la tabla con los nuevos datos
+                    seccion_clinica(response.data.list_clinica);
                 }
             })
             .catch(error => {
@@ -781,6 +661,8 @@ function borrar_clinica_admin(id, nombreClinica){
 }
 //----------------------------------- Fin Módulo Clínica -----------------------------------------------
 //----------------------------------- Inicio Módulo Doctor -----------------------------------------------
+// Declaramos la variable global para el datatable solo de doctores, CRUD.
+var tabla_doctor = null;
 function panel_doctores(){
     let info = document.getElementById("panel_doctor")
     info.addEventListener("click", function(e){
@@ -802,7 +684,7 @@ function panel_doctores(){
             });
             console.warn(arr)
             //
-            var table = $('#listar_doctor').DataTable({
+            tabla_doctor = $('#listar_doctor').DataTable({
                 data: arr,
                 columns: [
                     { title: 'ID', data: "id_doctor", defaultContent: '' },
@@ -1222,67 +1104,21 @@ function insertar_bd_doctor(e){
             //     // $('#listar_doctor').DataTable().destroy();
             //     $('#listar_doctor').empty(); // Limpia la tabla antes de inicializarla nuevamente
             // }
-            var table = $('#listar_doctor').DataTable({
-                data: arr,
-                columns: [
-                    { title: 'ID', data: "id_doctor", defaultContent: '' },
-                    { title: 'Username', data: "username", defaultContent: '' },
-                    { title: 'Primer Nombre', data: "primer_nombre", defaultContent: '' },
-                    { title: 'Segundo Nombre', data: "segundo_nombre", defaultContent: '' },
-                    { title: 'Apellido P.', data: "ap_paterno", defaultContent: '' },
-                    { title: 'Apellido M.', data: "ap_materno", defaultContent: '' },
-                    { title: 'Email', data: "email", defaultContent: '' },
-                    { title: 'Rut', data: "rut", defaultContent: '' },
-                    { title: 'Edad', data: "edad", defaultContent: '' },
-                    { title: 'Sexo', data: "sexo", defaultContent: '' },
-                    { title: 'Contacto', data: "fono", defaultContent: '' },
-                    { 
-                        title: 'Acciones', 
-                        data: null,
-                        responsivePriority: 1, // Prioridad máxima (no se oculta)
-                        className: 'no-wrap', // Clase para evitar saltos de línea
-                        orderable: false,
-                        render: function(data, type, row) {
-                            return '<button type="button" data-id="'+row.id_doctor+'" data-name="'+row.primer_nombre+'" id="btn_editar_doc" onclick="editar_doctor('+row.id_doctor+', \''+row.username+'\', \''+row.email+'\', \''+row.primer_nombre+'\', \''+row.segundo_nombre+'\', \''+row.edad+'\', \''+row.sexo+'\', \''+row.rut+'\', \''+row.fono+'\', \''+row.ap_materno+'\', \''+row.ap_paterno+'\')" class="btn btn-primary btn-sm editar-btn">Editar</button> ' +
-                                    '<button type="button" data-id="'+row.id_doctor+'" data-name="'+row.primer_nombre+'" id="btn_borrar_doc" onclick="borrar_user_doctor('+row.id_doctor+', \''+row.primer_nombre+'\', \''+row.segundo_nombre+'\', \''+row.username+'\')" class="btn btn-danger btn-sm borrar-btn">Borrar</button> ' +
-                                    '<button type="button" data-id="'+row.id_doctor+'" data-name="'+row.primer_nombre+'" id="btn_esp_doc" onclick="especialidades_list_doc('+row.id_doctor+', \''+row.primer_nombre+'\')" class="btn btn-sm borrar-btn" style="background:rgb(18, 236, 135)">Especialidades</button> ' +
-                                    '<button type="button" data-id="'+row.id_doctor+'" data-name="'+row.primer_nombre+'" id="btn_esp_cli" onclick="clinica_doc('+row.id_doctor+', \''+row.primer_nombre+'\')" class="btn btn-sm" style="background:rgb(229, 150, 253)">Clínicas Doc</button>';
-                        }
-                    }
-                ],
-                destroy: true,
-                "dom": 'Bfrtip',
-                buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-                "lengthMenu": [
-                    [5,10, 25, 50, -1],
-                    ['5 Resultados', '10 Resultados', '50 Resultados', 'Mostrar Todos']
-                ],
-                "buttons": {
-                    "pageLength": {
-                        _: "Mostrar %d Registros"
-                    }
-                },
-                "language": {
-                    "decimal": "",
-                    "emptyTable": "No hay información",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Datos",
-                    "infoEmpty": "Mostrando 0 to 0 of 0 Documentos",
-                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "lengthMenu": "Mostrar _MENU_ Documentos",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscar:",
-                    "zeroRecords": "Sin resultados encontrados",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Ultimo",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
-                }
-            });
+            if ($.fn.DataTable.isDataTable('#listar_doctor')) {
+                let table = $('#listar_doctor').DataTable();
+                
+                // Limpiamos y cargamos la lista completa que ya te devolvió el servidor
+                table.clear().rows.add(response.data.list_doctor).draw();
+                
+                // 2. IMPORTANTE: Forzar el ajuste de columnas para eliminar el scroll fantasma
+                setTimeout(() => {
+                    table.columns.adjust().responsive.recalc();
+                }, 150);
+
+            } else {
+                // Si por alguna razón no estaba inicializada, la cargamos de cero
+                panel_doctores();
+            }
             reset_input.reset()
         }
     }).catch(error => {
@@ -2443,9 +2279,6 @@ function editar_esp_admin(e){
                     }
                 }
             });
-            //modalInstance.hide();
-            // Realizamos el click automático.
-            //elemento.click();
         }
     })
     .catch(error => {
@@ -2483,6 +2316,14 @@ function editar_esp_admin(e){
                     icon: "error",
                     title: "Oops...",
                     text: "Debe ingresar el valor!",
+                });
+            }
+            //
+            if (error.response.data.error == 4) {
+                Swal.fire({
+                    icon: "error",
+                    title: "OOoops..",
+                    text: "No pueden quedar campos vacíos.",
                 });
             }
         }
@@ -2974,74 +2815,22 @@ function borrar_user_doctor(id_doc, nombres, apellidos, username){
                         text: "El Doctor fué eliminado correctamente!",
                     });
                     console.log(doc)
-                    //
-                    let grupos = response.data.list_doctor
-                    grupos.forEach(element => {
-                        console.log(element.username)
-                        arr.push(element)
-                    });
-                    //
-                    var table = $('#listar_doctor').DataTable({
-                        data: arr,
-                        columns: [
-                            { title: 'ID', data: "id_doctor", defaultContent: '' },
-                            { title: 'Username', data: "username", defaultContent: '' },
-                            { title: 'Primer Nombre', data: "primer_nombre", defaultContent: '' },
-                            { title: 'Segundo Nombre', data: "segundo_nombre", defaultContent: '' },
-                            { title: 'Apellido P.', data: "ap_paterno", defaultContent: '' },
-                            { title: 'Apellido M.', data: "ap_materno", defaultContent: '' },
-                            { title: 'Email', data: "email", defaultContent: '' },
-                            { title: 'Rut', data: "rut", defaultContent: '' },
-                            { title: 'Edad', data: "edad", defaultContent: '' },
-                            { title: 'Sexo', data: "sexo", defaultContent: '' },
-                            { title: 'Contacto', data: "fono", defaultContent: '' },
-                            { 
-                                title: 'Acciones', 
-                                data: null,
-                                responsivePriority: 1, // Prioridad máxima (no se oculta)
-                                className: 'no-wrap', // Clase para evitar saltos de línea
-                                orderable: false,
-                                render: function(data, type, row) {
-                                    return '<button type="button" data-id="'+row.id_doctor+'" data-name="'+row.primer_nombre+'" id="btn_editar_doc" onclick="editar_doctor('+row.id_doctor+', \''+row.username+'\', \''+row.email+'\', \''+row.primer_nombre+'\', \''+row.segundo_nombre+'\', \''+row.edad+'\', \''+row.sexo+'\', \''+row.rut+'\', \''+row.fono+'\', \''+row.ap_materno+'\', \''+row.ap_paterno+'\')" class="btn btn-primary btn-sm editar-btn">Editar</button> ' +
-                                            '<button type="button" data-id="'+row.id_doctor+'" data-name="'+row.primer_nombre+'" id="btn_borrar_doc" onclick="borrar_user_doctor('+row.id_doctor+', \''+row.primer_nombre+'\', \''+row.segundo_nombre+'\', \''+row.username+'\')" class="btn btn-danger btn-sm borrar-btn">Borrar</button> ' +
-                                            '<button type="button" data-id="'+row.id_doctor+'" data-name="'+row.primer_nombre+'" id="btn_esp_doc" onclick="especialidades_list_doc('+row.id_doctor+', \''+row.primer_nombre+'\')" class="btn btn-sm borrar-btn" style="background:rgb(18, 236, 135)">Especialidades</button> ' +
-                                            '<button type="button" data-id="'+row.id_doctor+'" data-name="'+row.primer_nombre+'" id="btn_esp_cli" onclick="clinica_doc('+row.id_doctor+', \''+row.primer_nombre+'\')" class="btn btn-sm" style="background:rgb(229, 150, 253)">Clínicas Doc</button>';
-                                }
-                            }
-                        ],
-                        destroy: true,
-                        "dom": 'Bfrtip',
-                        buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-                        "lengthMenu": [
-                            [5,10, 25, 50, -1],
-                            ['5 Resultados', '10 Resultados', '50 Resultados', 'Mostrar Todos']
-                        ],
-                        "buttons": {
-                            "pageLength": {
-                                _: "Mostrar %d Registros"
-                            }
-                        },
-                        "language": {
-                            "decimal": "",
-                            "emptyTable": "No hay información",
-                            "info": "Mostrando _START_ a _END_ de _TOTAL_ Datos",
-                            "infoEmpty": "Mostrando 0 to 0 of 0 Documentos",
-                            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                            "infoPostFix": "",
-                            "thousands": ",",
-                            "lengthMenu": "Mostrar _MENU_ Documentos",
-                            "loadingRecords": "Cargando...",
-                            "processing": "Procesando...",
-                            "search": "Buscar:",
-                            "zeroRecords": "Sin resultados encontrados",
-                            "paginate": {
-                                "first": "Primero",
-                                "last": "Ultimo",
-                                "next": "Siguiente",
-                                "previous": "Anterior"
-                            }
-                        }
-                    });
+                    // Actualizar la tabla con los nuevos datos
+                    // REFRESCAR DATATABLES SIN RECARGAR PÁGINA
+                    if ($.fn.DataTable.isDataTable('#listar_doctor')) {
+                        let table = $('#listar_doctor').DataTable();
+                        
+                        // Usamos la lista actualizada que viene del backend
+                        table.clear().rows.add(response.data.list_doctor).draw();
+                        
+                        // Ajustamos para evitar el scroll fantasma
+                        setTimeout(() => {
+                            table.columns.adjust().responsive.recalc();
+                        }, 150);
+                    } else {
+                        // Si por alguna razón la tabla no existía, llamamos a la inicialización básica
+                        panel_doctores();
+                    }
                 }
             })
             .catch(error => {
@@ -3176,82 +2965,22 @@ function enviar_datos_edit_doc_adm(){
                 title: "Actualizado Correctamente",
                 text: "Losdatos del doctor fueron actualizados correctamente!",
             });
-            //
-            // if (response.data.cerrar_session == 1){
-            //     // Eliminar el token del almacenamiento local
-            //     sessionStorage.removeItem('token');
-            //     alert("Debe iniciar Sessión nuevamente")
-            //     window.location.href = 'http://127.0.0.1:5500/index.html'
-            // }
-            let list_doctor = response.data.list_doctor
-            list_doctor.forEach(element => {
-                console.log(element.name)
-                arr.push(element)
-            });
-            console.warn(arr)
-            //
-            //
-            var table = $('#listar_doctor').DataTable({
-                data: arr,
-                columns: [
-                    { title: 'ID', data: "id_doctor", defaultContent: '' },
-                    { title: 'Username', data: "username", defaultContent: '' },
-                    { title: 'Primer Nombre', data: "primer_nombre", defaultContent: '' },
-                    { title: 'Segundo Nombre', data: "segundo_nombre", defaultContent: '' },
-                    { title: 'Apellido P.', data: "ap_paterno", defaultContent: '' },
-                    { title: 'Apellido M.', data: "ap_materno", defaultContent: '' },
-                    { title: 'Email', data: "email", defaultContent: '' },
-                    { title: 'Rut', data: "rut", defaultContent: '' },
-                    { title: 'Edad', data: "edad", defaultContent: '' },
-                    { title: 'Sexo', data: "sexo", defaultContent: '' },
-                    { title: 'Contacto', data: "fono", defaultContent: '' },
-                    { 
-                        title: 'Acciones', 
-                        data: null,
-                        responsivePriority: 1, // Prioridad máxima (no se oculta)
-                        className: 'no-wrap', // Clase para evitar saltos de línea
-                        orderable: false,
-                        render: function(data, type, row) {
-                            return '<button type="button" data-id="'+row.id_doctor+'" data-name="'+row.primer_nombre+'" id="btn_editar_doc" onclick="editar_doctor('+row.id_doctor+', \''+row.username+'\', \''+row.email+'\', \''+row.primer_nombre+'\', \''+row.segundo_nombre+'\', \''+row.edad+'\', \''+row.sexo+'\', \''+row.rut+'\', \''+row.fono+'\', \''+row.ap_materno+'\', \''+row.ap_paterno+'\')" class="btn btn-primary btn-sm editar-btn">Editar</button> ' +
-                                    '<button type="button" data-id="'+row.id_doctor+'" data-name="'+row.primer_nombre+'" id="btn_borrar_doc" onclick="borrar_user_doctor('+row.id_doctor+', \''+row.primer_nombre+'\', \''+row.segundo_nombre+'\', \''+row.username+'\')" class="btn btn-danger btn-sm borrar-btn">Borrar</button> ' +
-                                    '<button type="button" data-id="'+row.id_doctor+'" data-name="'+row.primer_nombre+'" id="btn_esp_doc" onclick="especialidades_list_doc('+row.id_doctor+', \''+row.primer_nombre+'\')" class="btn btn-sm borrar-btn" style="background:rgb(18, 236, 135)">Especialidades</button> ' +
-                                    '<button type="button" data-id="'+row.id_doctor+'" data-name="'+row.primer_nombre+'" id="btn_esp_cli" onclick="clinica_doc('+row.id_doctor+', \''+row.primer_nombre+'\')" class="btn btn-sm" style="background:rgb(229, 150, 253)">Clínicas Doc</button>';
-                        }
-                    }
-                ],
-                destroy: true,
-                "dom": 'Bfrtip',
-                buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-                "lengthMenu": [
-                    [5,10, 25, 50, -1],
-                    ['5 Resultados', '10 Resultados', '50 Resultados', 'Mostrar Todos']
-                ],
-                "buttons": {
-                    "pageLength": {
-                        _: "Mostrar %d Registros"
-                    }
-                },
-                "language": {
-                    "decimal": "",
-                    "emptyTable": "No hay información",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Datos",
-                    "infoEmpty": "Mostrando 0 to 0 of 0 Documentos",
-                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "lengthMenu": "Mostrar _MENU_ Documentos",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscar:",
-                    "zeroRecords": "Sin resultados encontrados",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Ultimo",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
-                }
-            });
+            // let list_clinica = response.data.list_clinica
+            if ($.fn.DataTable.isDataTable('#listar_doctor')) {
+                let table = $('#listar_doctor').DataTable();
+                
+                // Limpiamos y cargamos la lista completa que ya te devolvió el servidor
+                table.clear().rows.add(response.data.list_doctor).draw();
+                
+                // 2. IMPORTANTE: Forzar el ajuste de columnas para eliminar el scroll fantasma
+                setTimeout(() => {
+                    table.columns.adjust().responsive.recalc();
+                }, 150);
+
+            } else {
+                // Si por alguna razón no estaba inicializada, la cargamos de cero
+                panel_doctores();
+            }
         }
     })
     .catch(error => {
@@ -3967,7 +3696,7 @@ function edit_panel_adm_paciente(e){
         if (response.status == 200) {
             Swal.fire({
                 icon: "success",
-                title: "Paciente Registrado  Correctamente",
+                title: "Paciente Editado Correctamente",
                 text: "paciente registrado",
             });
             //console.warn(response.data.grupos[0])
@@ -5734,6 +5463,8 @@ function obtener_clin_secretaria_panel_adm(id_user, primer_nombre, seg_nombre){
             }
             var table = $('#tabla_clinica_secret_panel_admin').DataTable({
                 responsive: true,
+                autoWidth: false, // Forzamos a que no intente calcular anchos fijos pequeños
+                width: '100%',
                 data: arr,
                 columns: [
                     { title: 'ID', data: "id_clinica", defaultContent: '' },

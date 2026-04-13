@@ -423,17 +423,34 @@
                     </div>
                   </div>
                   <div class="card-body">
-                    <!-- Container Sección Clínica-->
+                  <!-- Container Sección Clínica
                   <div class="container mb-3" id="container_clinica" style="display: none;">
                     <h1 class="text-center">Clínicas Disponibles</h1>
                     <div class="container">
                       <div class="table-responsive">
-                        <table id="tabla_clinica" class="display nowrap" style="width:100%">
+                        <table id="tabla_clinica" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
                           <div class="col-md-12">
                             <div class="d-grid gap-2">
                               <button class="btn mb-2" onclick="abrir_modal_nueva_clinica(this)" style="background: rgb(129, 240, 129);" type="button">Agregar Clínica</button>
                             </div>
                           </div>
+                        </table>
+                      </div>
+                    </div>
+                  </div> -->
+                  <div class="container mb-3" id="container_clinica" style="display: none;">
+                    <h1 class="text-center">Clínicas Disponibles</h1>
+                    <div class="container">
+                      <div class="d-grid gap-2 mb-2">
+                        <button class="btn" onclick="abrir_modal_nueva_clinica(this)" 
+                                style="background: rgb(129, 240, 129);" type="button">
+                          Agregar Clínica
+                        </button>
+                      </div>
+                      <div class="table-responsive">
+                        <table id="tabla_clinica" 
+                              class="table table-striped table-bordered dt-responsive nowrap w-100" 
+                              style="width:100%">
                         </table>
                       </div>
                     </div>
@@ -910,7 +927,7 @@
           <div class="modal-body">
             <div class="container">
               <div class="table-responsive">
-                <table id="tabla_clinica_doct_admin" class="display nowrap" style="width:100%">
+                <table id="tabla_clinica_doct_admin" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
                   <div class="col-md-12">
                     <div class="d-grid gap-2">
                       <div class="d-grid gap-2 mb-2">
@@ -1690,7 +1707,7 @@
                       </div>
                     </div>
                     <div class="d-grid gap-2 mb-2">
-                        <button class="btn btn-success" id="edit_adm_regis_pac" onclick="edit_panel_adm_paciente(this)" type="button">Registrarme</button>
+                        <button class="btn btn-info" id="edit_adm_regis_pac" onclick="edit_panel_adm_paciente(this)" type="button">Editar</button>
                     </div>
                 </div>
               </div>
@@ -1843,7 +1860,7 @@
             <div class="container">
               <button class="btn btn-success btn-xl" id="btn_insert_nueva_clin_secret_panel_adm" onclick="insert_nueva_clin_secret_panel_adm()">Agregar Clínica</button>
               <div class="table-responsive">
-                <table id="tabla_clinica_secret_panel_admin" class="display nowrap" style="width:100%">
+                <table id="tabla_clinica_secret_panel_admin" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
                   <div class="col-md-12">
                     <div class="d-grid gap-2">
                       <div class="d-grid gap-2 mb-2">
@@ -2108,7 +2125,7 @@
       <div class="modal-dialog modal-xl">
         <div class="modal-content">
           <div class="modal-header" style="background:rgb(18, 236, 135)">
-            <h1 class="modal-title fs-5" id="staticBackdropLabel">Historial</h1>
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Respuesta Entregada</h1>
           </div>
           <div class="modal-body">
             <div class="container">

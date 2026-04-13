@@ -170,16 +170,27 @@ var calendar;
 function calendario_reserva_index(){
     //
     let id_clinica = document.getElementById("index_doctor_clinica").value
+    console.log(id_clinica)
     let id_especialidad = document.getElementById("index_especialidad").value
+    console.log(id_especialidad)
     let id_doctor = document.getElementById("index_doctor").value
+    console.log(id_doctor)
     let primer_nombre_index = document.getElementById("primer_nombre_index").value
+    console.log(primer_nombre_index)
     let segundo_nombre_index = document.getElementById("segundo_nombre_index").value
+    console.log(segundo_nombre_index)
     let ap_paterno_index = document.getElementById("ap_paterno_index").value
+    console.log(ap_paterno_index)
     let ap_materno_index = document.getElementById("ap_materno_index").value
+    console.log(ap_materno_index)
     let email = document.getElementById("email").value
+    console.log(email)
     let edad = document.getElementById("edad").value
+    console.log(edad)
     let fono = document.getElementById("fono").value
+    console.log(fono)
     let rut = document.getElementById("rut").value
+    console.log(rut)
     //------- Valor Radio Button Sexo ---------
     let sexo = document.getElementsByName("sexo")
     let valor_sexo;
@@ -188,6 +199,37 @@ function calendario_reserva_index(){
             valor_sexo = radio.value;
         }
     });
+    console.log(valor_sexo)
+    // Si estos campos están vacíos, no permitimos que el código avance al calendario
+    if (!primer_nombre_index || !segundo_nombre_index || !ap_paterno_index || !ap_materno_index || !email || !edad || !fono || !rut ) {
+        Swal.fire({
+            title: "Datos Incompletos",
+            text: "Por favor, rellena todos los campos obligatorios.",
+            icon: "warning"
+        });
+
+        // Si ya había un calendario visible de una consulta anterior exitosa, lo removemos
+        if (calendar) {
+            calendar.destroy();
+            calendar = null;
+        }
+        return;
+    }
+    if (valor_sexo == null || valor_sexo == "" || valor_sexo == undefined || id_especialidad == "Seleccionar Especialidad" || id_especialidad == "" || id_clinica == "Seleccionar Clínica" || id_clinica == "" || id_clinica == "" || id_doctor == "Seleccionar Médico" || id_doctor == "") {
+        Swal.fire({
+            title: "Datos Incompletos",
+            text: "Por favor, rellena los campos obligatorios (Sexo, Clínica, Especialidad, Doctor, etc.",
+            icon: "warning"
+        });
+         // Si ya había un calendario visible de una consulta anterior exitosa, lo removemos
+        if (calendar) {
+            calendar.destroy();
+            calendar = null;
+        }
+        return;
+    }
+    console.warn("Todos los datos necesarios están presentes. Procediendo a cargar el calendario...");
+    // !id_clinica || !id_especialidad || !id_doctor || 
     //
     let datos = {
         'id_clinica': id_clinica,
@@ -258,13 +300,14 @@ function calendario_reserva_index(){
                 .catch(error => {
                     console.error("Error al cargar eventos:", error);
                     if (error.error === 0) {
-                        calendar.destroy();
-                        calendar = null;
                         Swal.fire({
                             title: "Error",
                             text: "Faltan datos",
                             icon: "error"
                         });
+                        calendar.destroy();
+                        calendar = null;
+                        return
                     } else {
                         calendar.destroy();
                         calendar = null;
@@ -282,6 +325,7 @@ function calendario_reserva_index(){
                         });
                         calendar.destroy();
                         calendar = null;
+                        return
                     }
                     if (error.error === 6) {
                         Swal.fire({
@@ -291,6 +335,7 @@ function calendario_reserva_index(){
                         });
                         calendar.destroy();
                         calendar = null;
+                        return
                     }
                     failureCallback(error);
                 });
