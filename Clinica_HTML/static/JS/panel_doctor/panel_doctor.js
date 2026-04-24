@@ -148,6 +148,7 @@ function click_seccion(){
 }
 click_seccion()
 //
+var tabla_dato_doctor = null 
 function obtener_datos_doctor(){
     //
     const username = sessionStorage.getItem('username');
@@ -173,7 +174,7 @@ function obtener_datos_doctor(){
             $('#tabla_dato_doctor').empty(); // Limpia la tabla antes de inicializarla nuevamente
         }
         
-        var table = $('#tabla_dato_doctor').DataTable({
+        tabla_dato_doctor = $('#tabla_dato_doctor').DataTable({
             data: arr,
             columns: [
                 { title: 'ID', data: "id_usuario", defaultContent: '' },
@@ -272,6 +273,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 // Modal para editar la información del Doctor.
 function editar_doctor_panel_doc(id, usuario, pr_nombre, seg_nombre,ape_paterno, ape_materno, doc_email, edad,sexo,rut,contacto){
+    console.log(id)
     let modal_info_doctor = document.getElementById("modal_info_doctor")
     // Crea una instancia del modal de Bootstrap.
     const modalInstance = new bootstrap.Modal(modal_info_doctor);
@@ -380,71 +382,16 @@ function enviar_datos_doc(){
             } 
             //
             let doctor = response.data.dato_doctor
-            doctor.forEach(element => {
-                console.log(element.username)
-                arr.push(element)
-            });
-            console.warn(arr)
+            console.log(doctor)
             //
-            var table = $('#tabla_dato_doctor').DataTable({
-                data: arr,
-                columns: [
-                    { title: 'ID', data: "id_usuario", defaultContent: '' },
-                    { title: 'Username', data: "username", defaultContent: '' },
-                    { title: 'Primer Nombre', data: "primer_nombre", defaultContent: '' },
-                    { title: 'Segundo Nombre', data: "segundo_nombre", defaultContent: '' },
-                    { title: 'Apellido P.', data: "ap_paterno", defaultContent: '' },
-                    { title: 'Apellido M.', data: "ap_materno", defaultContent: '' },
-                    { title: 'Email', data: "email", defaultContent: '' },
-                    { title: 'Edad', data: "edad", defaultContent: '' },
-                    { title: 'Sexo', data: "sexo", defaultContent: '' },
-                    { title: 'Rut', data: "rut", defaultContent: '' },
-                    { title: 'Contacto', data: "fono", defaultContent: '' },
-                    { 
-                        title: 'Acciones', 
-                        data: null,
-                        responsivePriority: 1, // Prioridad máxima (no se oculta)
-                        className: 'no-wrap', // Clase para evitar saltos de línea
-                        orderable: false,
-                        render: function(data, type, row) {
-                            return '<button type="button" data-id="'+row.id_usuario+'" data-name="'+row.first_name+'" id="btn_editar_info_doc" onclick="editar_doctor_panel_doc('+row.id_usuario+', \''+row.username+'\',\''+row.primer_nombre+'\', \''+row.segundo_nombre+'\', \''+row.ap_paterno+'\', \''+row.ap_materno+'\', \''+row.email+'\', \''+row.edad+'\', \''+row.sexo+'\', \''+row.rut+'\', \''+row.fono+'\')" class="btn btn-warning btn-sm">Editar</button> ';
-                        }
-                    },
-                ],
-                responsive: true,
-                destroy: true,
-                "dom": 'Bfrtip',
-                buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-                "lengthMenu": [
-                    [5,10, 25, 50, -1],
-                    ['5 Resultados', '10 Resultados', '50 Resultados', 'Mostrar Todos']
-                ],
-                "buttons": {
-                    "pageLength": {
-                        _: "Mostrar %d Registros"
-                    }
-                },
-                "language": {
-                    "decimal": "",
-                    "emptyTable": "No hay información",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Datos",
-                    "infoEmpty": "Mostrando 0 to 0 of 0 Documentos",
-                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "lengthMenu": "Mostrar _MENU_ Documentos",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscar:",
-                    "zeroRecords": "Sin resultados encontrados",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Ultimo",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
-                }
-            });
+            if (tabla_dato_doctor) {
+                tabla_dato_doctor.clear();      // Limpia los datos viejos
+                tabla_dato_doctor.rows.add(doctor); // Agrega los nuevos
+                tabla_dato_doctor.draw();       // Redibuja la tabla
+            } else {
+                // Si por alguna razón la tabla no estaba iniciada, recargamos la página
+                location.reload();
+            }
         }
     })
     .catch(error => {
@@ -1199,6 +1146,8 @@ function obtener_pac_todo(){
     });
 }
 // Abrir Modal con el historial clínico del paciente desde el panel del Doc.
+// Declaramos el DataTables fuera de la función para poder destruirlo y evitar errores al abrir el modal varias veces.
+var tabla_historial_diagnostico_paciente_panel_doc;
 function info_pac_doctor_panel_doc(id, cod_reserva){
     //
     let id_pac = parseInt(id)
@@ -1235,48 +1184,46 @@ function info_pac_doctor_panel_doc(id, cod_reserva){
             $('#tabla_historial_diagnostico_paciente_panel_doc').DataTable().destroy();
         }
         //
-        var table = $('#tabla_historial_diagnostico_paciente_panel_doc').DataTable({
+       
+        tabla_historial_diagnostico_paciente_panel_doc = $('#tabla_historial_diagnostico_paciente_panel_doc').DataTable({
             data: datos,
+            scrollX: true, // Habilita el scroll horizontal nativo
+            autoWidth: false, // Evita que DataTables intente calcular anchos fijos extraños, 
+            // esto es para que no se vea mal el responsove.
             columns: [
                 { 
                     title: 'Fecha Historial', 
-                    data: "fecha_creacion_historial", 
-                    defaultContent: '',
-                    render: function(data, type, row) {
+                    data: "fecha_creacion_historial",
+                    width: '120px', // Fijamos un ancho mínimo para la fecha
+                    render: function(data) {
                         if (!data) return '';
                         const fecha = new Date(data);
-                        const dia = String(fecha.getDate()).padStart(2, '0');
-                        const mes = String(fecha.getMonth() + 1).padStart(2, '0');
-                        const año = fecha.getFullYear();
-                        return `${dia}-${mes}-${año}`;
+                        return `${String(fecha.getDate()).padStart(2, '0')}-${String(fecha.getMonth() + 1).padStart(2, '0')}-${fecha.getFullYear()}`;
                     }
                 },
                 { 
                     title: 'Síntomas', 
-                    data: "sintoma", 
-                    defaultContent: '',
-                    render: function(data, type, row) {
-                        return `<textarea class="form-control" readOnly="True" rows="2">${data}</textarea>`;
+                    data: "sintoma",
+                    render: function(data) {
+                        // Usamos un div con clase 'cell-scroll' en lugar de textarea
+                        return `<div class="cell-scroll">${data || ''}</div>`;
                     }
                 },
                 { 
                     title: 'Diagnóstico', 
-                    data: "diagnostico", 
-                    defaultContent: '',
-                    render: function(data, type, row) {
-                        return `<textarea class="form-control" readOnly="True" rows="2">${data}</textarea>`;
+                    data: "diagnostico",
+                    render: function(data) {
+                        return `<div class="cell-scroll">${data || ''}</div>`;
                     }
                 },
                 { 
                     title: 'Observación', 
-                    data: "observacion", 
-                    defaultContent: '',
-                    render: function(data, type, row) {
-                        return `<textarea class="form-control" readOnly="True" rows="2">${data}</textarea>`;
+                    data: "observacion",
+                    render: function(data) {
+                        return `<div class="cell-scroll">${data || ''}</div>`;
                     }
                 },
             ],
-            responsive: true,
             destroy: true,
             "dom": 'Bfrtip',
             buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
@@ -1867,7 +1814,7 @@ function obtener_pac_no_registrado(){
                         }
                     },
                     { 
-                        title: 'Acciones', 
+                        title: 'Información', 
                         data: null,
                         responsivePriority: 1, // Prioridad máxima (no se oculta)
                         className: 'no-wrap', // Clase para evitar saltos de línea
@@ -1882,7 +1829,6 @@ function obtener_pac_no_registrado(){
                         }
                     },
                 ],
-            responsive: true,
             destroy: true,
             "dom": 'Bfrtip',
             buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],

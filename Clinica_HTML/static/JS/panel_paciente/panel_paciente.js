@@ -71,6 +71,7 @@ function click_seccion(){
 }
 click_seccion()
 //
+var tabla_dato_pac_panel_paciente;
 function obtener_datos_paciente(){
     //
     const username = sessionStorage.getItem('username');
@@ -98,7 +99,7 @@ function obtener_datos_paciente(){
             $('#tabla_dato_pac_panel_paciente').empty(); 
         }
         
-        var table = $('#tabla_dato_pac_panel_paciente').DataTable({
+        tabla_dato_pac_panel_paciente = $('#tabla_dato_pac_panel_paciente').DataTable({
             data: arr,
             columns: [
                 { title: 'ID', data: "id_user", defaultContent: '' },
@@ -202,8 +203,6 @@ document.addEventListener('DOMContentLoaded', function () {
 //
 function editar_paciente_panel_paciente(id_user,username,email,primer_nombre,segundo_nombre,ap_paterno,ap_materno,edad,sexo,rut,contacto,region,comuna,vivienda,num_vivienda){
     //
-    console.warn(contacto)
-    debugger
     let modal_editar_pac_panel_pac = document.getElementById("modal_editar_pac_panel_pac")
     // Crea una instancia del modal de Bootstrap.
     const modalInstance = new bootstrap.Modal(modal_editar_pac_panel_pac);
@@ -276,6 +275,7 @@ function editar_paciente_panel_paciente(id_user,username,email,primer_nombre,seg
     option_comuna.value = comuna
     option_comuna.selected = true
 }
+//
 
 function edit_panel_pac_paciente(){
     //
@@ -364,7 +364,7 @@ function edit_panel_pac_paciente(){
     })
     .then(function (response) {
         console.warn(response.data);
-        console.warn(response.status)
+        console.warn(response.data.paciente);
         if (response.status == 200) {
             Swal.fire({
                 icon: "success",
@@ -378,75 +378,18 @@ function edit_panel_pac_paciente(){
                 alert("Debe iniciar Sessión nuevamente")
                 window.location.href = 'http://127.0.0.1:5500/Clinica_HTML/index.html'
             }
+            console.log("Ahora si que si")
             //console.warn(response.data.grupos[0])
             let paciente = response.data.paciente
-            console.error(paciente)
-            arr.push(paciente);
+            console.log(paciente)
             //
-            var table = $('#tabla_dato_pac_panel_paciente').DataTable({
-                responsive: true,
-                data: arr,
-                columns: [
-                    { title: 'ID', data: "id_usuario", defaultContent: '' },
-                    { title: 'Username', data: "username", defaultContent: '' },
-                    { title: 'Email', data: "email", defaultContent: '' },
-                    { title: 'Primer Nombre', data: "primer_nombre", defaultContent: '' },
-                    { title: 'Segundo Nombre', data: "segundo_nombre", defaultContent: '' },
-                    { title: 'Ap Paterno', data: "ap_paterno", defaultContent: '' },
-                    { title: 'Ap Materno', data: "ap_materno", defaultContent: '' },
-                    { title: 'Edad', data: "edad", defaultContent: '' },
-                    { title: 'Sexo', data: "sexo", defaultContent: '' },
-                    { title: 'Contacto', data: "contacto", defaultContent: '' },
-                    { title: 'Region', data: "region", defaultContent: '' },
-                    { title: 'Comuna', data: "comuna", defaultContent: '' },
-                    { title: 'Vivienda', data: "vivienda", defaultContent: '' },
-                    { title: 'num_vivienda', data: "num_vivienda", defaultContent: '' },
-                    { title: 'Cod. Usuario', data: "paciente_uuid", defaultContent: '' },
-                    { 
-                        title: 'Acciones', 
-                        data: null,
-                        responsivePriority: 1, // Prioridad máxima (no se oculta)
-                        className: 'no-wrap', // Clase para evitar saltos de línea
-                        orderable: false,
-                        render: function(data, type, row) {
-                            return  '<button type="button" data-id="'+row.id_user+'"  id="btn_editar_dato_pac" onclick="editar_paciente_panel_paciente('+row.id_user+', \''+row.username+'\', \''+row.email+'\', \''+row.primer_nombre+'\', \''+row.segundo_nombre+'\', \''+row.ap_paterno+'\', \''+row.ap_materno+'\',\''+row.edad+'\', \''+row.sexo+'\', \''+row.rut+'\', \''+row.contacto+'\', \''+row.region+'\', \''+row.comuna+'\', \''+row.vivienda+'\', \''+row.num_vivienda+'\')" class="btn btn-warning btn-sm editar-btn">Editar</button> ' +
-                                    '<button type="button" data-id="'+row.id_user+'" id="btn_historial_pac_adm" onclick="historial_user_paciente_panel_pac('+row.id_user+', \''+row.primer_nombre+'\', \''+row.segundo_nombre+'\', \''+row.ap_paterno+'\', \''+row.ap_materno+'\')" class="btn btn-info btn-sm ">Historial Citas</button> ';
-                        }
-                    },
-                ],
-                destroy: true,
-                "dom": 'Bfrtip',
-                buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-                "lengthMenu": [
-                    [5,10, 25, 50, -1],
-                    ['5 Resultados', '10 Resultados', '50 Resultados', 'Mostrar Todos']
-                ],
-                "buttons": {
-                    "pageLength": {
-                        _: "Mostrar %d Registros"
-                    }
-                },
-                "language": {
-                    "decimal": "",
-                    "emptyTable": "No hay información",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Datos",
-                    "infoEmpty": "Mostrando 0 to 0 of 0 Documentos",
-                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "lengthMenu": "Mostrar _MENU_ Documentos",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscar:",
-                    "zeroRecords": "Sin resultados encontrados",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Ultimo",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
-                }
-            });
+            // ACTUALIZAR EL DATATABLE
+            if (tabla_dato_pac_panel_paciente) {
+                // IMPORTANTE: Envolvemos 'paciente' en [] para que sea un array
+                tabla_dato_pac_panel_paciente.clear().rows.add([paciente]).draw();
+            } else {
+                obtener_datos_paciente();
+            }
         }
     })
     .catch(error => {
@@ -1496,7 +1439,7 @@ function enviar_cod_verificacion(){
         'reserva_uuid': cod_reserva,
     }
     console.warn(datos)
-    axios.post('https://jacruces91.pythonanywhere.com/reserva/cod_reserva_verificacion',datos,{
+    axios.post('https://jacruces91.pythonanywhere.com/reserva/cod_reserva_verificacion/',datos,{
         headers: {
             'Authorization': `Token ${token}`
         }

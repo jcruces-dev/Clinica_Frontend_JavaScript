@@ -593,11 +593,11 @@ function update_clinica_adm(){
             console.log('Error Response:', error.response.data);
             console.log('Error Status:', error.response.status);
             console.log('Error Headers:', error.response.headers);
-            if (error.response.data.error == 3) {
+            if (error.response.data.error == 0) {
                 Swal.fire({
                     icon: "error",
-                    title: "El grupo ya existe",
-                    text: "El grupo fue creado anteriormente!",
+                    title: "OOoops..",
+                    text: "Debe completar todos los campos",
                 });
             }
         }
@@ -3947,6 +3947,7 @@ function borrar_user_paciente(id, pac_primer_nombre, pac_segundo_nombre){
     });
 }
 //
+var tabla_reserva_paciente_panel_admin;
 function historial_user_paciente(id_usuario, nombre, apellido){
     let modal_historial_citas = document.getElementById("modal_historial_citas")
     // Crea una instancia del modal de Bootstrap
@@ -3973,7 +3974,7 @@ function historial_user_paciente(id_usuario, nombre, apellido){
             arr.push(element)
         });
         //
-        var table = $('#tabla_reserva_paciente_panel_admin').DataTable({
+        tabla_reserva_paciente_panel_admin = $('#tabla_reserva_paciente_panel_admin').DataTable({
             responsive: true,
             data: arr,
             columns: [
@@ -4136,72 +4137,15 @@ function borrar_cita_user_paciente(fk_usuario, nombre_paciente,fecha_reserva,esp
                         text: "La cita fué eliminada",
                     });
                     //console.warn(response.data.grupos[0])
-                    let secretarias = response.data.reserva
-                    secretarias.forEach(element => {
-                        console.log(element.username)
-                        arr.push(element)
-                    });
-                    console.warn(arr)
+                    let reserva = response.data.reserva
+                    console.log(reserva)
                     //
-                    var table = $('#tabla_reserva_paciente_panel_admin').DataTable({
-                        responsive: true,
-                        data: arr,
-                        columns: [
-                            { title: 'ID', data: "id", defaultContent: '' },
-                            { title: 'Fecha Reserva', data: "fecha_reserva", defaultContent: '' },
-                            { title: 'Especialidad', data: "especialidad", defaultContent: '' },
-                            { title: 'N. Doctor', data: "nombre_doctor", defaultContent: '' },
-                            { title: 'Tipo Pago', data: "tipo_pago", defaultContent: '' },
-                            { title: 'Cod. Reserva', data: "cod_reserva", defaultContent: '' },
-                            { title: 'Comuna Clínica', data: "comuna_clinica", defaultContent: '' },
-                            { title: 'Dirección Clínica', data: "direccion_clinica", defaultContent: '' },
-                            { title: 'Nombre Clínica', data: "nombre_clinica", defaultContent: '' },
-                            { title: 'Hora Inicio', data: "hora_inicio", defaultContent: '' },
-                            { title: 'Hora Término', data: "hora_termino", defaultContent: '' },
-                            { 
-                                title: 'Acciones', 
-                                data: null,
-                                responsivePriority: 1, // Prioridad máxima (no se oculta)
-                                className: 'no-wrap', // Clase para evitar saltos de línea
-                                orderable: false,
-                                render: function(data, type, row) {
-                                    return '<button type="button" id="btn_borrar_cita_pac_adm" onclick="borrar_cita_user_paciente('+row.id+', \''+row.nombre_paciente+'\',\''+row.fecha_reserva+'\', \''+row.especialidad+'\', \''+row.nombre_doctor+'\', \''+row.reserva_uuid+'\', \''+row.comuna_clinica+'\', \''+row.direccion_clinica+'\', \''+row.nombre_clinica+'\', \''+row.hora_inicio+'\', \''+row.hora_termino+'\')" class="btn btn-danger btn-sm">Borrar Cita</button> ';
-                                }
-                            },
-                        ],
-                        destroy: true,
-                        "dom": 'Bfrtip',
-                        buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-                        "lengthMenu": [
-                            [5,10, 25, 50, -1],
-                            ['5 Resultados', '10 Resultados', '50 Resultados', 'Mostrar Todos']
-                        ],
-                        "buttons": {
-                            "pageLength": {
-                                _: "Mostrar %d Registros"
-                            }
-                        },
-                        "language": {
-                            "decimal": "",
-                            "emptyTable": "No hay información",
-                            "info": "Mostrando _START_ a _END_ de _TOTAL_ Datos",
-                            "infoEmpty": "Mostrando 0 to 0 of 0 Documentos",
-                            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                            "infoPostFix": "",
-                            "thousands": ",",
-                            "lengthMenu": "Mostrar _MENU_ Documentos",
-                            "loadingRecords": "Cargando...",
-                            "processing": "Procesando...",
-                            "search": "Buscar:",
-                            "zeroRecords": "Sin resultados encontrados",
-                            "paginate": {
-                                "first": "Primero",
-                                "last": "Ultimo",
-                                "next": "Siguiente",
-                                "previous": "Anterior"
-                            }
-                        }
-                    });
+                    if (tabla_reserva_paciente_panel_admin) {
+                    // IMPORTANTE: Envolvemos 'paciente' en [] para que sea un array
+                        tabla_reserva_paciente_panel_admin.clear().rows.add(reserva).draw();
+                    } else {
+                        historial_user_paciente();
+                    }
                 }
             })
             .catch(error => {
@@ -4866,6 +4810,7 @@ function crearCita() {
         'hora_termino': horaConUnaHoraMas,
         'valor_especialidad': valor_especialidad,
     }
+    // axios.post(`https://jacruces91.pythonanywhere.com/paciente/crear_reserva_panel_admin`, datos, {
     console.warn(datos)
     axios.post(`https://jacruces91.pythonanywhere.com/paciente/crear_reserva_panel_admin`, datos, {
         headers: { 'Authorization': `Token ${token}` }

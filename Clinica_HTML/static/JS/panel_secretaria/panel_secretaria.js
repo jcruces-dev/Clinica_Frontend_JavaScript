@@ -25,7 +25,7 @@ function click_seccion(){
         panel_secretaria.style.display="none"
         let panel_doctor = this.getAttribute("data-name")
         //
-        let container_paciente = document.getElementById("container_paciente_panel_doctor")
+        let container_paciente = document.getElementById("container_paciente_panel_sec")
         container_paciente.style.display="none"
         //
         let container_doctor = document.getElementById("container_doctor_panel_doctor")
@@ -54,7 +54,7 @@ function click_seccion(){
         let container_doctor_panel_doctor = document.getElementById("container_doctor_panel_doctor")
         container_doctor_panel_doctor.style.display="block"
         //
-        let container_doctor = document.getElementById("container_paciente_panel_doctor")
+        let container_doctor = document.getElementById("container_paciente_panel_sec")
         container_doctor.style.display="none"
 
         let panel_secretaria = document.getElementById("container_secretaria_panel_doctor")
@@ -73,7 +73,7 @@ function click_seccion(){
     let panel_paciente = document.getElementById("panel_paciente")
     panel_paciente.addEventListener("click", function(event){
         //
-        let ocultar_container_paciente = document.getElementById("container_paciente_panel_doctor")
+        let ocultar_container_paciente = document.getElementById("container_paciente_panel_sec")
         ocultar_container_paciente.style.display="block"
         //
         let container_espe_doctor = document.getElementById("container_doctor_panel_doctor") 
@@ -98,7 +98,7 @@ function click_seccion(){
     let panel_secretaria = document.getElementById("panel_secretaria")
     panel_secretaria.addEventListener("click", function(event){
         //
-        let container_paciente = document.getElementById("container_paciente_panel_doctor")
+        let container_paciente = document.getElementById("container_paciente_panel_sec")
         container_paciente.style.display="none"
         //
         let ocultar_container_doctor = document.getElementById("container_doctor_panel_doctor")
@@ -123,7 +123,7 @@ function click_seccion(){
     let panel_consulta = document.getElementById("panel_consulta")
     panel_consulta.addEventListener("click", function(event){
         //
-        let container_paciente = document.getElementById("container_paciente_panel_doctor")
+        let container_paciente = document.getElementById("container_paciente_panel_sec")
         container_paciente.style.display="none"
         //
         let ocultar_container_doctor = document.getElementById("container_doctor_panel_doctor")
@@ -148,7 +148,7 @@ function click_seccion(){
     let panel_consulta_cerrada = document.getElementById("panel_consulta_cerrada")
     panel_consulta_cerrada.addEventListener("click", function(event){
         //
-        let container_paciente = document.getElementById("container_paciente_panel_doctor")
+        let container_paciente = document.getElementById("container_paciente_panel_sec")
         container_paciente.style.display="none"
         //
         let ocultar_container_doctor = document.getElementById("container_doctor_panel_doctor")
@@ -173,7 +173,7 @@ function click_seccion(){
     let panel_pac_no_registrado = document.getElementById("panel_pac_no_registrado")
     panel_pac_no_registrado.addEventListener("click", function(event){
         //
-        let container_paciente = document.getElementById("container_paciente_panel_doctor")
+        let container_paciente = document.getElementById("container_paciente_panel_sec")
         container_paciente.style.display="none"
         //
         let ocultar_container_doctor = document.getElementById("container_doctor_panel_doctor")
@@ -197,6 +197,7 @@ function click_seccion(){
 }
 click_seccion()
 //
+var tabla_dato_secretaria_panel_secretaria;
 function obtener_datos_secretaria(){
     //
     const username = sessionStorage.getItem('username');
@@ -222,7 +223,7 @@ function obtener_datos_secretaria(){
         //     $('#tabla_dato_secretaria_panel_secretaria').empty(); // Limpia la tabla antes de inicializarla nuevamente
         // }
         
-        var table = $('#tabla_dato_secretaria_panel_secretaria').DataTable({
+        tabla_dato_secretaria_panel_secretaria = $('#tabla_dato_secretaria_panel_secretaria').DataTable({
             data: arr,
             columns: [
                 { title: 'ID', data: "id_user", defaultContent: '' },
@@ -246,7 +247,6 @@ function obtener_datos_secretaria(){
                     }
                 },
             ],
-            responsive: true,
             destroy: true,
             "dom": 'Bfrtip',
             buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
@@ -398,6 +398,7 @@ function enviar_datos_sec(){
                 window.location.href = 'http://127.0.0.1:5500/Clinica_HTML/login.html';
             }
             //
+            console.log(response.data.secretarias)
             let secretarias = response.data.secretarias
             secretarias.forEach(element => {
                 console.log(element.username)
@@ -405,64 +406,15 @@ function enviar_datos_sec(){
             });
             console.warn(arr)
             //
-            var table = $('#tabla_dato_secretaria_panel_secretaria').DataTable({
-                data: arr,
-                columns: [
-                    { title: 'ID', data: "id_user", defaultContent: '' },
-                    { title: 'Username', data: "username", defaultContent: '' },
-                    { title: 'Primer Nombre', data: "primer_nombre", defaultContent: '' },
-                    { title: 'Segundo Nombre', data: "segundo_nombre", defaultContent: '' },
-                    { title: 'Apellido P.', data: "ap_paterno", defaultContent: '' },
-                    { title: 'Apellido M.', data: "ap_materno", defaultContent: '' },
-                    { title: 'Email', data: "email", defaultContent: '' },
-                    { title: 'Edad', data: "edad", defaultContent: '' },
-                    { title: 'Sexo', data: "sexo", defaultContent: '' },
-                    { title: 'Contacto', data: "fono", defaultContent: '' },
-                    { 
-                        title: 'Acciones', 
-                        data: null,
-                        responsivePriority: 1, // Prioridad máxima (no se oculta)
-                        className: 'no-wrap', // Clase para evitar saltos de línea
-                        orderable: false,
-                        render: function(data, type, row) {
-                            return '<button type="button" data-id="'+row.id_user+'" data-name="'+row.primer_nombre+'" id="btn_editar_info_secret_pan_secre" onclick="editar_secretaria_panel_secre('+row.id_user+', \''+row.username+'\',\''+row.primer_nombre+'\', \''+row.segundo_nombre+'\', \''+row.ap_paterno+'\', \''+row.ap_materno+'\', \''+row.email+'\', \''+row.edad+'\', \''+row.sexo+'\', \''+row.rut+'\', \''+row.fono+'\')" class="btn btn-warning btn-sm">Editar</button> ';
-                        }
-                    },
-                ],
-                responsive: true,
-                destroy: true,
-                "dom": 'Bfrtip',
-                buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-                "lengthMenu": [
-                    [5,10, 25, 50, -1],
-                    ['5 Resultados', '10 Resultados', '50 Resultados', 'Mostrar Todos']
-                ],
-                "buttons": {
-                    "pageLength": {
-                        _: "Mostrar %d Registros"
-                    }
-                },
-                "language": {
-                    "decimal": "",
-                    "emptyTable": "No hay información",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Datos",
-                    "infoEmpty": "Mostrando 0 to 0 of 0 Documentos",
-                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "lengthMenu": "Mostrar _MENU_ Documentos",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscar:",
-                    "zeroRecords": "Sin resultados encontrados",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Ultimo",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
-                }
-            });
+            // Esto evita el error de "Incorrect column count" y es más eficiente
+            if (tabla_dato_secretaria_panel_secretaria) {
+                tabla_dato_secretaria_panel_secretaria.clear();      // Limpia los datos viejos
+                tabla_dato_secretaria_panel_secretaria.rows.add(arr); // Agrega los nuevos
+                tabla_dato_secretaria_panel_secretaria.draw();       // Redibuja la tabla
+            } else {
+                // Si por alguna razón la tabla no estaba iniciada, recargamos la página
+                obtener_datos_secretaria();
+            }
         }
     })
     .catch(error => {
@@ -592,7 +544,8 @@ function obtener_doctores(){
         }
     });
 }
-//
+// Declaramos e datatabes el cual nos muestra a todos los pacientes REGISTRADOS.
+var tabla_pac = null;
 function obtener_pac_todo(){
     //
     const username = sessionStorage.getItem('username');
@@ -610,7 +563,7 @@ function obtener_pac_todo(){
         // 
         let datos = response.data.pacientes
         //
-        var table = $('#listar_todos_pac_panel_doc').DataTable({
+        tabla_pac = $('#tabla_pac').DataTable({
             data: datos,
             columns: [
                 { title: 'ID Usuario', data: "id_usuario", defaultContent: '' },
@@ -635,11 +588,28 @@ function obtener_pac_todo(){
                     className: 'no-wrap text-center',
                     orderable: false,
                     render: function(data, type, row) {
-                        return `<button type="button" data-id="${row.id_usuario}" id="btn_edit_pac_sec"
-                                    onclick="edit_pac_secretaria_panel_sec(\'${row.id_usuario}'\,\'${row.primer_nombre}'\,\'${row.segundo_nombre}'\,\'${row.ap_paterno}'\,\'${row.ap_materno}'\,\'${row.email}'\,\'${row.edad}'\,\'${row.sexo}'\,\'${row.rut}'\,\'${row.fono}'\,\'${row.vivienda}'\,\'${row.region}'\,\'${row.comuna}'\,\'${row.num_vivienda}'\)"
-                                    class="btn btn-warning btn-sm">Editar
-                                </button>  
-                        `;
+                        // Escapamos las comillas simples de cada campo para que no rompan el HTML, ya que Ohiggins, 
+                        // lleva comila simple y genera error.
+                        const escape = (str) => String(str).replace(/'/g, "\\'");
+                        
+                        return `<button type="button" 
+                            class="btn btn-warning btn-sm"
+                            onclick="edit_pac_secretaria_panel_sec(
+                                '${row.id_usuario}',
+                                '${escape(row.primer_nombre)}',
+                                '${escape(row.segundo_nombre)}',
+                                '${escape(row.ap_paterno)}',
+                                '${escape(row.ap_materno)}',
+                                '${row.email}',
+                                '${row.edad}',
+                                '${row.sexo}',
+                                '${row.rut}',
+                                '${row.fono}',
+                                '${escape(row.vivienda)}',
+                                '${escape(row.region)}',
+                                '${escape(row.comuna)}',
+                                '${escape(row.num_vivienda)}'
+                            )">Editar</button>`;
                     }
                 },
                 { 
@@ -910,92 +880,15 @@ function edit_panel_sec_paciente(){
             });
             //console.warn(response.data.grupos[0])
             let paciente = response.data.pacientes
-            paciente.forEach(element => {
-                console.log(element.username)
-                arr.push(element)
-            });
-            console.warn(arr)
-            //
-            var table = $('#listar_todos_pac_panel_doc').DataTable({
-                responsive: true,
-                data: arr,
-                columns: [
-                    { title: 'ID Usuario', data: "id_usuario", defaultContent: '' },
-                    { title: 'Primer Nombre', data: "primer_nombre", defaultContent: '' },
-                    { title: 'Segundo Nombre', data: "segundo_nombre", defaultContent: '' },
-                    { title: 'Ap. Paterno', data: "ap_paterno", defaultContent: '' },
-                    { title: 'Ap. Materno', data: "ap_materno", defaultContent: '' },
-                    { title: 'Email', data: "email", defaultContent: '' },
-                    { title: 'Edad', data: "edad", defaultContent: '' },
-                    { title: 'Sexo', data: "sexo", defaultContent: '' },
-                    { title: 'Contacto', data: "fono", defaultContent: '' },
-                    { title: 'Vivienda', data: "vivienda", defaultContent: '' },
-                    { title: 'Región', data: "region", defaultContent: '' },
-                    { title: 'Comuna', data: "comuna", defaultContent: '' },
-                    { title: 'Num Vivienda', data: "num_vivienda", defaultContent: '' },
-                    { 
-                        title: 'Acciones',
-                        data: null,
-                        responsivePriority: 1,
-                        className: 'no-wrap text-center',
-                        orderable: false,
-                        render: function(data, type, row) {
-                            return `<button type="button" data-id="${row.id_usuario}" id="btn_edit_pac_sec"
-                                        onclick="edit_pac_secretaria_panel_sec(\'${row.id_usuario}'\,\'${row.primer_nombre}'\,\'${row.segundo_nombre}'\,\'${row.ap_paterno}'\,\'${row.ap_materno}'\,\'${row.email}'\,\'${row.edad}'\,\'${row.sexo}'\,\'${row.rut}'\,\'${row.fono}'\,\'${row.vivienda}'\,\'${row.region}'\,\'${row.comuna}'\,\'${row.num_vivienda}'\)"
-                                        class="btn btn-warning btn-sm">Editar
-                                </button>
-                            `;
-                        }
-                    },
-                    { 
-                        title: 'Seguimiento',
-                        data: null,
-                        responsivePriority: 1,
-                        className: 'no-wrap text-center',
-                        orderable: false,
-                        render: function(data, type, row) {
-                            return `<button type="button" data-id="${row.id_usuario}" id="btn_info_pac_doc"
-                                        onclick="info_pac_secretaria_panel_sec(\'${row.id_usuario}'\)"
-                                        class="btn btn-sm" style='background: #ceebf2; border-color: blue;'><span class="material-symbols-outlined">clinical_notes
-                                    </span>
-                                </button>
-                            `;
-                        }
-                    }
-                ],
-                destroy: true,
-                "dom": 'Bfrtip',
-                buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-                "lengthMenu": [
-                    [5,10, 25, 50, -1],
-                    ['5 Resultados', '10 Resultados', '50 Resultados', 'Mostrar Todos']
-                ],
-                "buttons": {
-                    "pageLength": {
-                        _: "Mostrar %d Registros"
-                    }
-                },
-                "language": {
-                    "decimal": "",
-                    "emptyTable": "No hay información",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Datos",
-                    "infoEmpty": "Mostrando 0 to 0 of 0 Documentos",
-                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "lengthMenu": "Mostrar _MENU_ Documentos",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscar:",
-                    "zeroRecords": "Sin resultados encontrados",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Ultimo",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
-                }
-            });
+            // Esto evita el error de "Incorrect column count" y es más eficiente
+            if (tabla_pac) {
+                tabla_pac.clear();      // Limpia los datos viejos
+                tabla_pac.rows.add(paciente); // Agrega los nuevos
+                tabla_pac.draw();       // Redibuja la tabla
+            } else {
+                // Si por alguna razón la tabla no estaba iniciada, recargamos la página
+                location.reload();
+            }
         }
     })
     .catch(error => {
@@ -1895,33 +1788,67 @@ function secret_registrar_paciente(){
                 responsive: true,
                 data: arr,
                 columns: [
-                    { title: 'ID', data: "id_usuario", defaultContent: '' },
+                    { title: 'ID Usuario', data: "id_usuario", defaultContent: '' },
                     { title: 'Username', data: "username", defaultContent: '' },
-                    { title: 'Email', data: "email", defaultContent: '' },
                     { title: 'Primer Nombre', data: "primer_nombre", defaultContent: '' },
                     { title: 'Segundo Nombre', data: "segundo_nombre", defaultContent: '' },
-                    { title: 'Ap Paterno', data: "ap_paterno", defaultContent: '' },
-                    { title: 'Ap Materno', data: "ap_materno", defaultContent: '' },
+                    { title: 'Ap. Paterno', data: "ap_paterno", defaultContent: '' },
+                    { title: 'Ap. Materno', data: "ap_materno", defaultContent: '' },
+                    { title: 'Email', data: "email", defaultContent: '' },
                     { title: 'Edad', data: "edad", defaultContent: '' },
                     { title: 'Sexo', data: "sexo", defaultContent: '' },
+                    { title: 'RUT', data: "rut", defaultContent: '' },
                     { title: 'Contacto', data: "fono", defaultContent: '' },
-                    { title: 'Region', data: "region", defaultContent: '' },
-                    { title: 'Comuna', data: "comuna", defaultContent: '' },
                     { title: 'Vivienda', data: "vivienda", defaultContent: '' },
-                    { title: 'num_vivienda', data: "num_vivienda", defaultContent: '' },
-                    { title: 'Cod. Usuario', data: "paciente_uuid", defaultContent: '' },
+                    { title: 'Región', data: "region", defaultContent: '' },
+                    { title: 'Comuna', data: "comuna", defaultContent: '' },
+                    { title: 'Num Vivienda', data: "num_vivienda", defaultContent: '' },
                     { 
-                        title: 'Acciones', 
+                        title: 'Acciones',
                         data: null,
-                        responsivePriority: 1, // Prioridad máxima (no se oculta)
-                        className: 'no-wrap', // Clase para evitar saltos de línea
+                        responsivePriority: 1,
+                        className: 'no-wrap text-center',
                         orderable: false,
                         render: function(data, type, row) {
-                            return  '<button type="button" data-id="'+row.id_usuario+'"  id="btn_editar_pac_adm" onclick="editar_paciente('+row.id_usuario+', \''+row.username+'\', \''+row.email+'\', \''+row.primer_nombre+'\', \''+row.segundo_nombre+'\', \''+row.ap_paterno+'\', \''+row.ap_materno+'\',\''+row.edad+'\', \''+row.sexo+'\', \''+row.rut+'\', \''+row.fono+'\', \''+row.region+'\', \''+row.comuna+'\', \''+row.vivienda+'\', \''+row.num_vivienda+'\')" class="btn btn-warning btn-sm editar-btn">Editar</button> ' +
-                                    '<button type="button" data-id="'+row.id_usuario+'" id="btn_borrar_pac_adm" onclick="borrar_user_paciente('+row.id_usuario+', \''+row.primer_nombre+'\', \''+row.segundo_nombre+'\', \''+row.ap_paterno+'\', \''+row.ap_materno+'\')" class="btn btn-danger btn-sm borrar-btn">Borrar</button> ' +
-                                    '<button type="button" data-id="'+row.id_usuario+'" id="btn_historial_pac_adm" onclick="historial_user_paciente('+row.id_usuario+', \''+row.primer_nombre+'\', \''+row.segundo_nombre+'\', \''+row.ap_paterno+'\', \''+row.ap_materno+'\')" class="btn btn-info btn-sm ">Historial Citas</button> ';
+                            // Escapamos las comillas simples de cada campo para que no rompan el HTML, ya que Ohiggins, 
+                            // lleva comila simple y genera error.
+                            const escape = (str) => String(str).replace(/'/g, "\\'");
+                            
+                            return `<button type="button" 
+                                class="btn btn-warning btn-sm"
+                                onclick="edit_pac_secretaria_panel_sec(
+                                    '${row.id_usuario}',
+                                    '${escape(row.primer_nombre)}',
+                                    '${escape(row.segundo_nombre)}',
+                                    '${escape(row.ap_paterno)}',
+                                    '${escape(row.ap_materno)}',
+                                    '${row.email}',
+                                    '${row.edad}',
+                                    '${row.sexo}',
+                                    '${row.rut}',
+                                    '${row.fono}',
+                                    '${escape(row.vivienda)}',
+                                    '${escape(row.region)}',
+                                    '${escape(row.comuna)}',
+                                    '${escape(row.num_vivienda)}'
+                                )">Editar</button>`;
                         }
                     },
+                    { 
+                        title: 'Seguimiento',
+                        data: null,
+                        responsivePriority: 1,
+                        className: 'no-wrap text-center',
+                        orderable: false,
+                        render: function(data, type, row) {
+                            return `<button type="button" data-id="${row.id_usuario}" id="btn_info_pac_doc"
+                                        onclick="info_pac_secretaria_panel_sec(\'${row.id_usuario}'\)"
+                                        class="btn btn-sm" style='background: #ceebf2; border-color: blue;'><span class="material-symbols-outlined">clinical_notes
+                                    </span>
+                                </button>
+                            `;
+                        }
+                    }
                 ],
                 destroy: true,
                 "dom": 'Bfrtip',
@@ -2498,9 +2425,12 @@ function nueva_cita_pac_registrado(){
     let datos = buton.datos;
     console.log("Datos recibidos:", datos);
     const token = sessionStorage.getItem('token');
+    console.warn(token)
     console.warn(datos)
-    //
-    axios.post(`https://jacruces91.pythonanywhere.com/paciente/crear_reserva_pac_registrado_secretaria`, datos, {
+    //http://127.0.0.1:8000/
+    // http://127.0.0.1:8000/paciente/crear_reserva_pac_registrado_secretaria/
+    // axios.post(`https://jacruces91.pythonanywhere.com/paciente/crear_reserva_pac_registrado_secretaria`, datos, {
+    axios.post(`https://jacruces91.pythonanywhere.com/paciente/crear_reserva_pac_registrado_secretaria/`, datos, {
         headers: {
             'Authorization': `Token ${token}`
         }
