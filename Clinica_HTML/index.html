@@ -1,424 +1,737 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Clínica BuenPaciente - Atención médica de calidad para ti y tu familia">
-    
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Clínica BuenPaciente - Atención médica de calidad para ti y tu familia"
+    />
+
     <!-- Full Calendar -->
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+
     <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.15.10/dist/sweetalert2.min.css" rel="stylesheet">
-    
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11.15.10/dist/sweetalert2.min.css"
+      rel="stylesheet"
+    />
+
     <!-- DataTables -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.2.0/css/dataTables.bootstrap5.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.bootstrap5.min.css">
-    
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/2.2.0/css/dataTables.bootstrap5.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.bootstrap5.min.css"
+    />
+
     <!-- Font Awesome 6 (para iconos profesionales) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <!-- **************************************************************************************************************** -->
     <!-- Estilos de todos los templates principales. -->
-    <link rel="stylesheet" href="./static/CSS/template_principales/whatsapp.css">
-    <link rel="stylesheet" href="./static/CSS/template_principales/chat_both.css">
-    <link rel="stylesheet" href="./static/CSS/template_principales/body_principal.css">
-    <link rel="stylesheet" href="./static/CSS/template_principales/footer.css">
+    <link
+      rel="stylesheet"
+      href="./static/CSS/template_principales/whatsapp.css"
+    />
+    <link
+      rel="stylesheet"
+      href="./static/CSS/template_principales/chat_both.css"
+    />
+    <link
+      rel="stylesheet"
+      href="./static/CSS/template_principales/body_principal.css"
+    />
+    <link
+      rel="stylesheet"
+      href="./static/CSS/template_principales/footer.css"
+    />
     <!-- Fin Estilos de todos los templates principales. -->
     <!-- **************************************************************************************************************** -->
-
+    <!-- CDN STRIPE OFICIAL. -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <!-- FIN CDN STRIPE OFICIAL. -->
     <title>Clínica BuenPaciente - Atención Médica de Calidad</title>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="./index.html">
-                <i class="fas fa-clinic-medical me-2"></i>
-                Clínica BuenPaciente
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarScroll">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="./index.html">
-                            <i class="fas fa-home me-1"></i>Home
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./index.html#quienes_somos">
-                            <i class="fas fa-users me-1"></i>¿Quiénes Somos?
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./index.html#reserva_hora">
-                            <i class="fas fa-calendar-check me-1"></i>Reserva de Hora
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./index.html#destacados">
-                            <i class="fas fa-star me-1"></i>Destacados
-                        </a>
-                    </li>
-                    <!-- <li class="nav-item">
+      <div class="container">
+        <a class="navbar-brand" href="./index.html">
+          <i class="fas fa-clinic-medical me-2"></i>
+          Clínica BuenPaciente
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarScroll"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarScroll">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="./index.html">
+                <i class="fas fa-home me-1"></i>Home
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./index.html#quienes_somos">
+                <i class="fas fa-users me-1"></i>¿Quiénes Somos?
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./index.html#reserva_hora">
+                <i class="fas fa-calendar-check me-1"></i>Reserva de Hora
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./index.html#destacados">
+                <i class="fas fa-star me-1"></i>Destacados
+              </a>
+            </li>
+            <!-- <li class="nav-item">
                         <a class="nav-link" href="./static/Templates/Admin/template_admin.html">
                             <i class="fas fa-user-tie me-1"></i>Admin
                         </a>
                     </li> -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-user me-1"></i>Mi Portal
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item active" href="./registrar_paciente.html">
-                                    <i class="fas fa-user-plus me-2"></i>Regístrate
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="./login.html">
-                                    <i class="fas fa-sign-in-alt me-2"></i>Login
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./escribenos.html">
-                            <span class="badge bg-warning text-dark">
-                                <i class="fas fa-envelope me-1"></i>Escríbenos
-                            </span>
-                        </a>
-                    </li>
-                    <!--  -->
-                    <li class="nav-item">
-                        <a class="nav-link active" href="./pagar_reserva.html">
-                            <span class="badge bg-info text-dark">
-                                <i class="fas fa-credit-card me-1"></i>Paga tu Reserva
-                            </span>
-                        </a>
-                    </li>
-                    <!--  -->
-                </ul>
-            </div>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+              >
+                <i class="fas fa-user me-1"></i>Mi Portal
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a
+                    class="dropdown-item active"
+                    href="./registrar_paciente.html"
+                  >
+                    <i class="fas fa-user-plus me-2"></i>Regístrate
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="./login.html">
+                    <i class="fas fa-sign-in-alt me-2"></i>Login
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./escribenos.html">
+                <span class="badge bg-warning text-dark">
+                  <i class="fas fa-envelope me-1"></i>Escríbenos
+                </span>
+              </a>
+            </li>
+            <!--  -->
+            <li class="nav-item">
+              <a class="nav-link active" href="./pagar_reserva.html">
+                <span class="badge bg-info text-dark">
+                  <i class="fas fa-credit-card me-1"></i>Paga tu Reserva
+                </span>
+              </a>
+            </li>
+            <!--  -->
+          </ul>
         </div>
+      </div>
     </nav>
 
     <!-- Section con imagen profesional. -->
     <section class="hero-section">
-        <img src="https://images.unsplash.com/photo-1638202993928-5268c3d62b5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
-             alt="Clínica moderna con pacientes felices" 
-             class="hero-image">
-        <div class="hero-overlay">
-            <div class="hero-content">
-                <h1>Clínica BuenPaciente</h1>
-                <p>Cuidamos de ti y tu familia con excelencia médica y calidez humana</p>
-                <a href="#reserva_hora" class="hero-btn">
-                    <i class="fas fa-calendar-alt me-2"></i>
-                    Reserva tu Hora Ahora
-                </a>
-            </div>
+      <img
+        src="https://images.unsplash.com/photo-1638202993928-5268c3d62b5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+        alt="Clínica moderna con pacientes felices"
+        class="hero-image"
+      />
+      <div class="hero-overlay">
+        <div class="hero-content">
+          <h1>Clínica BuenPaciente</h1>
+          <p>
+            Cuidamos de ti y tu familia con excelencia médica y calidez humana
+          </p>
+          <a href="#reserva_hora" class="hero-btn">
+            <i class="fas fa-calendar-alt me-2"></i>
+            Reserva tu Hora Ahora
+          </a>
         </div>
+      </div>
     </section>
 
     <!-- Stats Section -->
     <section class="stats-section">
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-md-3 col-6">
-                    <div class="stat-item">
-                        <i class="fas fa-user-md stat-icon"></i>
-                        <div class="stat-number">50+</div>
-                        <div class="stat-label">Médicos Especialistas</div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="stat-item">
-                        <i class="fas fa-procedures stat-icon"></i>
-                        <div class="stat-number">15</div>
-                        <div class="stat-label">Especialidades</div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="stat-item">
-                        <i class="fas fa-smile stat-icon"></i>
-                        <div class="stat-number">10k+</div>
-                        <div class="stat-label">Pacientes Felices</div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="stat-item">
-                        <i class="fas fa-clock stat-icon"></i>
-                        <div class="stat-number">24/7</div>
-                        <div class="stat-label">Atención de Urgencia</div>
-                    </div>
-                </div>
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-md-3 col-6">
+            <div class="stat-item">
+              <i class="fas fa-user-md stat-icon"></i>
+              <div class="stat-number">50+</div>
+              <div class="stat-label">Médicos Especialistas</div>
             </div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="stat-item">
+              <i class="fas fa-procedures stat-icon"></i>
+              <div class="stat-number">15</div>
+              <div class="stat-label">Especialidades</div>
+            </div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="stat-item">
+              <i class="fas fa-smile stat-icon"></i>
+              <div class="stat-number">10k+</div>
+              <div class="stat-label">Pacientes Felices</div>
+            </div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="stat-item">
+              <i class="fas fa-clock stat-icon"></i>
+              <div class="stat-number">24/7</div>
+              <div class="stat-label">Atención de Urgencia</div>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Contenido Principal -->
     <main>
-        <!-- Destacados Section -->
+      <!-- Destacados Section -->
+      <div class="container">
+        <h1 class="text-center" id="destacados">
+          Nuestros Servicios Destacados
+        </h1>
+        <div class="row g-4 mt-3">
+          <div class="col-md-4">
+            <div class="custom-card card">
+              <img
+                src="./static/IMG/cardiologia.png"
+                class="card-img-top"
+                alt="Cardiología"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Cardiología</h5>
+                <p class="card-text">
+                  Atención especializada para tu corazón con tecnología de
+                  última generación.
+                </p>
+                <a
+                  href="#"
+                  class="btn btn-primary"
+                  style="background: #2a5298; border: none"
+                  >Más información</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="custom-card card">
+              <img
+                src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80"
+                class="card-img-top"
+                alt="Pediatría"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Pediatría</h5>
+                <p class="card-text">
+                  Cuidamos de la salud de tus hijos con calidez y
+                  profesionalismo.
+                </p>
+                <a
+                  href="#"
+                  class="btn btn-primary"
+                  style="background: #2a5298; border: none"
+                  >Más información</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="custom-card card">
+              <img
+                src="https://images.unsplash.com/photo-1584515933487-779824d29309?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                class="card-img-top"
+                alt="Traumatología"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Traumatología</h5>
+                <p class="card-text">
+                  Especialistas en el cuidado de tu sistema musculoesquelético.
+                </p>
+                <a
+                  href="#"
+                  class="btn btn-primary"
+                  style="background: #2a5298; border: none"
+                  >Más información</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quiénes Somos Section -->
+      <div class="container mt-5">
+        <h1 class="text-center" id="quienes_somos">¿Quiénes Somos?</h1>
+        <div class="row g-4">
+          <div class="col-md-6">
+            <div class="about-card">
+              <h3><i class="fas fa-heartbeat me-2"></i>Nuestra Misión</h3>
+              <p>
+                Brindar atención médica de excelencia, con calidez humana y
+                tecnología de vanguardia, para mejorar la calidad de vida de
+                nuestros pacientes y sus familias.
+              </p>
+              <div class="mt-4">
+                <p>
+                  <i class="fas fa-check-circle me-2"></i>Más de 20 años de
+                  experiencia
+                </p>
+                <p>
+                  <i class="fas fa-check-circle me-2"></i>Equipo médico
+                  altamente calificado
+                </p>
+                <p>
+                  <i class="fas fa-check-circle me-2"></i>Tecnología de última
+                  generación
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div
+              class="about-card"
+              style="
+                background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+                color: #1e3c72;
+              "
+            >
+              <h3><i class="fas fa-eye me-2"></i>Nuestra Visión</h3>
+              <p>
+                Ser reconocidos como la clínica líder en atención médica
+                integral en la región, destacando por nuestra innovación,
+                calidad asistencial y compromiso con la comunidad.
+              </p>
+              <div class="mt-4">
+                <p>
+                  <i class="fas fa-certificate me-2"></i>Acreditación de calidad
+                </p>
+                <p>
+                  <i class="fas fa-certificate me-2"></i>Certificación
+                  internacional
+                </p>
+                <p>
+                  <i class="fas fa-certificate me-2"></i>Centro de investigación
+                  médica
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Booking Section (formulario) -->
+      <section class="booking-section">
         <div class="container">
-            <h1 class="text-center" id="destacados">Nuestros Servicios Destacados</h1>
-            <div class="row g-4 mt-3">
-                <div class="col-md-4">
-                    <div class="custom-card card">
-                        <img src="./static/IMG/cardiologia.png" 
-                             class="card-img-top" alt="Cardiología">
-                        <div class="card-body">
-                            <h5 class="card-title">Cardiología</h5>
-                            <p class="card-text">Atención especializada para tu corazón con tecnología de última generación.</p>
-                            <a href="#" class="btn btn-primary" style="background: #2a5298; border: none;">Más información</a>
+          <h1 class="text-center" id="reserva_hora">Reserva tu Hora Médica</h1>
+          <div class="row justify-content-center">
+            <div class="col-lg-10">
+              <div class="booking-form-container">
+                <!-- Tu formulario original sin modificar -->
+                <div class="container-xl">
+                  <div class="container mt-5 d-flex justify-content-center">
+                    <div class="col-md-12">
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <label for="primer_nombre_index" class="form-label"
+                            >Primer Nombre</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="primer_nombre_index"
+                            placeholder="Ingresa tu primer nombre"
+                          />
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="custom-card card">
-                        <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80" 
-                             class="card-img-top" alt="Pediatría">
-                        <div class="card-body">
-                            <h5 class="card-title">Pediatría</h5>
-                            <p class="card-text">Cuidamos de la salud de tus hijos con calidez y profesionalismo.</p>
-                            <a href="#" class="btn btn-primary" style="background: #2a5298; border: none;">Más información</a>
+                        <div class="col-md-6 mb-3">
+                          <label for="segundo_nombre_index" class="form-label"
+                            >Segundo Nombre</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="segundo_nombre_index"
+                            placeholder="Ingresa tu segundo nombre"
+                          />
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="custom-card card">
-                        <img src="https://images.unsplash.com/photo-1584515933487-779824d29309?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
-                             class="card-img-top" alt="Traumatología">
-                        <div class="card-body">
-                            <h5 class="card-title">Traumatología</h5>
-                            <p class="card-text">Especialistas en el cuidado de tu sistema musculoesquelético.</p>
-                            <a href="#" class="btn btn-primary" style="background: #2a5298; border: none;">Más información</a>
+                        <div class="col-md-6 mb-3">
+                          <label for="ap_paterno_index" class="form-label"
+                            >Apellido Paterno</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="ap_paterno_index"
+                            placeholder="Ingresa tu apellido paterno"
+                          />
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="ap_materno_index" class="form-label"
+                            >Apellido Materno</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="ap_materno_index"
+                            placeholder="Ingresa tu apellido materno"
+                          />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="email" class="form-label">Email</label>
+                          <input
+                            type="email"
+                            class="form-control"
+                            id="email"
+                            placeholder="nombre@ejemplo.com"
+                          />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="edad" class="form-label">Edad</label>
+                          <input
+                            type="number"
+                            class="form-control"
+                            id="edad"
+                            placeholder="Tu edad"
+                          />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label class="form-label">Sexo</label>
+                          <div class="d-flex gap-4">
+                            <div class="form-check">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                name="sexo"
+                                id="masculino"
+                                value="M"
+                              />
+                              <label class="form-check-label" for="masculino"
+                                >Masculino</label
+                              >
+                            </div>
+                            <div class="form-check">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                name="sexo"
+                                id="femenino"
+                                value="F"
+                              />
+                              <label class="form-check-label" for="femenino"
+                                >Femenino</label
+                              >
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label class="form-label">Teléfono</label>
+                          <div class="input-group">
+                            <span class="input-group-text">+56</span>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="fono"
+                              placeholder="9 1234 5678"
+                            />
+                          </div>
+                          <div class="form-text text-muted">
+                            <span class="badge bg-secondary"
+                              >Debe contener 9 dígitos</span
+                            >
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label class="form-label">RUT</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="rut"
+                            placeholder="12.345.678-9"
+                          />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label class="form-label">Clínica</label>
+                          <select
+                            class="form-select"
+                            id="index_doctor_clinica"
+                            onfocus="clinica_disp()"
+                          >
+                            <option selected>Seleccionar Clínica</option>
+                          </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label class="form-label">Especialidad</label>
+                          <select
+                            class="form-select"
+                            id="index_especialidad"
+                            onfocus="select_esp_index(this)"
+                          >
+                            <option selected>Seleccionar Especialidad</option>
+                          </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label class="form-label">Médico</label>
+                          <select
+                            class="form-select"
+                            id="index_doctor"
+                            onfocus="valor_select_esp_index()"
+                          >
+                            <option selected>Seleccionar Médico</option>
+                          </select>
+                        </div>
+                      </div>
 
-        <!-- Quiénes Somos Section -->
-        <div class="container mt-5">
-            <h1 class="text-center" id="quienes_somos">¿Quiénes Somos?</h1>
-            <div class="row g-4">
-                <div class="col-md-6">
-                    <div class="about-card">
-                        <h3><i class="fas fa-heartbeat me-2"></i>Nuestra Misión</h3>
-                        <p>Brindar atención médica de excelencia, con calidez humana y tecnología de vanguardia, para mejorar la calidad de vida de nuestros pacientes y sus familias.</p>
-                        <div class="mt-4">
-                            <p><i class="fas fa-check-circle me-2"></i>Más de 20 años de experiencia</p>
-                            <p><i class="fas fa-check-circle me-2"></i>Equipo médico altamente calificado</p>
-                            <p><i class="fas fa-check-circle me-2"></i>Tecnología de última generación</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="about-card" style="background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%); color: #1e3c72;">
-                        <h3><i class="fas fa-eye me-2"></i>Nuestra Visión</h3>
-                        <p>Ser reconocidos como la clínica líder en atención médica integral en la región, destacando por nuestra innovación, calidad asistencial y compromiso con la comunidad.</p>
-                        <div class="mt-4">
-                            <p><i class="fas fa-certificate me-2"></i>Acreditación de calidad</p>
-                            <p><i class="fas fa-certificate me-2"></i>Certificación internacional</p>
-                            <p><i class="fas fa-certificate me-2"></i>Centro de investigación médica</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                      <div
+                        class="container"
+                        id="mostrar_cita_disponible"
+                        style="display: none"
+                      >
+                        <h4 class="text-center" style="color: #1e3c72">
+                          Citas Disponibles
+                        </h4>
+                        <div id="mostrar_citas_alert"></div>
+                      </div>
 
-        <!-- Booking Section (formulario) -->
-        <section class="booking-section">
-            <div class="container">
-                <h1 class="text-center" id="reserva_hora">Reserva tu Hora Médica</h1>
-                <div class="row justify-content-center">
-                    <div class="col-lg-10">
-                        <div class="booking-form-container">
-                            <!-- Tu formulario original sin modificar -->
-                            <div class="container-xl">
-                                <div class="container mt-5 d-flex justify-content-center">
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <label for="primer_nombre_index" class="form-label">Primer Nombre</label>
-                                                <input type="text" class="form-control" id="primer_nombre_index" placeholder="Ingresa tu primer nombre">
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label for="segundo_nombre_index" class="form-label">Segundo Nombre</label>
-                                                <input type="text" class="form-control" id="segundo_nombre_index" placeholder="Ingresa tu segundo nombre">
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label for="ap_paterno_index" class="form-label">Apellido Paterno</label>
-                                                <input type="text" class="form-control" id="ap_paterno_index" placeholder="Ingresa tu apellido paterno">
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label for="ap_materno_index" class="form-label">Apellido Materno</label>
-                                                <input type="text" class="form-control" id="ap_materno_index" placeholder="Ingresa tu apellido materno">
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label for="email" class="form-label">Email</label>
-                                                <input type="email" class="form-control" id="email" placeholder="nombre@ejemplo.com">
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label for="edad" class="form-label">Edad</label>
-                                                <input type="number" class="form-control" id="edad" placeholder="Tu edad">
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label class="form-label">Sexo</label>
-                                                <div class="d-flex gap-4">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="sexo" id="masculino" value="M">
-                                                        <label class="form-check-label" for="masculino">Masculino</label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="sexo" id="femenino" value="F">
-                                                        <label class="form-check-label" for="femenino">Femenino</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label class="form-label">Teléfono</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-text">+56</span>
-                                                    <input type="text" class="form-control" id="fono" placeholder="9 1234 5678">
-                                                </div>
-                                                <div class="form-text text-muted"><span class="badge bg-secondary">Debe contener 9 dígitos</span></div>
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label class="form-label">RUT</label>
-                                                <input type="text" class="form-control" id="rut" placeholder="12.345.678-9">
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label class="form-label">Clínica</label>
-                                                <select class="form-select" id="index_doctor_clinica" onfocus="clinica_disp()">
-                                                    <option selected>Seleccionar Clínica</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label class="form-label">Especialidad</label>
-                                                <select class="form-select" id="index_especialidad" onfocus="select_esp_index(this)">
-                                                    <option selected>Seleccionar Especialidad</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label class="form-label">Médico</label>
-                                                <select class="form-select" id="index_doctor" onfocus="valor_select_esp_index()">
-                                                    <option selected>Seleccionar Médico</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="container" id="mostrar_cita_disponible" style="display: none;">
-                                            <h4 class="text-center" style="color: #1e3c72;">Citas Disponibles</h4>
-                                            <div id="mostrar_citas_alert"></div>
-                                        </div>
-                                        
-                                        <div class="d-grid gap-2 mt-4">
-                                            <button class="btn btn-lg" id="calendario_index" style="background: #2a5298; color: white;" type="button" onclick="calendario_reserva_index()">
-                                                <i class="fas fa-calendar-alt me-2"></i>Ver Calendario de Citas
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- FullCalendar -->
-                                <div class="container mt-5 p-4 bg-white rounded-4 shadow">
-                                    <div id='calendar_index'></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Modal -->
-        <div class="modal fade" id="modal_info_res_index" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header" style="background: #1e3c72; color: white;">
-                        <h5 class="modal-title"><i class="fas fa-file-invoice me-2"></i>Resumen de tu Reserva</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body" style="background: #f8f9fa;">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">Nombre Completo</label>
-                                <input type="text" class="form-control" id="cita_reserva_nombre" readonly>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">Email</label>
-                                <input type="email" class="form-control" id="cita_reserva_email" readonly>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">Edad</label>
-                                <input type="text" class="form-control" id="cita_reserva_edad" readonly>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">Sexo</label>
-                                <input type="text" class="form-control" id="cita_reserva_sexo" readonly>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">Contacto</label>
-                                <input type="text" class="form-control" id="cita_reserva_fono" readonly>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">RUT</label>
-                                <input type="text" class="form-control" id="cita_reserva_rut" readonly>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">Especialidad</label>
-                                <input type="text" class="form-control" id="cita_reserva_esp" readonly>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">Valor</label>
-                                <input type="text" class="form-control" id="cita_reserva_valor_esp" readonly>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">Clínica</label>
-                                <input type="text" class="form-control" id="cita_reserva_nombre_clinica" readonly>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">Dirección</label>
-                                <input type="text" class="form-control" id="cita_reserva_direccion_clinica" readonly>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">Comuna</label>
-                                <input type="text" class="form-control" id="cita_reserva_comuna_clinica" readonly>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">Médico</label>
-                                <input type="text" class="form-control" id="cita_reserva_nombre_doctor" readonly>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label fw-bold">Fecha</label>
-                                <input type="text" class="form-control" id="cita_reserva_fecha" readonly>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label fw-bold">Hora Inicio</label>
-                                <input type="text" class="form-control" id="cita_reserva_hora_inicio" readonly>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label fw-bold">Hora Término</label>
-                                <input type="text" class="form-control" id="cita_reserva_hora_termino" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer" style="background: #1e3c72;">
-                        <button type="button" class="btn btn-light" onclick="cancelar_pago()" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn" style="background: #ffd700; color: #1e3c72; font-weight: 600;" onclick="metodo_pago_debito()">
-                            <i class="fas fa-credit-card me-2"></i>Débito
+                      <div class="d-grid gap-2 mt-4">
+                        <button
+                          class="btn btn-lg"
+                          id="calendario_index"
+                          style="background: #2a5298; color: white"
+                          type="button"
+                          onclick="calendario_reserva_index()"
+                        >
+                          <i class="fas fa-calendar-alt me-2"></i>Ver Calendario
+                          de Citas
                         </button>
-                        <button type="button" class="btn" style="background: #ffd700; color: #1e3c72; font-weight: 600;" onclick="boton_pago_credito()">
-                            <i class="fas fa-credit-card me-2"></i>Crédito
-                        </button>
+                      </div>
                     </div>
-                    <div class="modal-footer" id="lista_cuota" style="background: #1e3c72; display: none; justify-content: center;">
+                  </div>
+
+                  <!-- FullCalendar -->
+                  <div class="container mt-5 p-4 bg-white rounded-4 shadow">
+                    <div id="calendar_index"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="modal_info_res_index"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+      >
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header" style="background: #1e3c72; color: white">
+              <h5 class="modal-title">
+                <i class="fas fa-file-invoice me-2"></i>Resumen de tu Reserva
+              </h5>
+              <button
+                type="button"
+                class="btn-close btn-close-white"
+                data-bs-dismiss="modal"
+              ></button>
+            </div>
+            <div class="modal-body" style="background: #f8f9fa">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-bold">Nombre Completo</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="cita_reserva_nombre"
+                    readonly
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-bold">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="cita_reserva_email"
+                    readonly
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-bold">Edad</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="cita_reserva_edad"
+                    readonly
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-bold">Sexo</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="cita_reserva_sexo"
+                    readonly
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-bold">Contacto</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="cita_reserva_fono"
+                    readonly
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-bold">RUT</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="cita_reserva_rut"
+                    readonly
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-bold">Especialidad</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="cita_reserva_esp"
+                    readonly
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-bold">Valor</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="cita_reserva_valor_esp"
+                    readonly
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-bold">Clínica</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="cita_reserva_nombre_clinica"
+                    readonly
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-bold">Dirección</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="cita_reserva_direccion_clinica"
+                    readonly
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-bold">Comuna</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="cita_reserva_comuna_clinica"
+                    readonly
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label fw-bold">Médico</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="cita_reserva_nombre_doctor"
+                    readonly
+                  />
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label fw-bold">Fecha</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="cita_reserva_fecha"
+                    readonly
+                  />
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label fw-bold">Hora Inicio</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="cita_reserva_hora_inicio"
+                    readonly
+                  />
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label fw-bold">Hora Término</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="cita_reserva_hora_termino"
+                    readonly
+                  />
+                </div>
+              </div>
+            </div>
+            <button
+              type="button"
+              class="btn btn-light"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <!-- <div class="modal-footer" style="background: #1e3c72">
+              <button
+                type="button"
+                class="btn"
+                style="background: #ffd700; color: #1e3c72; font-weight: 600"
+                onclick="metodo_pago_debito()"
+              >
+                <i class="fas fa-credit-card me-2"></i>Débito
+              </button>
+              <button
+                type="button"
+                class="btn"
+                style="background: #ffd700; color: #1e3c72; font-weight: 600"
+                onclick="boton_pago_credito()"
+              >
+                <i class="fas fa-credit-card me-2"></i>Crédito
+              </button>
+            </div> -->
+            <!-- <div class="modal-footer" id="lista_cuota" style="background: #1e3c72; display: none; justify-content: center;">
                         <div class="d-flex gap-3 align-items-center">
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="cuota_index" id="cuota_index_1" value="3">
@@ -436,190 +749,336 @@
                                 Pagar
                             </button>
                         </div>
-                    </div>
+                    </div> -->
+            <!-- ESTE ES EL FORMULARIO DE PAGO DEL STRIPE. -->
+            <div class="p-4 border-top" style="background: #ffffff">
+              <h6 class="text-muted mb-3">
+                <i class="fas fa-shield-alt me-2 text-success"></i>Pago Seguro
+                procesado por Stripe
+              </h6>
+
+              <form id="payment-form">
+                <div id="link-authentication-element" class="mb-2"></div>
+                <div id="payment-element" class="mb-3"></div>
+
+                <div
+                  id="error-message"
+                  class="text-danger small mb-3 fw-bold"
+                ></div>
+
+                <div class="d-grid">
+                  <button
+                    id="submit"
+                    class="btn btn-lg"
+                    style="
+                      background: #ffd700;
+                      color: #1e3c72;
+                      font-weight: 600;
+                    "
+                  >
+                    <i class="fas fa-lock me-2"></i>Confirmar Pago
+                  </button>
                 </div>
+              </form>
             </div>
+            <!-- FIN FORMULARIO DE PAGO DEL STRIPE. -->
+            <!-- --------------------------------- -->
+          </div>
         </div>
+      </div>
     </main>
 
     <!-- Footer -->
     <footer class="footer mt-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-md-6">
-                    <div class="single_footer">
-                        <h4><i class="fas fa-clinic-medical me-2"></i>Clínica BuenPaciente</h4>
-                        <p class="text-white-50">Brindando atención médica de excelencia desde 1995. Comprometidos con tu salud y bienestar.</p>
-                        <div class="mt-4">
-                            <p class="text-white-50"><i class="fas fa-map-marker-alt me-2"></i>Av. Principal 123, Santiago</p>
-                            <p class="text-white-50"><i class="fas fa-phone me-2"></i>+56 2 2345 6789</p>
-                            <p class="text-white-50"><i class="fas fa-envelope me-2"></i>contacto@clinicabuenpaciente.cl</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-6">
-                    <div class="single_footer">
-                        <h4>Servicios</h4>
-                        <ul>
-                            <li><a href="#"><i class="fas fa-chevron-right me-2"></i>Consultas Médicas</a></li>
-                            <li><a href="#"><i class="fas fa-chevron-right me-2"></i>Especialidades</a></li>
-                            <li><a href="#"><i class="fas fa-chevron-right me-2"></i>Exámenes</a></li>
-                            <li><a href="#"><i class="fas fa-chevron-right me-2"></i>Urgencias 24/7</a></li>
-                            <li><a href="#"><i class="fas fa-chevron-right me-2"></i>Telemedicina</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-6">
-                    <div class="single_footer">
-                        <h4>Enlaces Rápidos</h4>
-                        <ul>
-                            <li><a href="#"><i class="fas fa-chevron-right me-2"></i>Sobre Nosotros</a></li>
-                            <li><a href="#"><i class="fas fa-chevron-right me-2"></i>Equipo Médico</a></li>
-                            <li><a href="#"><i class="fas fa-chevron-right me-2"></i>Convenios</a></li>
-                            <li><a href="#"><i class="fas fa-chevron-right me-2"></i>Preguntas Frecuentes</a></li>
-                            <li><a href="#"><i class="fas fa-chevron-right me-2"></i>Contacto</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="single_footer">
-                        <h4>Suscríbete</h4>
-                        <p class="text-white-50">Recibe noticias y promociones exclusivas</p>
-                        <div class="signup_form">
-                            <form action="#" class="subscribe">
-                                <input type="email" class="subscribe__input" placeholder="Tu correo electrónico">
-                                <button type="button" class="subscribe__btn">
-                                    <i class="fas fa-paper-plane"></i>
-                                </button>
-                            </form>
-                        </div>
-                        <div class="social_profile mt-4">
-                            <ul>
-                                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                                <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
-                                <li><a href="#"><i class="fab fa-youtube"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4 col-md-6">
+            <div class="single_footer">
+              <h4>
+                <i class="fas fa-clinic-medical me-2"></i>Clínica BuenPaciente
+              </h4>
+              <p class="text-white-50">
+                Brindando atención médica de excelencia desde 1995.
+                Comprometidos con tu salud y bienestar.
+              </p>
+              <div class="mt-4">
+                <p class="text-white-50">
+                  <i class="fas fa-map-marker-alt me-2"></i>Av. Principal 123,
+                  Santiago
+                </p>
+                <p class="text-white-50">
+                  <i class="fas fa-phone me-2"></i>+56 2 2345 6789
+                </p>
+                <p class="text-white-50">
+                  <i class="fas fa-envelope me-2"></i
+                  >contacto@clinicabuenpaciente.cl
+                </p>
+              </div>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="copyright">
-                        <p class="mb-0">© 2024 Clínica BuenPaciente. Todos los derechos reservados. | Diseñado con <i class="fas fa-heart text-danger"></i> para nuestros pacientes</p>
-                    </div>
-                </div>
+          </div>
+          <div class="col-lg-2 col-md-6">
+            <div class="single_footer">
+              <h4>Servicios</h4>
+              <ul>
+                <li>
+                  <a href="#"
+                    ><i class="fas fa-chevron-right me-2"></i>Consultas
+                    Médicas</a
+                  >
+                </li>
+                <li>
+                  <a href="#"
+                    ><i class="fas fa-chevron-right me-2"></i>Especialidades</a
+                  >
+                </li>
+                <li>
+                  <a href="#"
+                    ><i class="fas fa-chevron-right me-2"></i>Exámenes</a
+                  >
+                </li>
+                <li>
+                  <a href="#"
+                    ><i class="fas fa-chevron-right me-2"></i>Urgencias 24/7</a
+                  >
+                </li>
+                <li>
+                  <a href="#"
+                    ><i class="fas fa-chevron-right me-2"></i>Telemedicina</a
+                  >
+                </li>
+              </ul>
             </div>
+          </div>
+          <div class="col-lg-2 col-md-6">
+            <div class="single_footer">
+              <h4>Enlaces Rápidos</h4>
+              <ul>
+                <li>
+                  <a href="#"
+                    ><i class="fas fa-chevron-right me-2"></i>Sobre Nosotros</a
+                  >
+                </li>
+                <li>
+                  <a href="#"
+                    ><i class="fas fa-chevron-right me-2"></i>Equipo Médico</a
+                  >
+                </li>
+                <li>
+                  <a href="#"
+                    ><i class="fas fa-chevron-right me-2"></i>Convenios</a
+                  >
+                </li>
+                <li>
+                  <a href="#"
+                    ><i class="fas fa-chevron-right me-2"></i>Preguntas
+                    Frecuentes</a
+                  >
+                </li>
+                <li>
+                  <a href="#"
+                    ><i class="fas fa-chevron-right me-2"></i>Contacto</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="single_footer">
+              <h4>Suscríbete</h4>
+              <p class="text-white-50">
+                Recibe noticias y promociones exclusivas
+              </p>
+              <div class="signup_form">
+                <form action="#" class="subscribe">
+                  <input
+                    type="email"
+                    class="subscribe__input"
+                    placeholder="Tu correo electrónico"
+                  />
+                  <button type="button" class="subscribe__btn">
+                    <i class="fas fa-paper-plane"></i>
+                  </button>
+                </form>
+              </div>
+              <div class="social_profile mt-4">
+                <ul>
+                  <li>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                  </li>
+                  <li>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                  </li>
+                  <li>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                  </li>
+                  <li>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                  </li>
+                  <li>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="copyright">
+              <p class="mb-0">
+                © 2024 Clínica BuenPaciente. Todos los derechos reservados. |
+                Diseñado con <i class="fas fa-heart text-danger"></i> para
+                nuestros pacientes
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </footer>
 
     <!-- Chat Bot. -->
     <div class="chat-container" id="chatContainer">
-        <div class="chat-header" onclick="cerrar_chat()">
-            Asistente Virtual
-            <i class="fas fa-times"></i>
+      <div class="chat-header" onclick="cerrar_chat()">
+        Asistente Virtual
+        <i class="fas fa-times"></i>
+      </div>
+      <!-- ChatBot Inicio -->
+      <div class="chat-messages">
+        <!-- Mensaje Inicial del ChatBot. -->
+        <div style="display: none" id="chat_inicial">
+          <div class="message bot-message">
+            <i class="fas fa-robot me-2"></i>
+            ¡Hola! ¿Qué necesitas? Selecciona una opción para ayudarte... 😊
+          </div>
+          <!-- Creamos un Input para la opción de solo escribir en el ChatBot. -->
+          <input
+            type="hidden"
+            id="input_opcion_inicial_chatbot"
+            value="0"
+            name=""
+          />
+          <!-- Creamos un Input para la opción de solo escribir en el ChatBot. -->
+          <div class="message user-message">
+            <span class="badge text-bg-primary">
+              <a
+                class="text-white text-decoration-none"
+                href="./registrar_paciente.html"
+              >
+                <i class="fas fa-user-plus me-1"></i>Registrarme
+              </a>
+            </span>
+            <span class="badge text-bg-success">
+              <a
+                class="text-white text-decoration-none"
+                href="./index.html#reserva_hora"
+              >
+                <i class="fas fa-calendar-check me-1"></i>Reservar Hora
+              </a>
+            </span>
+            <span class="badge text-bg-secondary">
+              <a class="text-white text-decoration-none" href="./login.html">
+                <i class="fas fa-sign-in-alt me-1"></i>Login
+              </a>
+            </span>
+            <!-- Agregar más contenido al ChatBot. -->
+            <span class="badge text-bg-warning">
+              <a
+                class="text-black text-decoration-none"
+                href="#"
+                onclick="opcionInformacionReserva()"
+              >
+                <i class="fa-solid fa-circle-info me-1"></i>Info Reserva
+              </a>
+            </span>
+            <!-- Fin Agregar más contenido al ChatBot. -->
+            <!-- Agregar más contenido al ChatBot. -->
+            <span class="badge text-bg-danger">
+              <a
+                class="text-white text-decoration-none"
+                href="#"
+                onclick="opcionCancelarReserva()"
+              >
+                <i class="fa-regular fa-calendar-xmark me-1"></i>Cancelar
+                Reserva
+              </a>
+            </span>
+            <!-- Fin Agregar más contenido al ChatBot. -->
+          </div>
         </div>
-        <!-- ChatBot Inicio -->
-        <div class="chat-messages">
-            <!-- Mensaje Inicial del ChatBot. -->
-            <div style="display: none;" id="chat_inicial">
-                <div class="message bot-message">
-                    <i class="fas fa-robot me-2"></i>
-                    ¡Hola! ¿Qué necesitas? Selecciona una opción para ayudarte... 😊
-                </div>
-                <!-- Creamos un Input para la opción de solo escribir en el ChatBot. -->
-                 <input type="hidden" id ="input_opcion_inicial_chatbot" value="0" name="">
-                <!-- Creamos un Input para la opción de solo escribir en el ChatBot. -->
-                <div class="message user-message">
-                    <span class="badge text-bg-primary">
-                        <a class="text-white text-decoration-none" href="./registrar_paciente.html">
-                            <i class="fas fa-user-plus me-1"></i>Registrarme
-                        </a>
-                    </span>
-                    <span class="badge text-bg-success">
-                        <a class="text-white text-decoration-none" href="./index.html#reserva_hora">
-                            <i class="fas fa-calendar-check me-1"></i>Reservar Hora
-                        </a>
-                    </span>
-                    <span class="badge text-bg-secondary">
-                        <a class="text-white text-decoration-none" href="./login.html">
-                            <i class="fas fa-sign-in-alt me-1"></i>Login
-                        </a>
-                    </span>
-                    <!-- Agregar más contenido al ChatBot. -->
-                    <span class="badge text-bg-warning">
-                        <a class="text-black text-decoration-none" href="#" onclick="opcionInformacionReserva()">
-                            <i class="fa-solid fa-circle-info me-1"></i>Info Reserva
-                        </a>
-                    </span>
-                    <!-- Fin Agregar más contenido al ChatBot. -->
-                    <!-- Agregar más contenido al ChatBot. -->
-                    <span class="badge text-bg-danger">
-                        <a class="text-white text-decoration-none" href="#" onclick="opcionCancelarReserva()">
-                            <i class="fa-regular fa-calendar-xmark me-1"></i>Cancelar Reserva
-                        </a>
-                    </span>
-                    <!-- Fin Agregar más contenido al ChatBot. -->
-                </div>
-            </div>
-            <!-- Fin Mensaje Inicial del ChatBot. -->
+        <!-- Fin Mensaje Inicial del ChatBot. -->
 
-            <!-- Inicio mensaje INFORMACIÓN RESERVA. -->
-            <div style="display: none;" id="chat_informacion_reserva">
-                <div class="message bot-message">
-                    <i class="fas fa-robot me-2"></i>
-                    Ingrese el Código de la Reserva o Cita en el Chat para obtener la información... 😊
-                </div>
-                <!-- Este div es para crear un elemento input hidden. -->
-                <div style="display: none;" id="div_hidden_reserva">
-
-                </div>
-                <button type="button" id="boton_cancelar_info_reserva_chatbot" onclick="boton_cancelar_info_reserva_chatbot()" class="btn btn-outline-danger mb-2"><i class="fa-solid fa-delete-left"></i> Cancelar Operación</button>
-                <!-- Fin div input hidden información reserva. -->
-            </div>
-            <!-- FIN mensaje INFORMACIÓN RESERVA. -->
-            <!-- Inicio mensaje CANCELAR RESERVA. -->
-            <div style="display: none;" id="chat_cancelar_reserva">
-                <div class="message bot-message">
-                    <i class="fas fa-robot me-2"></i>
-                    ingrese el Código de la Reserva o Cita en el Chat para realizar la anulación... 😊
-                </div>
-                <div style="display: none;" id="div_hidden_cancelar_reserva">
-
-                </div>
-                <button type="button" id="boton_cancelar_reserva_chatbot" onclick="cancelar_reserva_chatbot()" class="btn btn-outline-danger mb-2"><i class="fa-solid fa-delete-left"></i> Cancelar Operación</button>
-            </div>
-            <!-- FIN mensaje INFORMACIÓN RESERVA. -->
-            <div class="message bot-message typing-indicator" id="typingIndicator">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+        <!-- Inicio mensaje INFORMACIÓN RESERVA. -->
+        <div style="display: none" id="chat_informacion_reserva">
+          <div class="message bot-message">
+            <i class="fas fa-robot me-2"></i>
+            Ingrese el Código de la Reserva o Cita en el Chat para obtener la
+            información... 😊
+          </div>
+          <!-- Este div es para crear un elemento input hidden. -->
+          <div style="display: none" id="div_hidden_reserva"></div>
+          <button
+            type="button"
+            id="boton_cancelar_info_reserva_chatbot"
+            onclick="boton_cancelar_info_reserva_chatbot()"
+            class="btn btn-outline-danger mb-2"
+          >
+            <i class="fa-solid fa-delete-left"></i> Cancelar Operación
+          </button>
+          <!-- Fin div input hidden información reserva. -->
         </div>
-        <!-- Fin al ChatBot de Inicio. -->
-
-        <div class="chat-input">
-            <input type="text" id="pregunta_usuario" placeholder="Escribe tu mensaje...">
-            <button id="mensaje_usuario" class="btn" onclick="respuesta_chatBot()">
-                <i class="fas fa-paper-plane"></i>
-            </button>
+        <!-- FIN mensaje INFORMACIÓN RESERVA. -->
+        <!-- Inicio mensaje CANCELAR RESERVA. -->
+        <div style="display: none" id="chat_cancelar_reserva">
+          <div class="message bot-message">
+            <i class="fas fa-robot me-2"></i>
+            ingrese el Código de la Reserva o Cita en el Chat para realizar la
+            anulación... 😊
+          </div>
+          <div style="display: none" id="div_hidden_cancelar_reserva"></div>
+          <button
+            type="button"
+            id="boton_cancelar_reserva_chatbot"
+            onclick="cancelar_reserva_chatbot()"
+            class="btn btn-outline-danger mb-2"
+          >
+            <i class="fa-solid fa-delete-left"></i> Cancelar Operación
+          </button>
         </div>
+        <!-- FIN mensaje INFORMACIÓN RESERVA. -->
+        <div class="message bot-message typing-indicator" id="typingIndicator">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <!-- Fin al ChatBot de Inicio. -->
+
+      <div class="chat-input">
+        <input
+          type="text"
+          id="pregunta_usuario"
+          placeholder="Escribe tu mensaje..."
+        />
+        <button id="mensaje_usuario" class="btn" onclick="respuesta_chatBot()">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
     </div>
-    
+
     <!-- Burbuja para abrir el chat -->
     <div class="chat-header-abrir" id="chatBubble" onclick="abrirChat()">
-        <i class="fas fa-comment"></i>
+      <i class="fas fa-comment"></i>
     </div>
 
     <!-- WhatsApp Button -->
-    <a href="https://wa.me/569XXXXXXXX?text=Hola!%20Vengo%20de%20la%20web%20y%20tengo%20una%20consulta" 
-       class="whatsapp-float" 
-       target="_blank" 
-       rel="noopener noreferrer">
-        <span class="whatsapp-text">¿Tienes dudas? Escríbenos</span>
-        <i class="fab fa-whatsapp whatsapp-icon"></i>
+    <a
+      href="https://wa.me/569XXXXXXXX?text=Hola!%20Vengo%20de%20la%20web%20y%20tengo%20una%20consulta"
+      class="whatsapp-float"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <span class="whatsapp-text">¿Tienes dudas? Escríbenos</span>
+      <i class="fab fa-whatsapp whatsapp-icon"></i>
     </a>
 
     <!-- Scripts -->
@@ -638,5 +1097,5 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/locales/es.global.min.js"></script>
     <script src="./static/JS/chatBot/chat_bot.js"></script>
     <script src="./static/JS/reserva_cita_index.js"></script>
-</body>
+  </body>
 </html>

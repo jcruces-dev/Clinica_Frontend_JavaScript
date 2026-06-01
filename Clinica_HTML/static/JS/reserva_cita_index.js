@@ -1,3 +1,6 @@
+// 1. Inicializas Stripe usando tu Clave Publicable (pk_test_...)
+const stripe = Stripe('pk_test_51TYa1EQ37bFB5bUepMhTC0jQ7IG75JygL3gADwvaK4CaNbEblu0dUvACUOXzvTUbbyPNCyWxzH16hCU2Shp81qW400uBWdzTKX');
+
 // Formatear rut Chileno.
 function formatearRUT(rut) {
     // Eliminar todo lo que no sea dígito o 'k'/'K'
@@ -517,243 +520,290 @@ function abrir_modal_nueva_cita_pa_index(fechaFormateada){
     modalInstance.show();
 }
 // Mostrar bloc de las cuotas cuando se presiona el botón de selección de cuotas.
-function mostrar_cuotas_disponibles(){
-    let container_cuota = document.getElementById("lista_cuota")
-    container_cuota.style.display = "block"
-}
+// function mostrar_cuotas_disponibles(){
+//     let container_cuota = document.getElementById("lista_cuota")
+//     container_cuota.style.display = "block"
+// }
 // Ocultar bloc de las cuotas cuando se presiona el botón de selección de cancelar o débito.
-function ocultar_cuotas_disponibles(){
-    let container_cuota = document.getElementById("lista_cuota")
-    container_cuota.style.display = "none"
-}
+// function ocultar_cuotas_disponibles(){
+//     let container_cuota = document.getElementById("lista_cuota")
+//     container_cuota.style.display = "none"
+// }
 //
-function boton_pago_credito(){
-    mostrar_cuotas_disponibles()
-}
-// INDEX crear la reserva y pagar con débito al mismo tiempo.
-function metodo_pago_debito(){
-    // Llamamos la función creada anteriormente.
-    ocultar_cuotas_disponibles()
+// function boton_pago_credito(){
+//     mostrar_cuotas_disponibles()
+// }
+// ---------------------- STRIPE. -----------------------------------------------------
+// Declaramos esta variable global para luego utilizar.
+let elements = undefined; 
+let reservaUuidGlobal = null;
+// Utilizamos el MODAL con la información del método inicializarPasarelaStripe().
+document.getElementById('modal_info_res_index').addEventListener('shown.bs.modal', function () {
+    // Llamamos al método de abajo que tiene nuestra petición AXIOS al BACKEND.
+    inicializarPasarelaStripe();
+});
+// INDEX crear la reserva y pagar con STRIPE al mismo tiempo.
+async function inicializarPasarelaStripe(){
+    let primer_nombre_index = document.getElementById("primer_nombre_index").value;
+    let segundo_nombre_index = document.getElementById("segundo_nombre_index").value;
+    let ap_paterno = document.getElementById("ap_paterno_index").value;
+    let ap_materno = document.getElementById("ap_materno_index").value;
+    let cita_reserva_nombre = document.getElementById("cita_reserva_nombre").value;
+    let cita_reserva_email = document.getElementById("cita_reserva_email").value;
+    let cita_reserva_edad = document.getElementById("cita_reserva_edad").value;
+    let cita_reserva_sexo = document.getElementById("cita_reserva_sexo").value;
+    let cita_reserva_fono = document.getElementById("cita_reserva_fono").value;
+    let cita_reserva_rut = document.getElementById("cita_reserva_rut").value;
+    let cita_reserva_esp = document.getElementById("cita_reserva_esp").value;
+    let cita_reserva_valor_esp = document.getElementById("cita_reserva_valor_esp").value;
+    let cita_reserva_nombre_clinica = document.getElementById("cita_reserva_nombre_clinica").value;
+    let cita_reserva_direccion_clinica = document.getElementById("cita_reserva_direccion_clinica").value;
+    let cita_reserva_comuna_clinica = document.getElementById("cita_reserva_comuna_clinica").value;
+    let cita_reserva_nombre_doctor = document.getElementById("cita_reserva_nombre_doctor").value;
+    let cita_reserva_fecha = document.getElementById("cita_reserva_fecha").value;
+    let hora_inicio = document.getElementById("cita_reserva_hora_inicio").value;
+    let hora_termino = document.getElementById("cita_reserva_hora_termino").value;
+
+    // Pasamos los datos a la petición de AXIOS
+    let datos = {
+        'nombre_paciente': cita_reserva_nombre,
+        'email': cita_reserva_email,
+        'edad': cita_reserva_edad,
+        'sexo': cita_reserva_sexo,
+        'fono': cita_reserva_fono,
+        'rut': cita_reserva_rut,
+        'especialidad': cita_reserva_esp,
+        'valor_especialidad': cita_reserva_valor_esp,
+        'nombre_clinica': cita_reserva_nombre_clinica,
+        'direccion_clinica': cita_reserva_direccion_clinica,
+        'comuna_clinica': cita_reserva_comuna_clinica,
+        'nombre_doctor': cita_reserva_nombre_doctor,
+        'fecha_reserva': cita_reserva_fecha,
+        'hora_inicio': hora_inicio,
+        'hora_termino': hora_termino,
+        'primer_nombre': primer_nombre_index,
+        'segundo_nombre': segundo_nombre_index,
+        'ap_paterno': ap_paterno,
+        'ap_materno': ap_materno,
+    };
     //
-    let primer_nombre_index = document.getElementById("primer_nombre_index").value
-    console.log(primer_nombre_index)
-    let segundo_nombre_index = document.getElementById("segundo_nombre_index").value
-    console.log(segundo_nombre_index)
-    let ap_paterno = document.getElementById("ap_paterno_index").value
-    console.log(ap_paterno)
-    let ap_materno = document.getElementById("ap_materno_index").value
-    let cita_reserva_nombre = document.getElementById("cita_reserva_nombre").value
-    let cita_reserva_email = document.getElementById("cita_reserva_email").value
-    let cita_reserva_edad = document.getElementById("cita_reserva_edad").value
-    let cita_reserva_sexo = document.getElementById("cita_reserva_sexo").value
-    let cita_reserva_fono = document.getElementById("cita_reserva_fono").value
-    let cita_reserva_rut = document.getElementById("cita_reserva_rut").value
-    let cita_reserva_esp = document.getElementById("cita_reserva_esp").value
-    let cita_reserva_valor_esp = document.getElementById("cita_reserva_valor_esp").value
-    let cita_reserva_nombre_clinica = document.getElementById("cita_reserva_nombre_clinica").value
-    let cita_reserva_direccion_clinica = document.getElementById("cita_reserva_direccion_clinica").value
-    let cita_reserva_comuna_clinica = document.getElementById("cita_reserva_comuna_clinica").value
-    let cita_reserva_nombre_doctor = document.getElementById("cita_reserva_nombre_doctor").value
-    let cita_reserva_fecha = document.getElementById("cita_reserva_fecha").value
-    let hora_inicio = document.getElementById("cita_reserva_hora_inicio").value
-    let hora_termino = document.getElementById("cita_reserva_hora_termino").value
-    Swal.fire({
-        title: "¿Está seguro de pagar la cita?",
-        text: "Una vez aceptado el pago, se procederá a generar la cita.",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "¡Si, Pagar!"
-      }).then((result) => {
-        if (result.isConfirmed) {
-            let datos = {
-                'nombre_paciente': cita_reserva_nombre,
-                'email': cita_reserva_email,
-                'edad': cita_reserva_edad,
-                'sexo': cita_reserva_sexo,
-                'fono': cita_reserva_fono,
-                'rut': cita_reserva_rut,
-                'especialidad': cita_reserva_esp,
-                'valor_especialidad': cita_reserva_valor_esp,
-                'nombre_clinica': cita_reserva_nombre_clinica,
-                'direccion_clinica': cita_reserva_direccion_clinica,
-                'comuna_clinica': cita_reserva_comuna_clinica,
-                'nombre_doctor': cita_reserva_nombre_doctor,
-                'fecha_reserva': cita_reserva_fecha,
-                'hora_inicio': hora_inicio,
-                'hora_termino': hora_termino,
-                'primer_nombre': primer_nombre_index,
-                'segundo_nombre': segundo_nombre_index,
-                'ap_paterno': ap_paterno,
-                'ap_materno': ap_materno,
-            }
-            axios.post(`https://jacruces91.pythonanywhere.com/reserva/pago_debito_reserva_index`, datos,{
-                headers: {
-                    //'Authorization': `Token ${token}`,
-                    'Content-Type': 'application/json',
-                },
-            })
-            .then(function (response) {
-                console.warn(response.data);
-                console.warn(response.status)
-                let doc = response.data.list_doctor;
-                if (response.status == 200) {
-                    Swal.fire({
-                        icon: "success",
-                        title: "Pago Realizado",
-                        text: "El pago de la reserva se ha efectuado correctamente!",
-                    });
-                    // 
-                    if (calendar) {
-                        calendar.refetchEvents();
-                    }
-                    // Volvemos a recargar el sitio web.
-                    setTimeout(function() {
-                        location.reload();
-                    }, 2000);
-                }
-            })
-            .catch(error => {
-                if (error.response) {
-                    console.log('Error Response:', error.response.data);
-                    console.log('Error Status:', error.response.status);
-                    console.log('Error Headers:', error.response.headers);
-                    if (error.response.data.error == 3) {
-                        Swal.fire({
-                            icon: "error",
-                            title: "El grupo ya existe",
-                            text: "El grupo fue creado anteriormente!",
-                        });
-                    }
-                    if (error.response.data.error == 3) {
-                        Swal.fire({
-                            icon: "error",
-                            title: "Reserva No Disponible",
-                            text: "Debe solicitar otra hora disponible!",
-                        });
-                    }
-                }
-            });
+    try {
+        const response = await axios.post("http://127.0.0.1:8000/reserva/pago_stripe_reserva_index/", datos, {
+            headers: { "Content-Type": "application/json" }
+        });
+        console.log(response.data)
+        // Sacamos ambas variables limpiamente en una sola línea
+        let { clientSecret, reserva_uuid } = response.data;
+        
+        // Guardamos el UUID en la variable global
+        reservaUuidGlobal = reserva_uuid; 
+        console.log("UUID de la reserva guardado globalmente:", reservaUuidGlobal);
+
+        // Pasamos el clientSecret a Stripe para configurar los elementos
+        elements = stripe.elements({ clientSecret });
+
+        // Creamos e inyectamos el formulario seguro en el HTML. STRIPE.
+        const paymentElement = elements.create("payment");
+        paymentElement.mount("#payment-element"); 
+
+    } catch (error) {
+        console.error("Error al inicializar Stripe:", error);
+        if (error.response) {
+            alert(`Error: ${error.response.data.detalle || 'No se pudo iniciar el pago'}`);
         }
-    });
+    }
 }
+
+// Envío del FORULARIO para procesar el dinero.
+document.querySelector("#payment-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const botonPagar = document.querySelector("#submit");
+    if (botonPagar) {
+        botonPagar.disabled = true;
+        botonPagar.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Procesando Pago...';
+    }
+
+    // Capturamos de forma dinámica el nombre y correo del paciente desde tu formulario nativo
+    let cita_reserva_nombre = document.getElementById("cita_reserva_nombre").value;
+    let cita_reserva_email = document.getElementById("cita_reserva_email").value;
+
+    // Aseguramos pasar "elements" y el titular de la tarjeta.
+    const { error, paymentIntent } = await stripe.confirmPayment({
+        // Forzamos la lectura de la instancia global cargada.
+        elements: elements,
+        confirmParams: {
+            return_url: window.location.href, 
+            // Agregamos los billing_details para evitar fallas por ocultar campos.
+            payment_method_data: {
+                billing_details: {
+                    name: cita_reserva_nombre,
+                    email: cita_reserva_email
+                }
+            }
+        },
+        redirect: "if_required" 
+    });
+    // Si ocurre un error inmediato (ej: tarjeta rechazada).
+    if (error) {
+        if (botonPagar) {
+            botonPagar.disabled = false;
+            botonPagar.innerHTML = '<i class="fas fa-lock me-2"></i>Confirmar Pago';
+        }
+        const messageContainer = document.querySelector("#error-message");
+        messageContainer.textContent = error.message;
+        return;
+    }
+    // Si paymentIntent existe y dice "succeeded", llamamos a la ruta de éxito
+    if (paymentIntent && paymentIntent.status === "succeeded") {
+        try {
+            console.log("¡Stripe aprobó el pago! Avisando al backend para actualizar...");
+            // Despachamos el UUID a tu endpoint 'pago_debito_realizado'
+            const confirmacion = await axios.post("http://127.0.0.1:8000/reserva/confirmar_pago_stripe_exitoso/", {
+                'reserva_uuid': reservaUuidGlobal,
+                'stripe_payment_id': paymentIntent.id
+            }, {
+                headers: { "Content-Type": "application/json" }
+            });
+
+            if (confirmacion.status === 200) {
+                // Cerramos el modal de Bootstrap
+                const modalResumen = bootstrap.Modal.getInstance(document.getElementById('modal_info_res_index'));
+                if (modalResumen) { modalResumen.hide(); }
+
+                // Disparamos el SweetAlert2.
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Reserva Confirmada!',
+                    text: 'Tu pago fue procesado correctamente. Te enviamos un correo con los detalles.',
+                    confirmButtonColor: '#1e3c72'
+                }).then(() => {
+                    // Recarga el calendario para ver la hora ocupada
+                    window.location.reload();
+                });
+            }
+        } catch (err) {
+            console.error("Error en la confirmación final:", err);
+            alert("El pago pasó en Stripe, pero la BD de Django falló al actualizar.");
+        }
+    }
+});
 // Ocultar las Cuotas.
-function cancelar_pago(){
-    ocultar_cuotas_disponibles()
-}
+// function cancelar_pago(){
+//     ocultar_cuotas_disponibles()
+// }
 // Pago con crédito desde el index.
-function pagar_index_reserva_credito(){
-    let primer_nombre_index = document.getElementById("primer_nombre_index").value
-    let segundo_nombre_index = document.getElementById("segundo_nombre_index").value
-    let ap_paterno = document.getElementById("ap_paterno_index").value
-    let ap_materno = document.getElementById("ap_materno_index").value
-    let cita_reserva_nombre = document.getElementById("cita_reserva_nombre").value
-    let cita_reserva_email = document.getElementById("cita_reserva_email").value
-    let cita_reserva_edad = document.getElementById("cita_reserva_edad").value
-    let cita_reserva_sexo = document.getElementById("cita_reserva_sexo").value
-    let cita_reserva_fono = document.getElementById("cita_reserva_fono").value
-    let cita_reserva_rut = document.getElementById("cita_reserva_rut").value
-    let cita_reserva_esp = document.getElementById("cita_reserva_esp").value
-    let cita_reserva_valor_esp = document.getElementById("cita_reserva_valor_esp").value
-    let cita_reserva_nombre_clinica = document.getElementById("cita_reserva_nombre_clinica").value
-    let cita_reserva_direccion_clinica = document.getElementById("cita_reserva_direccion_clinica").value
-    let cita_reserva_comuna_clinica = document.getElementById("cita_reserva_comuna_clinica").value
-    let cita_reserva_nombre_doctor = document.getElementById("cita_reserva_nombre_doctor").value
-    let cita_reserva_fecha = document.getElementById("cita_reserva_fecha").value
-    let hora_inicio = document.getElementById("cita_reserva_hora_inicio").value
-    let hora_termino = document.getElementById("cita_reserva_hora_termino").value
-    //---------------------- Sexo --------------------
-    let edit_sexo = document.getElementsByName("cuota_index")
-    let selectCuota;
-    edit_sexo.forEach((radioButton) => {
-        if (radioButton.checked) {
-            selectCuota = radioButton.value;
-            console.warn(selectCuota)
-        }
-    });
-    //---------------------- Fin Sexo ----------------
-    Swal.fire({
-        title: "¿Está seguro de pagar la cita?",
-        text: "Una vez aceptado el pago, se procederá a generar la cita.",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "¡Si, Pagar!"
-      }).then((result) => {
-        if (result.isConfirmed) {
-            let datos = {
-                'nombre_paciente': cita_reserva_nombre,
-                'email': cita_reserva_email,
-                'edad': cita_reserva_edad,
-                'sexo': cita_reserva_sexo,
-                'fono': cita_reserva_fono,
-                'rut': cita_reserva_rut,
-                'especialidad': cita_reserva_esp,
-                'valor_especialidad': cita_reserva_valor_esp,
-                'nombre_clinica': cita_reserva_nombre_clinica,
-                'direccion_clinica': cita_reserva_direccion_clinica,
-                'comuna_clinica': cita_reserva_comuna_clinica,
-                'nombre_doctor': cita_reserva_nombre_doctor,
-                'fecha_reserva': cita_reserva_fecha,
-                'hora_inicio': hora_inicio,
-                'hora_termino': hora_termino,
-                'cant_cuotas': selectCuota,
-                'primer_nombre': primer_nombre_index,
-                'segundo_nombre': segundo_nombre_index,
-                'ap_paterno': ap_paterno,
-                'ap_materno': ap_materno,
-            }
-            console.log(datos)
-            // https://jacruces91.pythonanywhere.com/reserva/pago_credito_reserva_index
-            axios.post(`https://jacruces91.pythonanywhere.com/reserva/pago_credito_reserva_index`, datos,{
-                headers: {
-                    //'Authorization': `Token ${token}`,
-                    'Content-Type': 'application/json',
-                },
-            })
-            .then(function (response) {
-                console.warn(response.data);
-                console.warn(response.status)
-                let doc = response.data.list_doctor;
-                if (response.status == 200) {
-                    Swal.fire({
-                        icon: "success",
-                        title: "Pago Realizado",
-                        text: "El pago de la reserva se ha efectuado correctamente!",
-                    });
-                    // 
-                    if (calendar) {
-                        calendar.refetchEvents();
-                    }
-                    // Volvemos a recargar el sitio web.
-                    setTimeout(function() {
-                        location.reload();
-                    }, 2000);
-                }
-            })
-            .catch(error => {
-                if (error.response) {
-                    console.log('Error Response:', error.response.data);
-                    console.log('Error Status:', error.response.status);
-                    console.log('Error Headers:', error.response.headers);
-                    if (error.response.data.error == 3) {
-                        Swal.fire({
-                            icon: "error",
-                            title: "El grupo ya existe",
-                            text: "El grupo fue creado anteriormente!",
-                        });
-                    }
-                    if (error.response.data.error == 8) {
-                        Swal.fire({
-                            icon: "error",
-                            title: "Reserva No Disponible",
-                            text: "Debe elegir otro horario de reserva.",
-                        });
-                    }
-                }
-            });
-        }
-    });
-}
+// function pagar_index_reserva_credito(){
+//     let primer_nombre_index = document.getElementById("primer_nombre_index").value
+//     let segundo_nombre_index = document.getElementById("segundo_nombre_index").value
+//     let ap_paterno = document.getElementById("ap_paterno_index").value
+//     let ap_materno = document.getElementById("ap_materno_index").value
+//     let cita_reserva_nombre = document.getElementById("cita_reserva_nombre").value
+//     let cita_reserva_email = document.getElementById("cita_reserva_email").value
+//     let cita_reserva_edad = document.getElementById("cita_reserva_edad").value
+//     let cita_reserva_sexo = document.getElementById("cita_reserva_sexo").value
+//     let cita_reserva_fono = document.getElementById("cita_reserva_fono").value
+//     let cita_reserva_rut = document.getElementById("cita_reserva_rut").value
+//     let cita_reserva_esp = document.getElementById("cita_reserva_esp").value
+//     let cita_reserva_valor_esp = document.getElementById("cita_reserva_valor_esp").value
+//     let cita_reserva_nombre_clinica = document.getElementById("cita_reserva_nombre_clinica").value
+//     let cita_reserva_direccion_clinica = document.getElementById("cita_reserva_direccion_clinica").value
+//     let cita_reserva_comuna_clinica = document.getElementById("cita_reserva_comuna_clinica").value
+//     let cita_reserva_nombre_doctor = document.getElementById("cita_reserva_nombre_doctor").value
+//     let cita_reserva_fecha = document.getElementById("cita_reserva_fecha").value
+//     let hora_inicio = document.getElementById("cita_reserva_hora_inicio").value
+//     let hora_termino = document.getElementById("cita_reserva_hora_termino").value
+//     //---------------------- Sexo --------------------
+//     let edit_sexo = document.getElementsByName("cuota_index")
+//     let selectCuota;
+//     edit_sexo.forEach((radioButton) => {
+//         if (radioButton.checked) {
+//             selectCuota = radioButton.value;
+//             console.warn(selectCuota)
+//         }
+//     });
+//     //---------------------- Fin Sexo ----------------
+//     Swal.fire({
+//         title: "¿Está seguro de pagar la cita?",
+//         text: "Una vez aceptado el pago, se procederá a generar la cita.",
+//         icon: "warning",
+//         showCancelButton: true,
+//         confirmButtonColor: "#3085d6",
+//         cancelButtonColor: "#d33",
+//         confirmButtonText: "¡Si, Pagar!"
+//       }).then((result) => {
+//         if (result.isConfirmed) {
+//             let datos = {
+//                 'nombre_paciente': cita_reserva_nombre,
+//                 'email': cita_reserva_email,
+//                 'edad': cita_reserva_edad,
+//                 'sexo': cita_reserva_sexo,
+//                 'fono': cita_reserva_fono,
+//                 'rut': cita_reserva_rut,
+//                 'especialidad': cita_reserva_esp,
+//                 'valor_especialidad': cita_reserva_valor_esp,
+//                 'nombre_clinica': cita_reserva_nombre_clinica,
+//                 'direccion_clinica': cita_reserva_direccion_clinica,
+//                 'comuna_clinica': cita_reserva_comuna_clinica,
+//                 'nombre_doctor': cita_reserva_nombre_doctor,
+//                 'fecha_reserva': cita_reserva_fecha,
+//                 'hora_inicio': hora_inicio,
+//                 'hora_termino': hora_termino,
+//                 'cant_cuotas': selectCuota,
+//                 'primer_nombre': primer_nombre_index,
+//                 'segundo_nombre': segundo_nombre_index,
+//                 'ap_paterno': ap_paterno,
+//                 'ap_materno': ap_materno,
+//             }
+//             console.log(datos)
+//             // https://jacruces91.pythonanywhere.com/reserva/pago_credito_reserva_index
+//             axios.post(`https://jacruces91.pythonanywhere.com/reserva/pago_credito_reserva_index`, datos,{
+//                 headers: {
+//                     //'Authorization': `Token ${token}`,
+//                     'Content-Type': 'application/json',
+//                 },
+//             })
+//             .then(function (response) {
+//                 console.warn(response.data);
+//                 console.warn(response.status)
+//                 let doc = response.data.list_doctor;
+//                 if (response.status == 200) {
+//                     Swal.fire({
+//                         icon: "success",
+//                         title: "Pago Realizado",
+//                         text: "El pago de la reserva se ha efectuado correctamente!",
+//                     });
+//                     // 
+//                     if (calendar) {
+//                         calendar.refetchEvents();
+//                     }
+//                     // Volvemos a recargar el sitio web.
+//                     setTimeout(function() {
+//                         location.reload();
+//                     }, 2000);
+//                 }
+//             })
+//             .catch(error => {
+//                 if (error.response) {
+//                     console.log('Error Response:', error.response.data);
+//                     console.log('Error Status:', error.response.status);
+//                     console.log('Error Headers:', error.response.headers);
+//                     if (error.response.data.error == 3) {
+//                         Swal.fire({
+//                             icon: "error",
+//                             title: "El grupo ya existe",
+//                             text: "El grupo fue creado anteriormente!",
+//                         });
+//                     }
+//                     if (error.response.data.error == 8) {
+//                         Swal.fire({
+//                             icon: "error",
+//                             title: "Reserva No Disponible",
+//                             text: "Debe elegir otro horario de reserva.",
+//                         });
+//                     }
+//                 }
+//             });
+//         }
+//     });
+// }
