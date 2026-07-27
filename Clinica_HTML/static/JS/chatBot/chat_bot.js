@@ -2,7 +2,6 @@
    1. INICIALIZACIÓN Y EVENTOS
    ======================================== */
 document.addEventListener('DOMContentLoaded', function() {
-    // Estado inicial: Chat abierto, burbuja oculta
     const chatContainer = document.getElementById('chatContainer');
     const chatBubble = document.getElementById('chatBubble');
     const chatInicial = document.getElementById('chat_inicial');
@@ -11,6 +10,19 @@ document.addEventListener('DOMContentLoaded', function() {
     if (chatContainer) chatContainer.style.display = 'block';
     if (chatBubble) chatBubble.style.display = 'none';
     if (chatInicial) chatInicial.style.display = 'block';
+
+    // DETECTAR SI LA PÁGINA FUE RECARGADA (F5 / REFRESH)
+    const navegacion = performance.getEntriesByType("navigation");
+    const esRecarga = navegacion.length > 0 && navegacion[0].type === 'reload';
+
+    if (esRecarga) {
+        // Si fue un refresh, borramos todo (sesión e historial)
+        limpiarHistorialYSesion();
+        console.log("🔄 Página recargada: Sesión e historial reiniciados por completo.");
+    } else {
+        // Si no fue recarga (ej. navegación interna), restauramos los mensajes guardados
+        restaurarHistorialChat();
+    }
 
     // Evento Enter para enviar mensaje
     if (input) {
@@ -22,6 +34,57 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+/**
+ * Borra tanto la sesión como el historial HTML del chat.
+ */
+function limpiarHistorialYSesion() {
+    sessionStorage.removeItem('chat_session_id');
+    sessionStorage.removeItem('chat_historial_html');
+    generarNuevaSessionId();
+}
+
+/**
+ * Genera un nuevo ID de sesión único.
+ */
+function generarNuevaSessionId() {
+    const nuevoSessionId = 'chat_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    sessionStorage.setItem('chat_session_id', nuevoSessionId);
+    return nuevoSessionId;
+}
+
+/**
+ * Obtiene el ID de sesión actual o crea uno si no existe.
+ */
+function obtenerSessionId() {
+    let sessionId = sessionStorage.getItem('chat_session_id');
+    if (!sessionId) {
+        sessionId = generarNuevaSessionId();
+    }
+    return sessionId;
+}
+
+/**
+ * Guarda el HTML actual del contenedor de mensajes en sessionStorage.
+ */
+function guardarHistorialChat() {
+    const chatMessages = document.querySelector('.chat-messages');
+    if (chatMessages) {
+        sessionStorage.setItem('chat_historial_html', chatMessages.innerHTML);
+    }
+}
+
+/**
+ * Restaura los mensajes guardados en sessionStorage si existen.
+ */
+function restaurarHistorialChat() {
+    const historialGuardado = sessionStorage.getItem('chat_historial_html');
+    const chatMessages = document.querySelector('.chat-messages');
+    if (historialGuardado && chatMessages) {
+        chatMessages.innerHTML = historialGuardado;
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+}
 
 /* ========================================
    2. CONTROL DE INTERFAZ (ABRIR/CERRAR)
@@ -44,7 +107,6 @@ function opcionInformacionReserva() {
     document.getElementById('chat_cancelar_reserva').style.display = 'none';
     document.getElementById('chat_informacion_reserva').style.display = 'block';
 
-    // Limpiar conflictos de inputs
     const cancelInput = document.getElementById('cancel_reserva_input');
     if (cancelInput) cancelInput.remove();
 
@@ -62,7 +124,6 @@ function opcionCancelarReserva() {
     document.getElementById('chat_cancelar_reserva').style.display = 'block';
     document.getElementById('chat_informacion_reserva').style.display = 'none';
 
-    // Limpiar conflictos de inputs
     const infoInput = document.getElementById('info_reserva_input');
     if (infoInput) infoInput.remove();
 
@@ -76,15 +137,14 @@ function opcionCancelarReserva() {
 }
 
 /* ========================================
-4. LÓGICA PRINCIPAL DEL CHATBOT
-======================================== */
+   4. LÓGICA PRINCIPAL DEL CHATBOT
+   ======================================== */
 function respuesta_chatBot() {
     const preguntaInput = document.getElementById('pregunta_usuario');
     const pregunta = preguntaInput.value.trim();
     const typing = document.getElementById('typingIndicator');
     const chatMessages = document.querySelector('.chat-messages');
 
-    // Validación de mensaje vacío
     if (!pregunta) {
         Swal.fire({
             icon: 'warning',
@@ -96,50 +156,54 @@ function respuesta_chatBot() {
         return;
     }
 
-    // 1. Mostrar indicador de escritura
+    // Dibujar el mensaje del usuario inmediatamente en el chat
+    const userMessage = document.createElement('div');
+    userMessage.className = 'message user-message';
+    userMessage.innerHTML = `<i class="fas fa-user me-2"></i> ${pregunta}`;
+    chatMessages.appendChild(userMessage);
+
+    // Indicador de escritura
     if (typing) {
         typing.style.display = 'flex';
         chatMessages.appendChild(typing); 
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
+    
+    const sessionId = obtenerSessionId();
 
-    // 2. Determinar la opción de envío
     let opcion_envio = 0;
     if (document.getElementById('info_reserva_input')) opcion_envio = 2;
     else if (document.getElementById('cancel_reserva_input')) opcion_envio = 3;
 
-    const datos = { pregunta: pregunta, opcion: opcion_envio };
+    const datos = { pregunta: pregunta, opcion: opcion_envio, session_id: sessionId };
+    console.log("Datos enviados al servidor:", datos);
     
-    // Limpiar input inmediatamente
     preguntaInput.value = '';
-
-    // 3. Petición Axios
-    axios.post('https://jacruces91.pythonanywhere.com/chatbot/obtener_respuesta', datos)
-    //axios.post('http://127.0.0.1:8000/chatbot/obtener_respuesta', datos)
+    
+    // Petición Axios
+    axios.post('http://127.0.0.1:8000/chatbot/obtener_respuesta', datos)
     .then(function (response) {
         setTimeout(() => {
             if (typing) typing.style.display = 'none';
             
             if (response.status === 200 && response.data.respuesta) {
+                console.log("-------------------------------------------------------");
+                console.log('Respuesta del servidor:', response.data.respuesta);
+                console.log("-------------------------------------------------------");
                 escribirRespuestaConAnimacion(response.data.respuesta);
             } else {
-                // Error genérico del servidor
                 escribirRespuestaConAnimacion("❌ Hubo un error inesperado. Inténtalo de nuevo.");
             }
         }, 800);
     })
     .catch(function (error) {
-        // --- AQUÍ ESTÁ EL CAMBIO PRINCIPAL ---
         setTimeout(() => {
             if (typing) typing.style.display = 'none';
             console.error('Error:', error);
             
-            // Creamos un objeto de error que imita la estructura del Modo Demo
-            // para que 'escribirRespuestaConAnimacion' lo maneje correctamente (Caso 1).
             const respuestaErrorConBoton = {
-                tipo: 'animar', // Usamos 'animar' para que se escriba letra por letra
+                tipo: 'animar',
                 texto: "❌ El código ingresado no es válido o no existe en nuestros registros.",
-                // Este HTML debe usar las clases CSS existentes para el botón amarillo
                 html_boton: `
                     <div style="text-align: center; margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 15px;">
                         <button type="button" onclick="boton_volver_chatbot()" class="btn-volver-inicio">
@@ -149,20 +213,17 @@ function respuesta_chatBot() {
                 `
             };
 
-            // Enviamos el objeto para que se anime y muestre el botón
             escribirRespuestaConAnimacion(respuestaErrorConBoton);
-
         }, 800);
     });
 }
-
 
 function escribirRespuestaConAnimacion(respuesta) {
     const chatMessages = document.querySelector('.chat-messages');
     const botMessage = document.createElement('div');
     botMessage.className = 'message bot-message';
     
-    // CASO 1: Es el objeto del MODO DEMO (enviado como diccionario desde Python)
+    // CASO 1: Objeto de animación
     if (typeof respuesta === 'object' && respuesta.tipo === 'animar') {
         botMessage.innerHTML = `
             <i class="fas fa-robot me-2"></i>
@@ -186,17 +247,19 @@ function escribirRespuestaConAnimacion(respuesta) {
                 buttonContainer.innerHTML = respuesta.html_boton;
                 buttonContainer.style.display = 'block';
                 chatMessages.scrollTop = chatMessages.scrollHeight;
+                guardarHistorialChat(); // Guardar historial tras terminar la animación
             }
         }
         escribirLetra();
     
-    // CASO 2: Es un string con HTML (Tarjetas de Reserva case 2 y 3)
+    // CASO 2: String con HTML
     } else if (typeof respuesta === 'string' && respuesta.includes('<div')) {
         botMessage.innerHTML = `<i class="fas fa-robot me-2"></i> ${respuesta}`;
         chatMessages.appendChild(botMessage);
         chatMessages.scrollTop = chatMessages.scrollHeight;
+        guardarHistorialChat();
 
-    // CASO 3: Es texto plano (OpenAI o errores simples)
+    // CASO 3: Texto plano
     } else {
         const textoLimpio = typeof respuesta === 'string' ? respuesta : JSON.stringify(respuesta);
         botMessage.innerHTML = `<i class="fas fa-robot me-2"></i> <span class="typing-text"></span>`;
@@ -210,6 +273,8 @@ function escribirRespuestaConAnimacion(respuesta) {
                 i++;
                 chatMessages.scrollTop = chatMessages.scrollHeight;
                 setTimeout(escribirTextoPlano, 25);
+            } else {
+                guardarHistorialChat(); // Guardar historial tras terminar de escribir
             }
         }
         escribirTextoPlano();
@@ -230,24 +295,20 @@ function mostrarMensajeError(mensaje) {
 
 function boton_volver_chatbot() {
     try {
-        // 1. Limpiar inputs hidden (Esto ya lo tenías)
+        limpiarHistorialYSesion();
+
         const ids = ['cancel_reserva_input', 'info_reserva_input'];
         ids.forEach(id => {
             const el = document.getElementById(id);
             if (el) el.remove();
         });
 
-        // 2. LIMPIEZA MEJORADA: Eliminamos los mensajes del bot que contienen 
-        // tarjetas de reserva O el mensaje de modo demo.
-        const mensajesBot = document.querySelectorAll('.message.bot-message');
-        mensajesBot.forEach(msg => {
-            // Si el mensaje contiene una tarjeta de reserva o el layout de demo, lo borramos
-            if (msg.innerHTML.includes('reserva-card') || msg.innerHTML.includes('demo-message') || msg.innerHTML.includes('contenedor-boton-post-animacion')) {
-                msg.remove();
-            }
-        });
+        // Limpieza visual completa de los mensajes antiguos
+        const chatMessages = document.querySelector('.chat-messages');
+        if (chatMessages) {
+            chatMessages.innerHTML = ''; 
+        }
 
-        // 3. Resetear visibilidad de menús (Asegúrate que estos IDs existan en tu HTML)
         const chatInicial = document.getElementById('chat_inicial');
         const chatCancelar = document.getElementById('chat_cancelar_reserva');
         const chatInfo = document.getElementById('chat_informacion_reserva');
@@ -256,11 +317,10 @@ function boton_volver_chatbot() {
         if (chatCancelar) chatCancelar.style.display = 'none';
         if (chatInfo) chatInfo.style.display = 'none';
         
-        // 4. Limpiar el campo de texto
         const input = document.getElementById('pregunta_usuario');
         if (input) {
             input.value = '';
-            input.focus(); // Opcional: devuelve el foco al teclado
+            input.focus();
         }
 
     } catch (error) {
@@ -268,7 +328,7 @@ function boton_volver_chatbot() {
     }
 }
 
-// Atajos para los distintos botones de volver
+// Atajos
 function cancelar_reserva_chatbot() { boton_volver_chatbot(); }
 function boton_cancelar_info_reserva_chatbot() { boton_volver_chatbot(); }
 function boton_cancelar_reser_volver_chatbot() { boton_volver_chatbot(); }
