@@ -181,7 +181,7 @@ function respuesta_chatBot() {
     preguntaInput.value = '';
     
     // Petición Axios
-    axios.post('http://127.0.0.1:8000/chatbot/obtener_respuesta', datos)
+    axios.post('api/chatbot/obtener_respuesta/', datos)
     .then(function (response) {
         setTimeout(() => {
             if (typing) typing.style.display = 'none';
