@@ -61,10 +61,10 @@ jobs:
           # Indica que la imagen debe subirse al registro.
           push: true
           # Etiquetas (tags) con las que se guardará la imagen.
+          # Tag basado en el nombre del tag de Git (ej. v1.0.0).
+          # Tag basado en el hash (SHA) del commit actual.
           tags: |
-            # Tag basado en el nombre del tag de Git (ej. v1.0.0).
             ${{ env.IMAGE_NAME }}:${{ github.ref_name }}
-            # Tag basado en el hash (SHA) del commit actual.
             ${{ env.IMAGE_NAME }}:${{ github.sha }}
 
   # ---------------------------------------------------------
