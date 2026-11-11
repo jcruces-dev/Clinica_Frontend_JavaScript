@@ -1,0 +1,92 @@
+# Nombre del workflow para Dev y Test.
+name: 2. CD - Deploy Frontend to Dev & Test
+
+# Define CUÁNDO se ejecuta.
+on:
+  # Se ejecuta cuando hay un push a la rama main.
+  push:
+    branches: [ main ]
+  # Permite ejecutarlo manualmente.
+  workflow_dispatch:
+
+# Variables globales.
+env:
+  IMAGE_NAME: ghcr.io/jcruces-dev/frontend-clinica-bp
+
+# Definición de trabajos.
+jobs:
+  # ==========================================================
+  # JOB 1: Construir y subir la imagen Docker
+  # ==========================================================
+  build-and-push:
+    name: Build and Push (Dev/Test)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      # Extraemos metadatos para etiquetar la imagen dinámicamente.
+      - name: Extraer metadatos
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE_NAME }}
+          tags: |
+            # Etiqueta con el SHA del commit.
+            type=sha,format=long
+            # Etiqueta con el número de ejecución.
+            type=raw,value=run-${{ github.run_number }}
+            # Etiqueta 'latest' si estamos en la rama main.
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Login a GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build y push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+  # ==========================================================
+  # JOB 2: Actualizar manifiestos de Kubernetes (GitOps)
+  # ==========================================================
+  update-manifest:
+    name: Update K8s Manifests (Dev/Test)
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repo de infraestructura
+        uses: actions/checkout@v4
+        with:
+          repository: jcruces-dev/clinica-k8s-infrastructure
+          token: ${{ secrets.GH_PAT }}
+          path: infra
+
+      - name: Actualizar imagen en los manifiestos
+        run: |
+          cd infra
+          # Definimos el tag a usar (el SHA del commit).
+          DEPLOY_TAG="${{ github.sha }}"
+          # Busca dinámicamente en las carpetas Dev/frontend y Test/frontend.
+          find Dev/frontend Test/frontend -type f -name "*.yaml" -exec sed -i "s|image: ghcr.io/jcruces-dev/frontend-clinica-bp:.*|image: ghcr.io/jcruces-dev/frontend-clinica-bp:${DEPLOY_TAG}|g" {} +
+
+      - name: Commit y push
+        run: |
+          cd infra
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Dev/frontend/ Test/frontend/
+          git diff --staged --quiet || git commit -m "Update Dev/Test frontend image to ${{ github.sha }}"
+          git push

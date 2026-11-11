@@ -1,0 +1,44 @@
+# Nombre del workflow para Pull Requests.
+name: 1. CI - Frontend Quality Gate (PRs)
+
+# Define CUÁNDO se ejecuta este workflow.
+on:
+  # Se ejecuta cuando abres o actualizas un Pull Request hacia main.
+  pull_request:
+    branches: [ main ]
+  # Permite ejecutarlo manualmente.
+  workflow_dispatch:
+
+# Variables de entorno globales.
+env:
+  # Nombre de la imagen base en GHCR.
+  IMAGE_NAME: ghcr.io/jcruces-dev/frontend-clinica-bp
+
+# Definición de trabajos.
+jobs:
+  # ==========================================================
+  # JOB 1: Validar construcción de Docker (Sin subir a GHCR)
+  # ==========================================================
+  validate-build:
+    name: Validate Docker Build
+    runs-on: ubuntu-latest
+    
+    steps:
+      # 1. Descarga el código del repositorio.
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      # 2. Configura Docker Buildx (necesario para build-push-action).
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # 3. Construye la imagen usando el Dockerfile, pero SIN hacer push.
+      - name: Build (sin push)
+        uses: docker/build-push-action@v5
+        with:
+          # Contexto: la raíz del repositorio.
+          context: .
+          # 'push: false' significa que solo valida, no sube a internet.
+          push: false
+          # Etiquetamos con 'test' solo para la validación local.
+          tags: ${{ env.IMAGE_NAME }}:test
