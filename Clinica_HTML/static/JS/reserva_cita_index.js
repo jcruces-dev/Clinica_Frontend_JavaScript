@@ -47,7 +47,7 @@ function clinica_disp() {
     // Mostrar indicador de carga (opcional)
     selectClinica.innerHTML = defaultOption + '<option disabled>Cargando clínicas...</option>';
     
-    axios.get('https://jacruces91.pythonanywhere.com/reserva/listar_clinica_index')
+    axios.get(`${API_BASE_URL}/reserva/listar_clinica_index`)
     .then(function (response) {
         // Verificar que la respuesta sea válida
         if (!response.data || !response.data.list_clinica || !Array.isArray(response.data.list_clinica)) {
@@ -103,7 +103,7 @@ function select_esp_index(e){
     //
     let arr =[]
     //
-    axios.get(`https://jacruces91.pythonanywhere.com/reserva/listar_esp_index/${id}/`,{
+    axios.get(`${API_BASE_URL}/reserva/listar_esp_index/${id}/`,{
     })
     .then(function (response) {
         // 
@@ -144,7 +144,7 @@ function valor_select_esp_index(){
     //
     let arr =[]
     //
-    axios.get(`https://jacruces91.pythonanywhere.com/reserva/listar_doc_index/${id_clinica}/${id_especialidad}/`,{
+    axios.get(`${API_BASE_URL}/reserva/listar_doc_index/${id_clinica}/${id_especialidad}/`,{
     })
     .then(function (response) {
         // 
@@ -588,7 +588,7 @@ async function inicializarPasarelaStripe(){
     };
     //
     try {
-        const response = await axios.post("http://127.0.0.1:8000/reserva/pago_stripe_reserva_index/", datos, {
+        const response = await axios.post(`${API_BASE_URL}/reserva/pago_stripe_reserva_index/`, datos, {
             headers: { "Content-Type": "application/json" }
         });
         console.log(response.data)
@@ -659,7 +659,7 @@ document.querySelector("#payment-form").addEventListener("submit", async (e) => 
         try {
             console.log("¡Stripe aprobó el pago! Avisando al backend para actualizar...");
             // Despachamos el UUID a tu endpoint 'pago_debito_realizado'
-            const confirmacion = await axios.post("http://127.0.0.1:8000/reserva/confirmar_pago_stripe_exitoso/", {
+            const confirmacion = await axios.post(`${API_BASE_URL}/reserva/confirmar_pago_stripe_exitoso/`, {
                 'reserva_uuid': reservaUuidGlobal,
                 'stripe_payment_id': paymentIntent.id
             }, {
