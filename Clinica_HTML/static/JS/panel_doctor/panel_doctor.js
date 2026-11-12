@@ -378,7 +378,7 @@ function enviar_datos_doc(){
                 // Eliminamos el token.
                 sessionStorage.removeItem('token');
                 // Redireccionamos al Login.
-                window.location.href = 'http://127.0.0.1:5500/Clinica_HTML/login.html'
+                window.location.href = '/static/Templates/Clinica_HTML/login.html'
             } 
             //
             let doctor = response.data.dato_doctor
