@@ -131,7 +131,7 @@ function registrar_paciente_index(e){
     }
     console.log(datos)
     // axios.post(`http://127.0.0.1:8000/paciente/crear_paciente_index_registrar`,datos, {
-    axios.post(`https://jacruces91.pythonanywhere.com/paciente/crear_paciente_index_registrar`,datos, {
+    axios.post(`${API_BASE_URL}/paciente/crear_paciente_index_registrar`,datos, {
     
         headers: {
             //'Authorization': `Token ${token}`,
@@ -268,7 +268,7 @@ function registrar_paciente(e){
         'comuna': comuna,
     }
     console.log(datos)
-    axios.post(`https://jacruces91.pythonanywhere.com/usuario/registrar_usuario`,datos, {
+    axios.post(`${API_BASE_URL}/usuario/registrar_usuario`,datos, {
         headers: {
             'Authorization': `Token ${token}`,
             'Content-Type': 'application/json',
