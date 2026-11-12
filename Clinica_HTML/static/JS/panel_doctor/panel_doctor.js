@@ -378,7 +378,7 @@ function enviar_datos_doc(){
                 // Eliminamos el token.
                 sessionStorage.removeItem('token');
                 // Redireccionamos al Login.
-                window.location.href = '/static/Templates/Clinica_HTML/login.html'
+                window.location.href = '/'
             } 
             //
             let doctor = response.data.dato_doctor
