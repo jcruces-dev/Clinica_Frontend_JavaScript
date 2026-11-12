@@ -3,10 +3,8 @@ name: 2. CD - Deploy Frontend to Dev & Test
 
 # Define CUÁNDO se ejecuta.
 on:
-  # Se ejecuta cuando hay un push a la rama main.
   push:
     branches: [ main ]
-  # Permite ejecutarlo manualmente.
   workflow_dispatch:
 
 # Variables globales.
@@ -36,7 +34,7 @@ jobs:
         with:
           images: ${{ env.IMAGE_NAME }}
           tags: |
-            # Etiqueta con el SHA del commit.
+            # Etiqueta con el SHA del commit (ESTO GENERA: sha-XXXXX).
             type=sha,format=long
             # Etiqueta con el número de ejecución.
             type=raw,value=run-${{ github.run_number }}
@@ -77,9 +75,10 @@ jobs:
       - name: Actualizar imagen en los manifiestos
         run: |
           cd infra
-          # Definimos el tag a usar (el SHA del commit).
-          DEPLOY_TAG="${{ github.sha }}"
-          # Busca dinámicamente en las carpetas Dev/frontend y Test/frontend.
+          # Agregamos el prefijo "sha-" para que coincida con la imagen real.
+          DEPLOY_TAG="sha-${{ github.sha }}"
+          
+          # Busca dinámicamente en las carpetas Dev/frontend y Test/frontend y actualiza la imagen.
           find Dev/frontend Test/frontend -type f -name "*.yaml" -exec sed -i "s|image: ghcr.io/jcruces-dev/frontend-clinica-bp:.*|image: ghcr.io/jcruces-dev/frontend-clinica-bp:${DEPLOY_TAG}|g" {} +
 
       - name: Commit y push
@@ -88,5 +87,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add Dev/frontend/ Test/frontend/
-          git diff --staged --quiet || git commit -m "Update Dev/Test frontend image to ${{ github.sha }}"
+          # También actualizamos el mensaje del commit para que sea consistente.
+          git diff --staged --quiet || git commit -m "Update Dev/Test frontend image to sha-${{ github.sha }}"
           git push

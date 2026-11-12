@@ -42,3 +42,8 @@ jobs:
           push: false
           # Etiquetamos con 'test' solo para la validación local.
           tags: ${{ env.IMAGE_NAME }}:test
+          
+          # Guarda las capas construidas en la caché de GitHub Actions.
+          cache-from: type=gha
+          # Exporta las capas a la caché para que la próxima ejecución sea ultrarrápida.
+          cache-to: type=gha,mode=max

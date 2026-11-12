@@ -3,11 +3,9 @@ name: 3. Release Frontend to Production
 
 # Define CUÁNDO se ejecuta.
 on:
-  # Se ejecuta exclusivamente cuando creas un Tag (ej. v1.0.0).
   push:
     tags:
       - 'v*'
-  # Permite ejecutarlo manualmente.
   workflow_dispatch:
 
 # Variables globales.
@@ -30,6 +28,10 @@ jobs:
       - name: Checkout código
         uses: actions/checkout@v4
 
+      # 👇 MEJORA: Configuramos Buildx para usar caché.
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Login a GHCR
         uses: docker/login-action@v3
         with:
@@ -42,8 +44,10 @@ jobs:
         with:
           context: .
           push: true
-          # 👇 Usamos el nombre del Tag de Git (ej. v1.0.0) para la imagen de prod.
           tags: ${{ env.IMAGE_NAME }}:${{ github.ref_name }}
+          # 👇 MEJORA: Aprovecha las capas ya construidas en los PRs o en Dev/Test.
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   # ==========================================================
   # JOB 2: Desplegar a Producción (Con aprobación manual)
@@ -53,7 +57,7 @@ jobs:
     needs: build-release
     runs-on: ubuntu-latest
     
-    # 👇 ESTO ACTIVA LA APROBACIÓN MANUAL DE GITHUB ENVIRONMENTS.
+    # ACTIVAMOS LA APROBACIÓN MANUAL DE GITHUB ENVIRONMENTS.
     environment: production 
 
     steps:
@@ -67,7 +71,7 @@ jobs:
       - name: Actualizar manifiestos de Producción
         run: |
           cd infra
-          # El tag es el nombre del release (ej. v1.0.0).
+          # El tag es el nombre del release (ej. v1.0.0). Coincide perfectamente con el build.
           DEPLOY_TAG="${{ github.ref_name }}"
           # Busca dinámicamente en la carpeta Prod/frontend.
           find Prod/frontend -type f -name "*.yaml" -exec sed -i "s|image: ghcr.io/jcruces-dev/frontend-clinica-bp:.*|image: ghcr.io/jcruces-dev/frontend-clinica-bp:${DEPLOY_TAG}|g" {} +
