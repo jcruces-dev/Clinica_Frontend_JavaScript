@@ -1,5 +1,3 @@
-// Declaramos las rutas de esta forma para seguir con las buenas practicas.
-const API_URL_LOGIN = 'http://34.74.230.140:8000';
 function login(){
     //
     let username = document.getElementById("username").value
@@ -11,7 +9,7 @@ function login(){
 
     }
     console.warn(datos)
-    axios.post(`${API_URL_LOGIN}/login/`,datos)
+    axios.post(`${API_BASE_URL}/login/`,datos)
         .then(function (response) {
             console.log(response.data)
             // Capturamos el token que generamos en el back-end.
