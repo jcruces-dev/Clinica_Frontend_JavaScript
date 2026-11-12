@@ -8,7 +8,7 @@ function enviar_cod_verificacion(){
         'reserva_uuid': cod_reserva,
     }
     console.warn(datos)
-    axios.post('https://jacruces91.pythonanywhere.com/reserva/cod_reserva_verificacion/',datos)
+    axios.post(`${API_BASE_URL}/reserva/cod_reserva_verificacion/`,datos)
     // axios.post('http://127.0.0.1:8000/reserva/cod_reserva_verificacion',datos)
         .then(function (response) {
             console.log(response.data)
@@ -62,7 +62,7 @@ function enviar_cod_verificacion_index(){
     }
     console.warn(datos)
     // axios.post('https://jacruces91.pythonanywhere.com/reserva/cod_reserva_verificacion',datos)
-    axios.post('https://jacruces91.pythonanywhere.com/reserva/cod_reserva_verificacion_index/',datos)
+    axios.post(`${API_BASE_URL}/reserva/cod_reserva_verificacion_index/`,datos)
         .then(function (response) {
             console.log(response.data.datos)
             let reserva_cerrada;
@@ -190,7 +190,7 @@ function pagarDebitoReserva(){
             }
             //
             // axios.post(`https://jacruces91.pythonanywhere.com/reserva/pago_debito_reserva_index`, datos,{
-            axios.post(`https://jacruces91.pythonanywhere.com/reserva/pago_debito_solo_reserva`, datos,{
+            axios.post(`${API_BASE_URL}/reserva/pago_debito_solo_reserva`, datos,{
                 headers: {
                     //'Authorization': `Token ${token}`,
                     'Content-Type': 'application/json',
@@ -283,7 +283,7 @@ function pagar_solo_reserva_credito(){
             }
             //
             // axios.post(`http://127.0.0.1:8000/reserva/pago_credito_solo_reserva`, datos,{
-            axios.post(`https://jacruces91.pythonanywhere.com/reserva/pago_credito_solo_reserva`, datos,{
+            axios.post(`${API_BASE_URL}/reserva/pago_credito_solo_reserva`, datos,{
                 headers: {
                     //'Authorization': `Token ${token}`,
                     'Content-Type': 'application/json',

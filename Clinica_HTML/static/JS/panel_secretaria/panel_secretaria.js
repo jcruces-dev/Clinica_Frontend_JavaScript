@@ -3028,7 +3028,7 @@ function cerrar_session(){
         // Eliminar el token del almacenamiento local
         if (response.status == 200) {
             sessionStorage.removeItem('token');
-            window.location.href = '/static/Templates/Clinica_HTML/index.html'
+            window.location.href = '/'
         }
     }).catch(error => {
         if (error.response) {
