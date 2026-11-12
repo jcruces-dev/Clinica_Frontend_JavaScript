@@ -1946,7 +1946,7 @@ function cerrar_session(){
         // Eliminar el token del almacenamiento local
         if (response.status == 200) {
             sessionStorage.removeItem('token');
-            window.location.href = 'http://127.0.0.1:5500/Clinica_HTML/index.html'
+            window.location.href = '/static/Templates/Clinica_HTML/index.html'
         }
     }).catch(error => {
         if (error.response) {
