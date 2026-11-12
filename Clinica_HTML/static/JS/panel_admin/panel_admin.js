@@ -363,7 +363,7 @@ var tabla_clinica = null;
 function seccion_clinica(){
     //
     const token = sessionStorage.getItem('token');
-    axios.get('https://jacruces91.pythonanywhere.com/api/clinica/listar_clinica_adm/',{
+    axios.get(`${API_BASE_URL}/clinica/listar_clinica_adm/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -466,7 +466,7 @@ function registrar_clinica(){
     console.warn(datos)
     //
     let arr =[]
-    axios.post(`https://jacruces91.pythonanywhere.com/api/clinica/crear_clinica`, datos, {
+    axios.post(`${API_BASE_URL}/clinica/crear_clinica`, datos, {
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -556,7 +556,7 @@ function update_clinica_adm(){
         'direccion_clinica': edit_direccion_clinica_adm, 
     }
     //
-    axios.put(`https://jacruces91.pythonanywhere.com/api/clinica/editar_clinica/${edit_id_clinica}/`,datos, {
+    axios.put(`${API_BASE_URL}/clinica/editar_clinica/${edit_id_clinica}/`,datos, {
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -621,7 +621,7 @@ function borrar_clinica_admin(id, nombreClinica){
         confirmButtonText: "¡Si, borrar!"
       }).then((result) => {
         if (result.isConfirmed) {
-            axios.delete(`https://jacruces91.pythonanywhere.com/api/clinica/delete_clinica/${id}/`, {
+            axios.delete(`${API_BASE_URL}/clinica/delete_clinica/${id}/`, {
                 headers: {
                     'Authorization': `Token ${token}`
                 }
@@ -669,7 +669,7 @@ function panel_doctores(){
         //
         const token = sessionStorage.getItem('token');
         let arr =[]
-        axios.get('https://jacruces91.pythonanywhere.com/api/doctor/listar_doctor_admin/',{
+        axios.get(`${API_BASE_URL}/doctor/listar_doctor_admin/`,{
             headers: {
                 'Authorization': `Token ${token}`
             }
@@ -767,7 +767,7 @@ panel_doctores()
 function listar_pac_no_registrado(){
     const token = sessionStorage.getItem('token');
     let arr =[]
-    axios.get('https://jacruces91.pythonanywhere.com/api/paciente/pac_no_registrado_admin/',{
+    axios.get(`${API_BASE_URL}/paciente/pac_no_registrado_admin/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -927,7 +927,7 @@ function option_especialidad(e){
     // Evitar múltiples peticiones si ya hay datos
     if (select_especialidad.options.length > 1) return;
     let arr =[]
-    axios.get('https://jacruces91.pythonanywhere.com/api/especialidad/especialidad_doctor/',{
+    axios.get(`${API_BASE_URL}/especialidad/especialidad_doctor/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -961,7 +961,7 @@ function obtener_clinica(e){
     // Evitar múltiples peticiones si ya hay datos
     if (select_clinica.options.length > 1) return;
     let arr =[]
-    axios.get('https://jacruces91.pythonanywhere.com/api/clinica/listar_clinica_adm/',{
+    axios.get(`${API_BASE_URL}/clinica/listar_clinica_adm/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -1081,7 +1081,7 @@ function insertar_bd_doctor(e){
     console.warn(datos)
     //
     let arr =[]
-    axios.post(`https://jacruces91.pythonanywhere.com/api/doctor/crear_doctor/`, datos, {
+    axios.post(`${API_BASE_URL}/doctor/crear_doctor/`, datos, {
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -1200,7 +1200,7 @@ function insert_grupo(){
             'name':name
         }
         //
-        axios.post(`https://jacruces91.pythonanywhere.com/api/grupo/crear_grupo/`, datos, {
+        axios.post(`${API_BASE_URL}/grupo/crear_grupo/`, datos, {
             headers: {
                 'Authorization': `Token ${token}`
             }
@@ -1318,7 +1318,7 @@ function grupos(e){
         // modalInstance.show();
         const token = sessionStorage.getItem('token');
         let arr =[]
-        axios.get('https://jacruces91.pythonanywhere.com/api/grupo/listar_grupo/',{
+        axios.get(`${API_BASE_URL}/grupo/listar_grupo/`,{
             headers: {
                 'Authorization': `Token ${token}`
             }
@@ -1417,7 +1417,7 @@ function clinica_doc(id, nombre_clinica){
     //
    const token = sessionStorage.getItem('token');
    let arr =[]
-   axios.get(`https://jacruces91.pythonanywhere.com/api/doctor/listar_clinica/${id}/`,{
+   axios.get(`${API_BASE_URL}/doctor/listar_clinica/${id}/`,{
        headers: {
            'Authorization': `Token ${token}`
        }
@@ -1508,7 +1508,7 @@ function agregar_nueva_clinica_doctor(){
     // Evitar múltiples peticiones si ya hay datos
     if (nueva_clinica_doc.options.length > 1) return;
     let arr =[]
-    axios.get('https://jacruces91.pythonanywhere.com/api/clinica/listar_clinica_adm/',{
+    axios.get(`${API_BASE_URL}/clinica/listar_clinica_adm/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -1549,7 +1549,7 @@ function borrar_clinica_doctor_panel_adm(id, nombreEmpresa){
         confirmButtonText: "¡Si, borrar!"
       }).then((result) => {
         if (result.isConfirmed) {
-            axios.delete(`https://jacruces91.pythonanywhere.com/api/doctor/delete_clinica_doctor/${iduser_doc}/?comunaclinicamodel_id=${id}/`,{
+            axios.delete(`${API_BASE_URL}/doctor/delete_clinica_doctor/${iduser_doc}/?comunaclinicamodel_id=${id}/`,{
                 headers: {
                     'Authorization': `Token ${token}`
                 }
@@ -1656,7 +1656,7 @@ function registrar_nueva_clinica_doctor(){
         'id_clinica': id_clinica,
     }
     let arr =[]
-    axios.post(`https://jacruces91.pythonanywhere.com/api/doctor/doctor_nueva_clinica/${id_user}/`, datos, {
+    axios.post(`${API_BASE_URL}/doctor/doctor_nueva_clinica/${id_user}/`, datos, {
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -1772,7 +1772,7 @@ function borrar_grupo(id, nombre_grupo){
         confirmButtonText: "¡Si, borrar!"
       }).then((result) => {
         if (result.isConfirmed) {
-            axios.delete(`https://jacruces91.pythonanywhere.com/api/grupo/eliminar_grupo/${id}/`, {
+            axios.delete(`${API_BASE_URL}/grupo/eliminar_grupo/${id}/`, {
                 headers: {
                     'Authorization': `Token ${token}`
                 }
@@ -1886,7 +1886,7 @@ function seccion_especialidad(e){
     //
     const token = sessionStorage.getItem('token');
     let arr =[]
-    axios.get('https://jacruces91.pythonanywhere.com/api/especialidad/especialidad_doctor/',{
+    axios.get(`${API_BASE_URL}/especialidad/especialidad_doctor/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -2014,7 +2014,7 @@ function form_insert_Esp(e){
         'valor_especialidad': valor_especialidad,
     }
     //
-    axios.post(`https://jacruces91.pythonanywhere.com/api/especialidad/insertar_especialidad/`, datos, {
+    axios.post(`${API_BASE_URL}/especialidad/insertar_especialidad/`, datos, {
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -2181,7 +2181,7 @@ function editar_esp_admin(e){
         "valor_especialidad": valor_especialidad,
     }
     const token = sessionStorage.getItem('token');
-    axios.put(`https://jacruces91.pythonanywhere.com/api/especialidad/edit_especialidad/${id_Edit}/`,datos, {
+    axios.put(`${API_BASE_URL}/especialidad/edit_especialidad/${id_Edit}/`,datos, {
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -2344,7 +2344,7 @@ function borrar_esp(id, especialidad){
         if (result.isConfirmed) {
             //
             const token = sessionStorage.getItem('token');
-            axios.delete(`https://jacruces91.pythonanywhere.com/api/especialidad/eliminar_especialidad/${id}/`, {
+            axios.delete(`${API_BASE_URL}/especialidad/eliminar_especialidad/${id}/`, {
                 headers: {
                     'Authorization': `Token ${token}`
                 }
@@ -2470,7 +2470,7 @@ function especialidades_list_doc(id, first_name){
     id_doc.value = id
     const token = sessionStorage.getItem('token');
     let arr =[]
-    axios.get(`https://jacruces91.pythonanywhere.com/api/doctor/esp_doc_list/${id}/`,{
+    axios.get(`${API_BASE_URL}/doctor/esp_doc_list/${id}/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -2545,7 +2545,7 @@ function option_especialidad_nueva_doc(e){
     // Evitar múltiples peticiones si ya hay datos
     if (select_especialidad_option.options.length > 1) return;
     let arr =[]
-    axios.get('https://jacruces91.pythonanywhere.com/api/especialidad/especialidad_doctor/',{
+    axios.get(`${API_BASE_URL}/especialidad/especialidad_doctor/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -2593,7 +2593,7 @@ function insert_nueva_esp_doctor_Admin(e){
     let datos = {
         'especialidad_id': valor,
     }
-    axios.post(`https://jacruces91.pythonanywhere.com/api/doctor/nueva_esp_doctor_admin/${id_doc}/`,datos,{
+    axios.post(`${API_BASE_URL}/doctor/nueva_esp_doctor_admin/${id_doc}/`,datos,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -2696,7 +2696,7 @@ function eliminar_esp_doct_panel_admin(id_especialidad, especialidad, id_doctor)
             let datos = {
                 'id_especialidad': id_especialidad
             }
-            axios.delete(`https://jacruces91.pythonanywhere.com/api/doctor/borrar_esp_doctor/${id_doctor}/?id_especialidad=${id_especialidad}/`,{
+            axios.delete(`${API_BASE_URL}/doctor/borrar_esp_doctor/${id_doctor}/?id_especialidad=${id_especialidad}/`,{
                 headers: {
                     'Authorization': `Token ${token}`
                 }
@@ -2799,7 +2799,7 @@ function borrar_user_doctor(id_doc, nombres, apellidos, username){
             let datos = {
                 'id_especialidad': id_doc
             }
-            axios.delete(`https://jacruces91.pythonanywhere.com/api/doctor/borrar_doctor/${id_doc}/${username}/`,{
+            axios.delete(`${API_BASE_URL}/doctor/borrar_doctor/${id_doc}/${username}/`,{
                 headers: {
                     'Authorization': `Token ${token}`
                 }
@@ -2951,7 +2951,7 @@ function enviar_datos_edit_doc_adm(){
     }
     console.warn(datos)
     //
-    axios.put(`https://jacruces91.pythonanywhere.com/api/doctor/update_doctor/${id}/`,datos, {
+    axios.put(`${API_BASE_URL}/doctor/update_doctor/${id}/`,datos, {
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -3037,7 +3037,7 @@ function panel_pacientes(){
             // Reemplazamos los carácters, como este caso la comilla '.
             return str.replace(/'/g, "\\'");
         }
-        axios.get('https://jacruces91.pythonanywhere.com/api/paciente/listar_paciente/',{
+        axios.get(`${API_BASE_URL}/paciente/listar_paciente/`,{
             headers: {
                 'Authorization': `Token ${token}`
             }
@@ -3368,7 +3368,7 @@ function adm_registrar_paciente(){
         'comuna': comuna ,
     }
     console.log(datos)
-    axios.post(`https://jacruces91.pythonanywhere.com/api/paciente/crear_paciente/`,datos, {
+    axios.post(`${API_BASE_URL}/paciente/crear_paciente/`,datos, {
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -3685,7 +3685,7 @@ function edit_panel_adm_paciente(e){
         'ap_materno': adm_paciente_ap_materno,
     }
     console.log(datos)
-    axios.put(`https://jacruces91.pythonanywhere.com/api/paciente/update_paciente/${id}/`,datos, {
+    axios.put(`${API_BASE_URL}/api/paciente/update_paciente/${id}/`,datos, {
         headers: {
             'Authorization': `Token ${token}`,
         }
@@ -3837,7 +3837,7 @@ function borrar_user_paciente(id, pac_primer_nombre, pac_segundo_nombre){
             let datos = {
                 'id_especialidad': id_doc
             }
-            axios.delete(`https://jacruces91.pythonanywhere.com/api/paciente/delete_paciente/${id}/`,{
+            axios.delete(`${API_BASE_URL}/paciente/delete_paciente/${id}/`,{
                 headers: {
                     'Authorization': `Token ${token}`
                 }
@@ -3960,7 +3960,7 @@ function historial_user_paciente(id_usuario, nombre, apellido){
     //
     const token = sessionStorage.getItem('token');
     let arr =[]
-    axios.get(`https://jacruces91.pythonanywhere.com/api/paciente/historial_user_paciente/${id_usuario}/`,{
+    axios.get(`${API_BASE_URL}/paciente/historial_user_paciente/${id_usuario}/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -4119,7 +4119,7 @@ function borrar_cita_user_paciente(fk_usuario, nombre_paciente,fecha_reserva,esp
         confirmButtonText: "¡Si, borrar!"
       }).then((result) => {
         if (result.isConfirmed) {
-            axios.delete(`https://jacruces91.pythonanywhere.com/api/reserva/delete_pac_reserva/${fk_usuario}/`,{
+            axios.delete(`${API_BASE_URL}/reserva/delete_pac_reserva/${fk_usuario}/`,{
                 headers: {
                     'Authorization': `Token ${token}`
                 },
@@ -4176,7 +4176,7 @@ function comuna_clinica_paciente_registrado(){
     // //
     let arr =[]
     const token = sessionStorage.getItem('token');
-    axios.get('https://jacruces91.pythonanywhere.com/api/clinica/listar_clinica_adm/',{
+    axios.get(`${API_BASE_URL}/clinica/listar_clinica_adm/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -4228,7 +4228,7 @@ function select_esp_adm_panel_pac_registrado(){
     //
     let arr =[]
     //
-    axios.get('https://jacruces91.pythonanywhere.com/api/especialidad/especialidad_doctor/',{
+    axios.get(`${API_BASE_URL}/especialidad/especialidad_doctor/`,{
         headers: { 'Authorization': `Token ${token}`
             }
     })
@@ -4277,7 +4277,7 @@ function valor_select_esp_adm_pac_registrado(){
     }
     console.warn(datos)
     //
-    axios.get(`https://jacruces91.pythonanywhere.com/api/doctor/esp_doc_list_reserva_panel_adm/`, {
+    axios.get(`${API_BASE_URL}/doctor/esp_doc_list_reserva_panel_adm/`, {
         params: {
             id_clinica: select_adm_com_clin_pac,
             id_especialidad: select_especialidad
@@ -4519,7 +4519,7 @@ function paciente_nombre_clinica_paciente_registrado(){
     
     //
     const token = sessionStorage.getItem('token');
-    axios.get(`https://jacruces91.pythonanywhere.com/api/paciente/listar_paciente/`, {
+    axios.get(`${API_BASE_URL}/paciente/listar_paciente/`, {
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -4812,7 +4812,7 @@ function crearCita() {
     }
     // axios.post(`https://jacruces91.pythonanywhere.com/paciente/crear_reserva_panel_admin`, datos, {
     console.warn(datos)
-    axios.post(`https://jacruces91.pythonanywhere.com/api/paciente/crear_reserva_panel_admin/`, datos, {
+    axios.post(`${API_BASE_URL}/paciente/crear_reserva_panel_admin/`, datos, {
         headers: { 'Authorization': `Token ${token}` }
     })
     .then(response => {
@@ -4867,7 +4867,7 @@ function select_esp_adm_panel_pac(){
     //
     let arr =[]
     //
-    axios.get('https://jacruces91.pythonanywhere.com/api/especialidad/listar_esp_index/',{
+    axios.get(`${API_BASE_URL}/especialidad/listar_esp_index/`,{
     })
     .then(function (response) {
         // 
@@ -4913,7 +4913,7 @@ function valor_select_esp_adm_pac(){
     }
     console.warn(datos)
     // //
-    axios.get(`https://jacruces91.pythonanywhere.com/api/doctor/esp_doc_list_reserva_panel_adm/`, {
+    axios.get(`${API_BASE_URL}/doctor/esp_doc_list_reserva_panel_adm/`, {
         params: {
             id_clinica: select_adm_com_clin_pac,
             id_especialidad: select_especialidad
@@ -4955,7 +4955,7 @@ function comuna_clinica(){
     // //
     let arr =[]
     const token = sessionStorage.getItem('token');
-    axios.get('https://jacruces91.pythonanywhere.com/api/clinica/listar_clinica_adm/',{
+    axios.get(`${API_BASE_URL}/clinica/listar_clinica_adm/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -4999,7 +4999,7 @@ function panel_secretaria(){
         const token = sessionStorage.getItem('token');
         console.log(token)
         let arr =[]
-        axios.get('https://jacruces91.pythonanywhere.com/api/secretaria/listar_secretaria/',{
+        axios.get(`${API_BASE_URL}/secretaria/listar_secretaria/`,{
             headers: {
                 'Authorization': `Token ${token}`
             }
@@ -5099,7 +5099,7 @@ function obtener_clinica_secretaria(){
     // Evitar múltiples peticiones si ya hay datos
     if (select_clinica.options.length > 1) return;
     let arr =[]
-    axios.get('https://jacruces91.pythonanywhere.com/api/clinica/listar_clinica_adm/',{
+    axios.get(`${API_BASE_URL}/clinica/listar_clinica_adm/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -5132,7 +5132,7 @@ function insert_nueva_clinica_secret_panel_adm(){
     // Evitar múltiples peticiones si ya hay datos
     if (select_clinica.options.length > 1) return;
     let arr =[]
-    axios.get('https://jacruces91.pythonanywhere.com/api/clinica/listar_clinica_adm/',{
+    axios.get(`${API_BASE_URL}/clinica/listar_clinica_adm/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -5222,7 +5222,7 @@ function registrar_secretaria(e){
         'id_clinica': clinica_secretaria,
     }
     console.log(datos)
-    axios.post(`https://jacruces91.pythonanywhere.com/api/secretaria/crear_secretaria/`,datos,{
+    axios.post(`${API_BASE_URL}/secretaria/crear_secretaria/`,datos,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -5382,7 +5382,7 @@ function obtener_clin_secretaria_panel_adm(id_user, primer_nombre, seg_nombre){
     const modalInstance = new bootstrap.Modal(modal_todas_clin_secretaria_panel_admin);
     // Abre el modal
     modalInstance.show();
-    axios.get(`https://jacruces91.pythonanywhere.com/api/secretaria/obtener_clin_secretaria/${id_user}/`,{
+    axios.get(`${API_BASE_URL}/secretaria/obtener_clin_secretaria/${id_user}/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -5500,7 +5500,7 @@ function enviar_nueva_clinica_secretaria(){
         'id_user_secretaria': id_user_secretaria,
     }
     //
-    axios.post(`https://jacruces91.pythonanywhere.com/api/secretaria/agregar_clin_secretaria_panel_adm/`,datos,{
+    axios.post(`${API_BASE_URL}/secretaria/agregar_clin_secretaria_panel_adm/`,datos,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -5609,7 +5609,7 @@ function borrar_clin_secretaria(id_clin, id_user_secret, name_clinica){
         confirmButtonText: "¡Si, borrar!"
       }).then((result) => {
         if (result.isConfirmed) {
-            axios.delete(`https://jacruces91.pythonanywhere.com/api/secretaria/delete_clin_secretaria/${id_clin}/${id_user_secret}/`,{
+            axios.delete(`${API_BASE_URL}/secretaria/delete_clin_secretaria/${id_clin}/${id_user_secret}/`,{
                 headers: {
                     'Authorization': `Token ${token}`
                 }
@@ -5803,7 +5803,7 @@ function editando_secretaria(){
         'ap_paterno': edit_adm_secretaria_ap_paterno,
         'ap_materno': edit_adm_secretaria_ap_materno, 
     }
-    axios.put(`https://jacruces91.pythonanywhere.com/api/secretaria/update_secretaria/${id_usuuario_secretaria}/`,datos, {
+    axios.put(`${API_BASE_URL}/secretaria/update_secretaria/${id_usuuario_secretaria}/`,datos, {
         
     })
     .then(function (response) {
@@ -5947,7 +5947,7 @@ function borrar_user_secretaria(id, primer_nombre, segundo_nombre){
         confirmButtonText: "¡Si, borrar!"
       }).then((result) => {
         if (result.isConfirmed) {
-            axios.delete(`https://jacruces91.pythonanywhere.com/api/secretaria/delete_secretaria/${id}/`,{
+            axios.delete(`${API_BASE_URL}/secretaria/delete_secretaria/${id}/`,{
                 headers: {
                     'Authorization': `Token ${token}`
                 }
@@ -6054,7 +6054,7 @@ function cargar_info_cardiologia(){
     //
     const token = sessionStorage.getItem('token');
     let arr =[]
-    axios.get('https://jacruces91.pythonanywhere.com/api/cardiologia/listar_info_cardiologia/',{
+    axios.get(`${API_BASE_URL}/cardiologia/listar_info_cardiologia/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -6150,7 +6150,7 @@ function historial_citas(){
     //
     let arr =[]
     //
-    axios.get('https://jacruces91.pythonanywhere.com/api/reserva/historial_reserva/',{
+    axios.get(`${API_BASE_URL}/reserva/historial_reserva/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -6265,7 +6265,7 @@ function historial_citas(){
 function listar_descuento(){
     const token = sessionStorage.getItem('token');
     let arr =[]
-    axios.get('https://jacruces91.pythonanywhere.com/api/descuento/listar_descuento/',{
+    axios.get(`${API_BASE_URL}/descuento/listar_descuento/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -6425,7 +6425,7 @@ function enviar_descuento(){
     }
     //
     let arr = []
-    axios.post('https://jacruces91.pythonanywhere.com/api/descuento/crear_descuento/', datos,{
+    axios.post(`${API_BASE_URL}/descuento/crear_descuento/`, datos,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -6560,7 +6560,7 @@ function desc_delete(id, nom_desc){
         confirmButtonText: "¡Si, eliminar!"
       }).then((result) => {
         if (result.isConfirmed) {
-            axios.delete(`https://jacruces91.pythonanywhere.com/api/descuento/eliminar_descuento/${id}/`,{
+            axios.delete(`${API_BASE_URL}/descuento/eliminar_descuento/${id}/`,{
                 headers: {
                     'Authorization': `Token ${token}`
                 }
@@ -6707,7 +6707,7 @@ function desc_delete(id, nom_desc){
 //----------------------------------- Panel Consultas Pacientes Abiertas --------------------------------------------
 function listar_consulta_pac(){
     const token = sessionStorage.getItem('token');
-    axios.get('https://jacruces91.pythonanywhere.com/api/consulta/listar_consulta_abierta_paciente/',{
+    axios.get(`${API_BASE_URL}/api/consulta/listar_consulta_abierta_paciente/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -6812,7 +6812,7 @@ function listar_consulta_pac(){
 //
 function listar_consulta_pac_cerrada(){
     const token = sessionStorage.getItem('token');
-    axios.get('https://jacruces91.pythonanywhere.com/api/consulta/listar_consulta_cerrada_paciente/',{
+    axios.get(`${API_BASE_URL}/api/consulta/listar_consulta_cerrada_paciente/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -6941,7 +6941,7 @@ function consulta_paciente_cerrada_panel_adm(id_consulta, primer_nombre, segundo
     id_consulta_cerrada_pac_adm.value = id_consulta
     //
     const token = sessionStorage.getItem('token');
-    axios.get(`https://jacruces91.pythonanywhere.com/api/consulta/respuesta_consulta_cerrada_paciente/${id_consulta}/`,{
+    axios.get(`${API_BASE_URL}/api/consulta/respuesta_consulta_cerrada_paciente/${id_consulta}/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -6981,7 +6981,7 @@ function cerrar_session(){
         'token': token
     }
     //
-    axios.post(`https://jacruces91.pythonanywhere.com/api/usuario/cerrar_sesion/`,datos, {
+    axios.post(`${API_BASE_URL}/usuario/cerrar_sesion/`,datos, {
         headers: {
             'Authorization': `Token ${token}`
         }
