@@ -4347,7 +4347,7 @@ function reserva_calendar_pac_registrado() {
         // console.log(datos)
         // INICIALIZACIÓN ÚNICA DEL CALENDARIO
         var calendarEl = document.getElementById('calendar_pac_registrado');
-        let request_calendar = `https://jacruces91.pythonanywhere.com/api/paciente/reserva_paciente_registrado/`
+        let request_calendar = `${API_BASE_URL}/paciente/reserva_paciente_registrado/`;
         if (calendar) {
             calendar.destroy(); // Destruye la instancia actual
             calendar = null;    // Resetea la variable
@@ -6707,7 +6707,7 @@ function desc_delete(id, nom_desc){
 //----------------------------------- Panel Consultas Pacientes Abiertas --------------------------------------------
 function listar_consulta_pac(){
     const token = sessionStorage.getItem('token');
-    axios.get(`${API_BASE_URL}/api/consulta/listar_consulta_abierta_paciente/`,{
+    axios.get(`${API_BASE_URL}/consulta/listar_consulta_abierta_paciente/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -6812,7 +6812,7 @@ function listar_consulta_pac(){
 //
 function listar_consulta_pac_cerrada(){
     const token = sessionStorage.getItem('token');
-    axios.get(`${API_BASE_URL}/api/consulta/listar_consulta_cerrada_paciente/`,{
+    axios.get(`${API_BASE_URL}/consulta/listar_consulta_cerrada_paciente/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -6941,7 +6941,7 @@ function consulta_paciente_cerrada_panel_adm(id_consulta, primer_nombre, segundo
     id_consulta_cerrada_pac_adm.value = id_consulta
     //
     const token = sessionStorage.getItem('token');
-    axios.get(`${API_BASE_URL}/api/consulta/respuesta_consulta_cerrada_paciente/${id_consulta}/`,{
+    axios.get(`${API_BASE_URL}/consulta/respuesta_consulta_cerrada_paciente/${id_consulta}/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
