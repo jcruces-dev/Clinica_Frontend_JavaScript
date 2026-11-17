@@ -376,7 +376,7 @@ function edit_panel_pac_paciente(){
                 // Eliminar el token del almacenamiento local
                 sessionStorage.removeItem('token');
                 alert("Debe iniciar Sessión nuevamente")
-                window.location.href = 'http://127.0.0.1:5500/Clinica_HTML/index.html'
+                window.location.href = '/'
             }
             console.log("Ahora si que si")
             //console.warn(response.data.grupos[0])
@@ -1935,7 +1935,7 @@ function cerrar_session(){
         'token': token
     }
     //
-    axios.post(`${API_BASE_URL}/usuario/cerrar_sesion`,datos, {
+    axios.post(`${API_BASE_URL}/usuario/cerrar_sesion/`,datos, {
         headers: {
             'Authorization': `Token ${token}`
         }
