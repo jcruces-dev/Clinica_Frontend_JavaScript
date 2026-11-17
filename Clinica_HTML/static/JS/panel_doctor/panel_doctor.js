@@ -156,7 +156,7 @@ function obtener_datos_doctor(){
     const token = sessionStorage.getItem('token');
     //
     let arr = []
-    axios.get(`${API_BASE_URL}/doctor/listar_datos_doctor/${username}`, {
+    axios.get(`${API_BASE_URL}/doctor/listar_datos_doctor/${username}/`, {
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -446,7 +446,7 @@ function clinica_doc_panel_doc(id){
     //
    const token = sessionStorage.getItem('token');
    let arr =[]
-   axios.get(`${API_BASE_URL}/doctor/listar_clinica_panel_doc/${id}`,{
+   axios.get(`${API_BASE_URL}/doctor/listar_clinica_panel_doc/${id}/`,{
        headers: {
            'Authorization': `Token ${token}`
        }
@@ -533,7 +533,7 @@ function obtener_doctores(){
     //
     let arr = []
     //
-    axios.get(`${API_BASE_URL}/doctor/listar_doctor`,{
+    axios.get(`${API_BASE_URL}/doctor/listar_doctor/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -642,7 +642,7 @@ function clinica_disp(){
     //
     let arr = []
     //
-    axios.get(`${API_BASE_URL}/reserva/listar_clinica_paciente_doctor`,{
+    axios.get(`${API_BASE_URL}/reserva/listar_clinica_paciente_doctor/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -700,7 +700,7 @@ function seleccionar_cli_reservas(){
         calendar.destroy();
     }
     // Full Callendar.
-    let request_calendar = `https://jacruces91.pythonanywhere.com/reserva/listar_paciente_doctor`
+    let request_calendar = `${API_BASE_URL}/reserva/listar_paciente_doctor/`
     //let request_calendar = '../../JS/events.json'
     var calendarEl = document.getElementById('calendar_res_pac_registrado');
     // Si ya existe un calendario, destrúyelo antes de crear uno nuevo
@@ -1044,7 +1044,7 @@ function obtener_pac_todo(){
     //
     let arr = []
     //
-    axios.get(`${API_BASE_URL}/reserva/listar_paciente_doctor_cita`,{
+    axios.get(`${API_BASE_URL}/reserva/listar_paciente_doctor_cita/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -1166,7 +1166,7 @@ function info_pac_doctor_panel_doc(id, cod_reserva){
     modalInstance.show();
     //
     let arr = []
-    axios.post(`${API_BASE_URL}/historial_clinico/listar_historial_clinico_pacien_panel_doctor`,datos,{
+    axios.post(`${API_BASE_URL}/historial_clinico/listar_historial_clinico_pacien_panel_doctor/`,datos,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -1302,7 +1302,7 @@ function cerrar_cita(){
                 calendar.destroy();
             }   
             // Full Callendar.
-            let request_calendar = `https://jacruces91.pythonanywhere.com/paciente/historial_clinico`
+            let request_calendar = `${API_BASE_URL}/paciente/historial_clinico/`
             //let request_calendar = '../../JS/events.json'
             var calendarEl = document.getElementById('calendar_res_pac_registrado');
             // Si ya existe un calendario, destrúyelo antes de crear uno nuevo
@@ -1600,7 +1600,7 @@ function cerrar_session(){
         'token': token
     }
     //
-    axios.post(`${API_BASE_URL}/usuario/cerrar_sesion`,datos, {
+    axios.post(`${API_BASE_URL}/usuario/cerrar_sesion/`,datos, {
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -1611,7 +1611,7 @@ function cerrar_session(){
         // Eliminar el token del almacenamiento local
         if (response.status == 200) {
             sessionStorage.removeItem('token');
-            window.location.href = 'http://127.0.0.1:5500/Clinica_HTML/index.html'
+            window.location.href = '/'
         }
     }).catch(error => {
         if (error.response) {
@@ -1629,7 +1629,7 @@ function listar_secretarias(){
     const token = sessionStorage.getItem('token');
     //
     let arr = []
-    axios.get(`${API_BASE_URL}/secretaria/listar_secretaria`, {
+    axios.get(`${API_BASE_URL}/secretaria/listar_secretaria/`, {
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -1723,7 +1723,7 @@ function obtener_pac_no_registrado(){
     const token = sessionStorage.getItem('token');
     //
     let arr = []
-    axios.get(`${API_BASE_URL}/paciente_no_registrado/listar_pac_no_registrado`, {
+    axios.get(`${API_BASE_URL}/paciente_no_registrado/listar_pac_no_registrado/`, {
         headers: {
             'Authorization': `Token ${token}`,
             'Content-Type': 'application/json'
@@ -1733,7 +1733,6 @@ function obtener_pac_no_registrado(){
         // 
         console.log(typeof(response.data.pacientes))
         let datos = response.data.pacientes
-        console.log(datos)
         datos.forEach(element => {
             arr.push(element)
         });
@@ -1781,6 +1780,7 @@ function obtener_pac_no_registrado(){
                     { title: 'Valor Especialidad', data: "valor_especialidad", defaultContent: '' },
                     { title: 'Nombre Doctor', data: "nombre_doctor", defaultContent: '' },
                     { title: 'tipo Pago', data: "tipo_pago", defaultContent: '' },
+                    { title: 'Rut Paciente', data: "rut", defaultContent: '' },
                     { title: 'Cod Reserva', data: "reserva_uuid", defaultContent: '' },
                     { title: 'Nombre Clinica', data: "nombre_clinica", defaultContent: '' },
                     { title: 'Comuna Clinica', data: "comuna_clinica", defaultContent: '' },
@@ -1874,6 +1874,7 @@ function obtener_pac_no_registrado(){
 //
 function info_pac_no_register_panel_doc(reserva_uuid){
     //
+    console.warn(reserva_uuid)
     const token = sessionStorage.getItem('token');
     //
     let arr = []
@@ -1884,7 +1885,7 @@ function info_pac_no_register_panel_doc(reserva_uuid){
     // Abre el modal
     modalInstance.show();
     //
-    axios.get(`${API_BASE_URL}/historial_pac_no_registrado/historial_paciente_no_registrado/${reserva_uuid}`,{
+    axios.get(`${API_BASE_URL}/historial_pac_no_registrado/historial_paciente_no_registrado/${reserva_uuid}/`,{
         headers: {
             'Authorization': `Token ${token}`,
             'Content-Type': 'application/json'

@@ -828,16 +828,7 @@ function listar_pac_no_registrado(){
                 { title: 'Hora Termino', data: "hora_termino", defaultContent: '' },
                 { title: 'Especialidad', data: "especialidad", defaultContent: '' },
                 { title: 'Nombre Doctor', data: "nombre_doctor", defaultContent: '' },
-                { 
-                    title: 'Tipo Pago', 
-                    data: "tipo_pago", 
-                    defaultContent: '', 
-                    render: function(data, type, row) {
-                        if (data === 0 || data === "0") return "Débito";
-                        if (data === 1 || data === "1") return "Crédito";
-                        return "Desconocido";
-                    }
-                },
+                { title: 'Tipo Pago', data: "tipo_pago", defaultContent: '' },
                 { title: 'Reserva UUID', data: "reserva_uuid", defaultContent: '' },
                 { title: 'Nombre Clinica', data: "nombre_clinica", defaultContent: '' },
                 { title: 'Comuna Clínica', data: "comuna_clinica", defaultContent: '' },
@@ -1534,14 +1525,14 @@ function agregar_nueva_clinica_doctor(){
     });
 }
 //
-function borrar_clinica_doctor_panel_adm(id, nombreEmpresa){
+function borrar_clinica_doctor_panel_adm(id_clinica, nombreClinica){
     //
-    let iduser_doc = document.getElementById("iduser_doc").value
+    let id_doctor = document.getElementById("iduser_doc").value
     //
     const token = sessionStorage.getItem('token');
     Swal.fire({
-        title: "¿Desea eliminar la clínica: " +nombreEmpresa+"?",
-        text: "El grupo se eliminará correctamente",
+        title: "¿Desea eliminar la clínica: " +nombreClinica+"?",
+        text: "La clínica se ha eliminado correctamente",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -1549,7 +1540,8 @@ function borrar_clinica_doctor_panel_adm(id, nombreEmpresa){
         confirmButtonText: "¡Si, borrar!"
       }).then((result) => {
         if (result.isConfirmed) {
-            axios.delete(`${API_BASE_URL}/doctor/delete_clinica_doctor/${iduser_doc}/?comunaclinicamodel_id=${id}/`,{
+            axios.delete(`${API_BASE_URL}/doctor/delete_clinica_doctor/${id_doctor}/`,{
+                data: { 'id_clinica': id_clinica },
                 headers: {
                     'Authorization': `Token ${token}`
                 }
@@ -2696,7 +2688,9 @@ function eliminar_esp_doct_panel_admin(id_especialidad, especialidad, id_doctor)
             let datos = {
                 'id_especialidad': id_especialidad
             }
-            axios.delete(`${API_BASE_URL}/doctor/borrar_esp_doctor/${id_doctor}/?id_especialidad=${id_especialidad}/`,{
+            console.log(datos)
+            axios.delete(`${API_BASE_URL}/doctor/borrar_esp_doctor/${id_doctor}/`, {
+                data: datos,
                 headers: {
                     'Authorization': `Token ${token}`
                 }
@@ -2963,7 +2957,7 @@ function enviar_datos_edit_doc_adm(){
             Swal.fire({
                 icon: "success",
                 title: "Actualizado Correctamente",
-                text: "Losdatos del doctor fueron actualizados correctamente!",
+                text: "Los datos del doctor fueron actualizados correctamente!",
             });
             // let list_clinica = response.data.list_clinica
             if ($.fn.DataTable.isDataTable('#listar_doctor')) {
@@ -3610,7 +3604,7 @@ function editar_paciente(id_pac, username_pac, email, primer_nombre, segundo_nom
     option_comuna.selected = true
 }
 //
-function edit_panel_adm_paciente(e){
+function edit_panel_adm_paciente(){
     //
     const token = sessionStorage.getItem('token');
     // Creamos esta funcion interna para la región porque la O'higgins, tiene comilla y
@@ -3685,7 +3679,7 @@ function edit_panel_adm_paciente(e){
         'ap_materno': adm_paciente_ap_materno,
     }
     console.log(datos)
-    axios.put(`${API_BASE_URL}/api/paciente/update_paciente/${id}/`,datos, {
+    axios.put(`${API_BASE_URL}/paciente/update_paciente/${id}/`, datos, {
         headers: {
             'Authorization': `Token ${token}`,
         }
@@ -5027,6 +5021,7 @@ function panel_secretaria(){
                     { title: 'Edad', data: "edad", defaultContent: '' },
                     { title: 'Sexo', data: "sexo", defaultContent: '' },
                     { title: 'Contacto', data: "fono", defaultContent: '' },
+                    { title: 'Rut', data: "rut", defaultContent: '' },
                     { title: 'Cod. Secretaria', data: "secretaria_uuid", defaultContent: '' },
                     { 
                         title: 'Acciones', 
@@ -5273,6 +5268,7 @@ function registrar_secretaria(e){
                     { title: 'Edad', data: "edad", defaultContent: '' },
                     { title: 'Sexo', data: "sexo", defaultContent: '' },
                     { title: 'Contacto', data: "fono", defaultContent: '' },
+                    { title: 'Rut', data: "rut", defaultContent: '' },
                     { 
                         title: 'Acciones', 
                         data: null,
@@ -5768,7 +5764,7 @@ function editando_secretaria(){
         password = "0"
     }
     //
-    let id_usuuario_secretaria = document.getElementById("id_usuario_secretaria").value
+    let id = document.getElementById("id_usuario_secretaria").value
     let edit_adm_secretaria_username = document.getElementById("edit_adm_secretaria_username").value
     let edit_adm_secretaria_primer_nombre = document.getElementById("edit_adm_secretaria_primer_nombre").value
     let edit_adm_secretaria_segundo_nombre = document.getElementById("edit_adm_secretaria_segundo_nombre").value
@@ -5803,7 +5799,7 @@ function editando_secretaria(){
         'ap_paterno': edit_adm_secretaria_ap_paterno,
         'ap_materno': edit_adm_secretaria_ap_materno, 
     }
-    axios.put(`${API_BASE_URL}/secretaria/update_secretaria/${id_usuuario_secretaria}/`,datos, {
+    axios.put(`${API_BASE_URL}/secretaria/update_secretaria/${id}/`,datos, {
         
     })
     .then(function (response) {
@@ -5820,7 +5816,7 @@ function editando_secretaria(){
                 // Eliminar el token del almacenamiento local
                 sessionStorage.removeItem('token');
                 alert("Debe iniciar Sessión nuevamente")
-                window.location.href = 'http://127.0.0.1:5500/Clinica_HTML/index.html'
+                window.location.href = '/'
             }
             //console.warn(response.data.grupos[0])
             let secretarias = response.data.secretarias
@@ -5844,6 +5840,7 @@ function editando_secretaria(){
                     { title: 'Edad', data: "edad", defaultContent: '' },
                     { title: 'Sexo', data: "sexo", defaultContent: '' },
                     { title: 'Contacto', data: "fono", defaultContent: '' },
+                    { title: 'Rut', data: "rut", defaultContent: '' },
                     { title: 'Cod. Secretaria', data: "secretaria_uuid", defaultContent: '' },
                     { 
                         title: 'Acciones', 
@@ -5983,6 +5980,7 @@ function borrar_user_secretaria(id, primer_nombre, segundo_nombre){
                             { title: 'Edad', data: "edad", defaultContent: '' },
                             { title: 'Sexo', data: "sexo", defaultContent: '' },
                             { title: 'Contacto', data: "fono", defaultContent: '' },
+                            { title: 'Rut', data: "rut", defaultContent: '' },
                             { title: 'Cod. Secretaria', data: "secretaria_uuid", defaultContent: '' },
                             { 
                                 title: 'Acciones', 

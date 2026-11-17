@@ -205,7 +205,7 @@ function obtener_datos_secretaria(){
     const token = sessionStorage.getItem('token');
     //
     let arr = []
-    axios.get(`${API_BASE_URL}/secretaria/listar_datos_secretaria/${username}`, {
+    axios.get(`${API_BASE_URL}/secretaria/listar_datos_secretaria/${username}/`, {
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -225,6 +225,7 @@ function obtener_datos_secretaria(){
         
         tabla_dato_secretaria_panel_secretaria = $('#tabla_dato_secretaria_panel_secretaria').DataTable({
             data: arr,
+            responsive: true, 
             columns: [
                 { title: 'ID', data: "id_user", defaultContent: '' },
                 { title: 'Username', data: "username", defaultContent: '' },
@@ -235,6 +236,7 @@ function obtener_datos_secretaria(){
                 { title: 'Email', data: "email", defaultContent: '' },
                 { title: 'Edad', data: "edad", defaultContent: '' },
                 { title: 'Sexo', data: "sexo", defaultContent: '' },
+                { title: 'Rut', data: "rut", defaultContent: '' },
                 { title: 'Contacto', data: "fono", defaultContent: '' },
                 { 
                     title: 'Acciones', 
@@ -395,7 +397,7 @@ function enviar_datos_sec(){
                 // Eliminar sesión
                 sessionStorage.clear(); // Si usas sessionStorage
                 alert("Debe iniciar Sesión nuevamente")
-                window.location.href = 'http://127.0.0.1:5500/Clinica_HTML/login.html';
+                window.location.href = '/';
             }
             //
             console.log(response.data.secretarias)
@@ -441,7 +443,7 @@ function obtener_doctores(){
     //
     let arr = []
     //
-    axios.get(`${API_BASE_URL}/doctor/listar_doctor`,{
+    axios.get(`${API_BASE_URL}/doctor/listar_doctor/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -554,7 +556,7 @@ function obtener_pac_todo(){
     //
     let arr = []
     //
-    axios.get(`${API_BASE_URL}/paciente/listar_paciente`,{
+    axios.get(`${API_BASE_URL}/paciente/listar_paciente/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -936,7 +938,7 @@ function info_pac_secretaria_panel_sec(id){
     const token = sessionStorage.getItem('token');
     //
     let arr = []
-    axios.get(`${API_BASE_URL}/reserva/historial_cli_pac_panel_secretaria/${id}`, {
+    axios.get(`${API_BASE_URL}/reserva/historial_cli_pac_panel_secretaria/${id}/`, {
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -1073,7 +1075,7 @@ function info_pac_secretaria_panel_sec(id){
 function listar_pac_no_registrado(){
     const token = sessionStorage.getItem('token');
     let arr =[]
-    axios.get(`${API_BASE_URL}/paciente/pac_no_registrado_admin`,{
+    axios.get(`${API_BASE_URL}/paciente/pac_no_registrado_secretaria/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -1084,6 +1086,7 @@ function listar_pac_no_registrado(){
         //console.warn(response.data.grupos[0])
         let paciente = response.data.pacientes
         console.warn(paciente)
+        debugger
         paciente.forEach(element => {
             arr.push(element)
         });
@@ -1134,16 +1137,7 @@ function listar_pac_no_registrado(){
                 { title: 'Hora Termino', data: "hora_termino", defaultContent: '' },
                 { title: 'Especialidad', data: "especialidad", defaultContent: '' },
                 { title: 'Nombre Doctor', data: "nombre_doctor", defaultContent: '' },
-                { 
-                    title: 'Tipo Pago', 
-                    data: "tipo_pago", 
-                    defaultContent: '', 
-                    render: function(data, type, row) {
-                        if (data === 0 || data === "0") return "Débito";
-                        if (data === 1 || data === "1") return "Crédito";
-                        return "Desconocido";
-                    }
-                },
+                { title: 'Tipo Pago', data: "tipo_pago", defaultContent: ''},
                 { title: 'Reserva UUID', data: "reserva_uuid", defaultContent: '' },
                 { title: 'Nombre Clinica', data: "nombre_clinica", defaultContent: '' },
                 { title: 'Comuna Clínica', data: "comuna_clinica", defaultContent: '' },
@@ -1234,7 +1228,7 @@ function listar_secretarias(){
     const token = sessionStorage.getItem('token');
     //
     let arr = []
-    axios.get(`${API_BASE_URL}/secretaria/listar_secretarias_panel_secretaria`, {
+    axios.get(`${API_BASE_URL}/secretaria/listar_secretarias_panel_secretaria/`, {
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -1912,7 +1906,7 @@ function paciente_nombre_clinica_paciente_registrado(){
     
     //
     const token = sessionStorage.getItem('token');
-    axios.get(`${API_BASE_URL}/paciente/listar_paciente`, {
+    axios.get(`${API_BASE_URL}/paciente/listar_paciente/`, {
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -2004,7 +1998,7 @@ function valor_select_esp_adm_pac_registrado(){
     }
     console.warn(datos)
     //
-    axios.get(`${API_BASE_URL}/doctor/esp_doc_list_reserva_panel_adm`, {
+    axios.get(`${API_BASE_URL}/doctor/esp_doc_list_reserva_panel_adm/`, {
         params: {
             id_clinica: select_adm_com_clin_pac,
             id_especialidad: select_especialidad
@@ -2045,7 +2039,7 @@ function comuna_clinica_paciente_registrado(){
     // //
     let arr =[]
     const token = sessionStorage.getItem('token');
-    axios.get(`${API_BASE_URL}/clinica/listar_clinica_adm`,{
+    axios.get(`${API_BASE_URL}/clinica/listar_clinica_adm/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -2112,7 +2106,7 @@ function reserva_calendar_pac_registrado(){
         }
         console.log(datos)
         // Full Callendar.
-        let request_calendar = `https://jacruces91.pythonanywhere.com/paciente/reserva_paciente_registrado`
+        let request_calendar = `${API_BASE_URL}/paciente/reserva_paciente_registrado/`
         //let request_calendar = '../../JS/events.json'
         var calendarEl = document.getElementById('calendar_pac_registrado');
         calendar = new FullCalendar.Calendar(calendarEl, {
@@ -3017,7 +3011,7 @@ function cerrar_session(){
         'token': token
     }
     //
-    axios.post(`${API_BASE_URL}/usuario/cerrar_sesion`,datos, {
+    axios.post(`${API_BASE_URL}/usuario/cerrar_sesion/`,datos, {
         headers: {
             'Authorization': `Token ${token}`
         }
