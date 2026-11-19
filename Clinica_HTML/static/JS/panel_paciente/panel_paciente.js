@@ -79,7 +79,7 @@ function obtener_datos_paciente(){
     const token = sessionStorage.getItem('token');
     //
     let arr = []
-    axios.get(`${API_BASE_URL}/paciente/listar_datos_paciente/${username}`, {
+    axios.get(`${API_BASE_URL}/paciente/listar_datos_paciente/${username}/`, {
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -682,7 +682,7 @@ function realizar_reserva(){
     const token = sessionStorage.getItem('token');
     //
     let arr = []
-    axios.get(`${API_BASE_URL}/paciente/res_nombre_paciente/${username}`, {
+    axios.get(`${API_BASE_URL}/paciente/res_nombre_paciente/${username}/`, {
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -716,7 +716,7 @@ function comuna_clinica_paciente_registrado(){
     // //
     let arr =[]
     const token = sessionStorage.getItem('token');
-    axios.get(`${API_BASE_URL}/clinica/listar_clinica_adm`,{
+    axios.get(`${API_BASE_URL}/clinica/listar_clinica_adm/`,{
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -817,7 +817,7 @@ function valor_select_esp_adm_pac_registrado(){
     }
     console.warn(datos)
     //
-    axios.get(`${API_BASE_URL}/doctor/esp_doc_list_reserva_panel_adm`, {
+    axios.get(`${API_BASE_URL}/doctor/esp_doc_list_reserva_panel_adm/`, {
         params: {
             id_clinica: select_adm_com_clin_pac,
             id_especialidad: select_especialidad
@@ -882,7 +882,7 @@ function reserva_calendar_pac_registrado(){
         }
         console.log(datos)
         // Full Callendar.
-        let request_calendar = `https://jacruces91.pythonanywhere.com/paciente/reserva_paciente_panel_paciente`
+        let request_calendar = `${API_BASE_URL}/paciente/reserva_paciente_panel_paciente/`
         //let request_calendar = '../../JS/events.json'
         var calendarEl = document.getElementById('calendar_pac_registrado');
         calendar = new FullCalendar.Calendar(calendarEl, {
@@ -1127,7 +1127,6 @@ function abrir_modal_nueva_cita_pa_registrado(fechaFormateada){
     div_alert_doctor.innerText = "Nombre Doctor: " + nombre_doctor
     alert_info.appendChild(div_alert_doctor);
     // Info Fecha Reserva..
-    console.log(fechaFormateada)
     let fecha = new Date(fechaFormateada);
     // Extraemos cada parte y la formateamos
     let dia = String(fecha.getDate()).padStart(2, '0');
@@ -1181,7 +1180,7 @@ function validar_cup_pac(){
         'valor_especialidad': valor_especialidad,
     }
     //
-    axios.post(`${API_BASE_URL}/descuento/descuento_pac`, datos, {
+    axios.post(`${API_BASE_URL}/descuento/descuento_pac/`, datos, {
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -1189,11 +1188,9 @@ function validar_cup_pac(){
     .then(function (response) {
         // 
         if (response.status = 200) {
-            console.log(response.data.descuento)
             let valor_desc = response.data.descuento
             let descuento_valor = valor_especialidad * valor_desc / 100;
             let nuevo_valor_pagar = valor_especialidad - descuento_valor
-            console.warn(nuevo_valor_pagar)
             // Antea de crear el div, debemos limpiar.
             let nuevo_valor = document.getElementById("nuevo_valor")
             nuevo_valor.innerHTML = "";
@@ -1320,7 +1317,6 @@ function crearCita(){
     let tipo_pago = "";
     if (metodoSeleccionado) {
         tipo_pago = metodoSeleccionado.value;
-        console.log(tipo_pago)
     }
     // Obtenemos las cuotas
     let cuotaSeleccionada = document.querySelector('input[name="cuota"]:checked');
@@ -1328,7 +1324,6 @@ function crearCita(){
     let cuota_pago = "";
     if (cuotaSeleccionada) {
         cuota_pago = cuotaSeleccionada.value;
-        console.log(cuota_pago)
     }
     let btn_crear_cita_pac_registrado_panel_paciente = document.getElementById("btn_crear_cita_pac_registrado_panel_paciente")
     let fk_usuario = btn_crear_cita_pac_registrado_panel_paciente.getAttribute("data-fk_usuario")
@@ -1366,9 +1361,8 @@ function crearCita(){
         'cuotas': cuota_pago,
         'pago_realizado': 1,
     }
-    console.warn(datos)
     //
-    axios.post(`${API_BASE_URL}/paciente/crear_reserva_panel_pac`, datos, {
+    axios.post(`${API_BASE_URL}/paciente/crear_reserva_panel_pac/`, datos, {
         headers: {
             'Authorization': `Token ${token}`
         }
@@ -1628,7 +1622,7 @@ function veri_cod_des(){
     //
     console.log(datos)
     //
-    axios.post(`${API_BASE_URL}/descuento/veri_cod_des`, datos, {
+    axios.post(`${API_BASE_URL}/descuento/veri_cod_des/`, datos, {
         headers: {
             'Authorization': `Token ${token}`
         }
