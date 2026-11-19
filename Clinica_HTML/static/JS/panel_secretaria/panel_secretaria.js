@@ -1756,7 +1756,7 @@ function secret_registrar_paciente(){
         'comuna': comuna ,
     }
     console.log(datos)
-    axios.post(`${API_BASE_URL}/paciente/crear_paciente`,datos, {
+    axios.post(`${API_BASE_URL}/paciente/crear_paciente/`,datos, {
         headers: {
             'Authorization': `Token ${token}`
         }
