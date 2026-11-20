@@ -1,21 +1,24 @@
-# Nombre del workflow de Producción.
+# Nombre del workflow que verás en la pestaña de Actions de GitHub.
 name: 3. Release Frontend to Production
 
-# Define CUÁNDO se ejecuta.
+# Define CUÁNDO se va a ejecutar este workflow.
 on:
+  # Se ejecuta cuando subes un tag que empiece con 'v' (ej. v1.0.0).
   push:
     tags:
       - 'v*'
+  # Permite ejecutar el workflow manualmente desde la interfaz de GitHub.
   workflow_dispatch:
 
-# Variables globales.
+# Variables globales disponibles para todos los trabajos (jobs).
 env:
+  # El nombre de la imagen en el registro de contenedores de GitHub.
   IMAGE_NAME: ghcr.io/jcruces-dev/frontend-clinica-bp
 
-# Definición de trabajos.
+# Definición de los trabajos (jobs) que se ejecutarán.
 jobs:
   # ==========================================================
-  # JOB 1: Construir y subir imagen con versión semántica
+  # JOB 1: Construir y subir la imagen a GitHub Packages (GHCR)
   # ==========================================================
   build-release:
     name: Build Production Image
@@ -28,7 +31,6 @@ jobs:
       - name: Checkout código
         uses: actions/checkout@v4
 
-      # 👇 MEJORA: Configuramos Buildx para usar caché.
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -45,20 +47,21 @@ jobs:
           context: .
           push: true
           tags: ${{ env.IMAGE_NAME }}:${{ github.ref_name }}
-          # 👇 MEJORA: Aprovecha las capas ya construidas en los PRs o en Dev/Test.
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
   # ==========================================================
-  # JOB 2: Desplegar a Producción (Con aprobación manual)
+  # JOB 2: Desplegar a Producción (Actualizar el YAML de K8s)
   # ==========================================================
   deploy-prod:
     name: Deploy Frontend to Production
     needs: build-release
     runs-on: ubuntu-latest
     
-    # ACTIVAMOS LA APROBACIÓN MANUAL DE GITHUB ENVIRONMENTS.
-    environment: production 
+    # 👇 AQUÍ ESTÁ LA CORRECCIÓN PARA VS CODE 👇
+    # Esto le dice a GitHub que use las reglas del entorno "production".
+    environment:
+      name: production
 
     steps:
       - name: Checkout repo de infraestructura
@@ -71,10 +74,8 @@ jobs:
       - name: Actualizar manifiestos de Producción
         run: |
           cd infra
-          # El tag es el nombre del release (ej. v1.0.0). Coincide perfectamente con el build.
           DEPLOY_TAG="${{ github.ref_name }}"
-          # Busca dinámicamente en la carpeta Prod/frontend.
-          find Prod/frontend -type f -name "*.yaml" -exec sed -i "s|image: ghcr.io/jcruces-dev/frontend-clinica-bp:.*|image: ghcr.io/jcruces-dev/frontend-clinica-bp:${DEPLOY_TAG}|g" {} +
+          find Prod/frontend -type f \( -name "*.yaml" -o -name "*.yml" \) -exec sed -i "s|image: ghcr.io/jcruces-dev/frontend-clinica-bp:.*|image: ghcr.io/jcruces-dev/frontend-clinica-bp:${DEPLOY_TAG}|g" {} +
 
       - name: Commit y push
         run: |

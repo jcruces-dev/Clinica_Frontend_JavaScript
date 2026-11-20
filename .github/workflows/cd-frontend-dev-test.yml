@@ -1,46 +1,52 @@
-# Nombre del workflow para Dev y Test.
+# Nombre del workflow que aparecerá en la pestaña Actions de GitHub.
 name: 2. CD - Deploy Frontend to Dev & Test
 
-# Define CUÁNDO se ejecuta.
+# Define CUÁNDO se ejecuta este pipeline.
 on:
+  # Se ejecuta automáticamente cada vez que haces push a la rama main.
   push:
     branches: [ main ]
+  # Permite ejecutarlo manualmente desde la interfaz de GitHub.
   workflow_dispatch:
 
-# Variables globales.
+# Variables globales para todo el workflow.
 env:
+  # El nombre base de la imagen en el registro de contenedores de GitHub (GHCR).
   IMAGE_NAME: ghcr.io/jcruces-dev/frontend-clinica-bp
 
-# Definición de trabajos.
+# Definición de los trabajos (jobs).
 jobs:
   # ==========================================================
-  # JOB 1: Construir y subir la imagen Docker
+  # JOB 1: Construir y subir la imagen Docker a GHCR
   # ==========================================================
   build-and-push:
     name: Build and Push (Dev/Test)
     runs-on: ubuntu-latest
+    # Permisos necesarios para leer el código y escribir en el registro (GHCR).
     permissions:
       contents: read
       packages: write
 
     steps:
+      # 1. Descarga el código fuente del repositorio en la máquina virtual.
       - name: Checkout código
         uses: actions/checkout@v4
 
-      # Extraemos metadatos para etiquetar la imagen dinámicamente.
+      # 2. Extrae metadatos para etiquetar la imagen dinámicamente (tags).
       - name: Extraer metadatos
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.IMAGE_NAME }}
           tags: |
-            # Etiqueta con el SHA del commit (ESTO GENERA: sha-XXXXX).
+            # Etiqueta con el SHA del commit (Genera algo como: sha-123456789).
             type=sha,format=long
-            # Etiqueta con el número de ejecución.
+            # Etiqueta con el número de ejecución del pipeline (ej: run-45).
             type=raw,value=run-${{ github.run_number }}
-            # Etiqueta 'latest' si estamos en la rama main.
+            # Etiqueta 'latest' solo si estamos en la rama principal (main).
             type=raw,value=latest,enable={{is_default_branch}}
 
+      # 3. Inicia sesión en GitHub Container Registry (GHCR).
       - name: Login a GHCR
         uses: docker/login-action@v3
         with:
@@ -48,6 +54,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # 4. Construye la imagen y la sube a internet.
       - name: Build y push
         uses: docker/build-push-action@v5
         with:
@@ -57,36 +64,46 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
   # ==========================================================
-  # JOB 2: Actualizar manifiestos de Kubernetes (GitOps)
+  # JOB 2: Actualizar manifiestos de Kubernetes (Patrón GitOps)
   # ==========================================================
   update-manifest:
     name: Update K8s Manifests (Dev/Test)
+    # Solo se ejecuta si el JOB 1 (build-and-push) terminó con éxito.
     needs: build-and-push
     runs-on: ubuntu-latest
     
     steps:
+      # 1. Descarga el repositorio de infraestructura (donde viven los YAMLs).
       - name: Checkout repo de infraestructura
         uses: actions/checkout@v4
         with:
           repository: jcruces-dev/clinica-k8s-infrastructure
+          # Usa tu Token Personal (PAT) para tener permisos de escritura en ese repo.
           token: ${{ secrets.GH_PAT }}
+          # Lo clona en una carpeta llamada 'infra'.
           path: infra
 
+      # 2. Busca y actualiza el tag de la imagen en los YAMLs.
       - name: Actualizar imagen en los manifiestos
         run: |
           cd infra
-          # Agregamos el prefijo "sha-" para que coincida con la imagen real.
+          # Define el tag usando el SHA del commit actual (igual que en el JOB 1).
           DEPLOY_TAG="sha-${{ github.sha }}"
           
-          # Busca dinámicamente en las carpetas Dev/frontend y Test/frontend y actualiza la imagen.
-          find Dev/frontend Test/frontend -type f -name "*.yaml" -exec sed -i "s|image: ghcr.io/jcruces-dev/frontend-clinica-bp:.*|image: ghcr.io/jcruces-dev/frontend-clinica-bp:${DEPLOY_TAG}|g" {} +
+          # CORRECCIÓN IMPORTANTE: El find ahora busca archivos .yaml Y .yml
+          # Busca en las carpetas Dev/frontend y Test/frontend y usa sed para reemplazar la imagen.
+          find Dev/frontend Test/frontend -type f \( -name "*.yaml" -o -name "*.yml" \) -exec sed -i "s|image: ghcr.io/jcruces-dev/frontend-clinica-bp:.*|image: ghcr.io/jcruces-dev/frontend-clinica-bp:${DEPLOY_TAG}|g" {} +
 
+      # 3. Hace commit de los cambios y los sube al repositorio de infraestructura.
       - name: Commit y push
         run: |
           cd infra
+          # Configura el usuario bot de GitHub Actions.
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Agrega los archivos modificados al stage de Git.
           git add Dev/frontend/ Test/frontend/
-          # También actualizamos el mensaje del commit para que sea consistente.
+          # Hace el commit solo si hubo cambios reales (evita fallos si el YAML ya estaba actualizado).
           git diff --staged --quiet || git commit -m "Update Dev/Test frontend image to sha-${{ github.sha }}"
+          # Sube los cambios a GitHub.
           git push
