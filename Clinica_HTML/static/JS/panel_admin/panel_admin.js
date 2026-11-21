@@ -466,7 +466,7 @@ function registrar_clinica(){
     console.warn(datos)
     //
     let arr =[]
-    axios.post(`${API_BASE_URL}/clinica/crear_clinica`, datos, {
+    axios.post(`${API_BASE_URL}/clinica/crear_clinica/`, datos, {
         headers: {
             'Authorization': `Token ${token}`
         }
