@@ -3502,8 +3502,8 @@ function adm_registrar_paciente(){
             if (error.response.data.error == 4) {
                 Swal.fire({
                     icon: "error",
-                    title: "El usuario ya existe",
-                    text: "El usuario fue creado anteriormente!",
+                    title: "Problemas con el RUT",
+                    text: "¡El rut ingresado se encuentra regisrado!",
                 });
             }
             if (error.response.data.error == 6) {
