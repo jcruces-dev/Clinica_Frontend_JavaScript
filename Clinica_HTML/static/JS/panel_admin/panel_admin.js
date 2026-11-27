@@ -372,10 +372,12 @@ function seccion_clinica(){
         // 
         //console.warn(response.data.grupos[0])
         let list_clinica = response.data.list_clinica
-        //
-        tabla_clinica = $('#tabla_clinica').DataTable({
+        if (response.data.list_clinica == 0){
+            tabla_clinica.clear().rows.add(list_clinica).draw();
+        }else{
+            tabla_clinica = $('#tabla_clinica').DataTable({
             data: list_clinica,
-            autoWidth: false, // <-- ESTO EVITA EL ESPACIO FANTASMA
+            autoWidth: false,
             destroy: true,
             columns: [
                 { title: 'ID', data: "id", defaultContent: '' },
@@ -385,8 +387,8 @@ function seccion_clinica(){
                 { 
                     title: 'Acciones', 
                     data: null,
-                    responsivePriority: 1, // Prioridad máxima (no se oculta)
-                    className: 'no-wrap', // Clase para evitar saltos de línea
+                    responsivePriority: 1,
+                    className: 'no-wrap',
                     orderable: false,
                     render: function(data, type, row) {
                         return '<button type="button" id="btn_editar_clinica" onclick="modal_editar_clinica('+row.id+', \''+row.nombre_clinica+'\', \''+row.comuna_clinica+'\', \''+row.direccion_clinica+'\')" class="btn btn-primary btn-sm editar-btn">Editar</button> ' +
@@ -426,6 +428,7 @@ function seccion_clinica(){
                 }
             }
         });
+        }
     })
     .catch(error => {
         if (error.response) {
@@ -630,7 +633,18 @@ function borrar_clinica_admin(id, nombreClinica){
                 console.warn(response.data);
                 console.warn(response.status)
                 let arr = []
-                if (response.status == 200) {
+                if (response.status == 200 & response.data.list_clinica != 0) {
+                    console.log("Pasamos")
+                    Swal.fire({
+                        icon: "success",
+                        title: "Clínica Eliminada",
+                        text: "La clínica fue eliminada correctamente!",
+                    });
+                    //console.warn(response.data.grupos[0])
+                    let list_clinica = response.data.list_clinica
+                    // Actualizar la tabla con los nuevos datos
+                    seccion_clinica(response.data.list_clinica);
+                }else{
                     Swal.fire({
                         icon: "success",
                         title: "Clínica Eliminada",
@@ -650,8 +664,8 @@ function borrar_clinica_admin(id, nombreClinica){
                     if (error.response.data.error == 3) {
                         Swal.fire({
                             icon: "error",
-                            title: "El grupo ya existe",
-                            text: "El grupo fue creado anteriormente!",
+                            title: "La clínica se encuentraregistrada",
+                            text: "¡La clínica fue creada anteriormente!",
                         });
                     }
                 }
@@ -946,7 +960,7 @@ function option_especialidad(e){
     });
 }
 //
-function obtener_clinica(e){
+function obtener_clinica(){
     let select_clinica = document.getElementById("select_clinica")
     const token = sessionStorage.getItem('token');
     // Evitar múltiples peticiones si ya hay datos
@@ -964,7 +978,7 @@ function obtener_clinica(e){
         esp.forEach(element => {
             // Crear un NUEVO elemento option en cada iteración
             const elegir_clinica = document.createElement("option");
-            elegir_clinica.value = element.id; // Usar ID como valor (mejor práctica)
+            elegir_clinica.value = element.id; // Usar ID como valor
             elegir_clinica.setAttribute("data-esp", element.nombre_especialidad)
             elegir_clinica.setAttribute("data-id", element.id)
             elegir_clinica.textContent = element.nombre_clinica;
@@ -1419,54 +1433,56 @@ function clinica_doc(id, nombre_clinica){
             arr.push(element)
         });
         //
-        var table = $('#tabla_clinica_doct_admin').DataTable({
-            data: arr,
-            columns: [
+        if ($.fn.DataTable.isDataTable('#tabla_clinica_doct_admin')) {
+    $('#tabla_clinica_doct_admin').DataTable().clear().destroy();
+}
+$('#tabla_clinica_doct_admin tbody').empty();
+
+var table = $('#tabla_clinica_doct_admin').DataTable({
+    data: arr,
+    responsive: true,
+    autoWidth: false,
+    columns: [
                 { title: 'ID', data: "id", defaultContent: '' },
                 { title: 'Nombre Clínica', data: "nombre_clinica", defaultContent: '' },
                 { title: 'Comuna Clínica', data: "comuna_clinica", defaultContent: '' },
                 { title: 'Dirección Clínica', data: "direccion_clinica", defaultContent: '' },
-                { 
-                    title: 'Acciones', 
+                {
+                    title: 'Acciones',
                     data: null,
-                    responsivePriority: 1, // Prioridad máxima (no se oculta)
-                    className: 'no-wrap', // Clase para evitar saltos de línea
+                    responsivePriority: 1,
+                    className: 'no-wrap',
                     orderable: false,
                     render: function(data, type, row) {
-                        return '<button type="button" data-id="'+row.id+'" id="btn_borrar_doc" onclick="borrar_clinica_doctor_panel_adm('+row.id+', \''+row.nombre_clinica+'\')" class="btn btn-danger btn-sm borrar-btn">Borrar</button> ';
+                        const nombreSeguro = String(row.nombre_clinica || '').replace(/'/g, "\\'");
+                        return `<button type="button" data-id="${row.id}" onclick="borrar_clinica_doctor_panel_adm(${row.id}, '${nombreSeguro}')" class="btn btn-danger btn-sm borrar-btn">Borrar</button>`;
                     }
                 }
             ],
-            destroy: true,
-            "dom": 'Bfrtip',
+            dom: 'Bfrtip',
             buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-            "lengthMenu": [
-                [5,10, 25, 50, -1],
-                ['5 Resultados', '10 Resultados', '50 Resultados', 'Mostrar Todos']
+            lengthMenu: [
+                [5, 10, 25, 50, -1],
+                ['5 Resultados', '10 Resultados', '25 Resultados', '50 Resultados', 'Mostrar Todos']
             ],
-            "buttons": {
-                "pageLength": {
-                    _: "Mostrar %d Registros"
-                }
-            },
-            "language": {
-                "decimal": "",
-                "emptyTable": "No hay información",
-                "info": "Mostrando _START_ a _END_ de _TOTAL_ Datos",
-                "infoEmpty": "Mostrando 0 to 0 of 0 Documentos",
-                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                "infoPostFix": "",
-                "thousands": ",",
-                "lengthMenu": "Mostrar _MENU_ Documentos",
-                "loadingRecords": "Cargando...",
-                "processing": "Procesando...",
-                "search": "Buscar:",
-                "zeroRecords": "Sin resultados encontrados",
-                "paginate": {
-                    "first": "Primero",
-                    "last": "Ultimo",
-                    "next": "Siguiente",
-                    "previous": "Anterior"
+            language: {
+                decimal: "",
+                emptyTable: "No hay información",
+                info: "Mostrando _START_ a _END_ de _TOTAL_ Datos",
+                infoEmpty: "Mostrando 0 to 0 of 0 Documentos",
+                infoFiltered: "(Filtrado de _MAX_ total entradas)",
+                infoPostFix: "",
+                thousands: ",",
+                lengthMenu: "Mostrar _MENU_ Documentos",
+                loadingRecords: "Cargando...",
+                processing: "Procesando...",
+                search: "Buscar:",
+                zeroRecords: "Sin resultados encontrados",
+                paginate: {
+                    first: "Primero",
+                    last: "Ultimo",
+                    next: "Siguiente",
+                    previous: "Anterior"
                 }
             }
         });
