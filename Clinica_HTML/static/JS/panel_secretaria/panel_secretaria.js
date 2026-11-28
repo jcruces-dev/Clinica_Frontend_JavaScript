@@ -947,17 +947,20 @@ function info_pac_secretaria_panel_sec(id){
         // 
         console.log(typeof(response.data.reserva))
         let datos = response.data.reserva
+        console.log(datos)
         datos.forEach(element => {
             arr.push(element)
         });
         //
         if ($.fn.DataTable.isDataTable('#tabla_hist_pac_panel_secre')) {
             $('#tabla_hist_pac_panel_secre').DataTable().destroy();
-            $('#tabla_hist_pac_panel_secre').empty(); // Limpia la tabla antes de inicializarla nuevamente
+            $('#tabla_hist_pac_panel_secre').empty();
         }
         
         var table = $('#tabla_hist_pac_panel_secre').DataTable({
             data: arr,
+            responsive: true,
+            destroy: true,
             columns: [
                 { title: 'ID', data: "id_reserva", defaultContent: '' },
                 { 
@@ -973,17 +976,19 @@ function info_pac_secretaria_panel_sec(id){
                         return `${dia}-${mes}-${anio}`;
                     }
                 },
-                { 
-                    title: 'Fecha Reserva', 
-                    data: "fecha_reserva", 
+                {
+                    title: 'Fecha Reserva',
+                    data: "fecha_reserva",
                     defaultContent: '',
                     render: function(data, type, row) {
-                        if (!data) return ''; // Si no hay fecha, retorna vacío
-                        let fecha = new Date(data);
-                        let dia = fecha.getDate().toString().padStart(2, '0');
-                        let mes = (fecha.getMonth() + 1).toString().padStart(2, '0'); // Meses en JavaScript empiezan desde 0
-                        let anio = fecha.getFullYear();
-                        return `${dia}-${mes}-${anio}`;
+                        if (!data) return '';
+                        // Si viene como "YYYY-MM-DD", separamos directo sin pasar por zona horaria local
+                        const partes = String(data).split('T')[0].split('-');
+                        if (partes.length === 3) {
+                            const [anio, mes, dia] = partes;
+                            return `${dia.padStart(2, '0')}-${mes.padStart(2, '0')}-${anio}`;
+                        }
+                        return data;
                     }
                 },
                 { 
@@ -1021,16 +1026,14 @@ function info_pac_secretaria_panel_sec(id){
                 { 
                     title: 'Acciones', 
                     data: null,
-                    responsivePriority: 1, // Prioridad máxima (no se oculta)
-                    className: 'no-wrap', // Clase para evitar saltos de línea
+                    responsivePriority: 1,
+                    className: 'no-wrap',
                     orderable: false,
                     render: function(data, type, row) {
                         return '<button type="button" data-id="'+row.id_reserva+'" data-name="'+row.primer_nombre+'" id="btn_delete_reserva_secret_panel_secre" onclick="eliminar_reserva(\''+row.id_reserva+'\', \''+row.especialidad+'\')" class="btn btn-danger btn-sm">Eliminar</button> ';
                     }
                 },
             ],
-            responsive: true,
-            destroy: true,
             "dom": 'Bfrtip',
             buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
             "lengthMenu": [
@@ -1072,6 +1075,7 @@ function info_pac_secretaria_panel_sec(id){
         }
     });
 }
+
 function listar_pac_no_registrado(){
     const token = sessionStorage.getItem('token');
     let arr =[]
@@ -1086,7 +1090,6 @@ function listar_pac_no_registrado(){
         //console.warn(response.data.grupos[0])
         let paciente = response.data.pacientes
         console.warn(paciente)
-        debugger
         paciente.forEach(element => {
             arr.push(element)
         });
@@ -2417,6 +2420,7 @@ function abrir_modal_nueva_cita_pa_registrado(fechaFormateada){
 function nueva_cita_pac_registrado(){
     let buton = document.getElementById("btn_crear_cita_pac_registrado_panel_adm")
     let datos = buton.datos;
+    console.log("Ojo acá.....")
     console.log("Datos recibidos:", datos);
     const token = sessionStorage.getItem('token');
     console.warn(token)
@@ -2512,6 +2516,8 @@ function eliminar_reserva(id_reserva, especialidad){
                     //
                     var table = $('#tabla_hist_pac_panel_secre').DataTable({
                         data: arr,
+                        // responsive: true,
+                        destroy: true,
                         columns: [
                             { title: 'ID', data: "id_reserva", defaultContent: '' },
                             { 
@@ -2575,16 +2581,14 @@ function eliminar_reserva(id_reserva, especialidad){
                             { 
                                 title: 'Acciones', 
                                 data: null,
-                                responsivePriority: 1, // Prioridad máxima (no se oculta)
-                                className: 'no-wrap', // Clase para evitar saltos de línea
+                                responsivePriority: 1,
+                                className: 'no-wrap',
                                 orderable: false,
                                 render: function(data, type, row) {
                                     return '<button type="button" data-id="'+row.id_reserva+'" data-name="'+row.primer_nombre+'" id="btn_delete_reserva_secret_panel_secre" onclick="eliminar_reserva(\''+row.id_reserva+'\', \''+row.especialidad+'\')" class="btn btn-danger btn-sm">Eliminar</button> ';
                                 }
                             },
                         ],
-                        responsive: true,
-                        destroy: true,
                         "dom": 'Bfrtip',
                         buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
                         "lengthMenu": [
