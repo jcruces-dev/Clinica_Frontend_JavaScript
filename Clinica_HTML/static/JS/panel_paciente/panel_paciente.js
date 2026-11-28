@@ -668,8 +668,8 @@ function diagnostico_reserva(id_user, cod_reserva){
             console.log('Error Headers:', error.response.headers);
             Swal.fire({
                 icon: "error",
-                title: "No existen reservas",
-                text: "No se encontraron reservas.",
+                title: "Información No Disponible",
+                text: "La información solicitada aún está disponible",
             });
         }
     });
